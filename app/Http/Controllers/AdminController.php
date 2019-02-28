@@ -1,0 +1,94 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Course;
+use App\Mail\CourseApproved;
+use App\Mail\CourseRejected;
+use App\VueTables\EloquentVueTables;
+use Illuminate\Http\Request;
+use App\Teacher;
+use App\Student;
+use App\User;
+use Yajra\DataTables\Facades\DataTables;
+
+class AdminController extends Controller
+{
+	public function courses () {
+		return view('admin.courses');
+	}
+
+	public function coursesJson () {
+		if(request()->ajax()) {
+			$vueTables = new EloquentVueTables;
+			$data = $vueTables->get(new Course, ['id', 'name', 'status'], ['reviews']);
+			return response()->json($data);
+		}
+		return abort(401);
+	}
+
+	public function updateCourseStatus () {
+		if (\request()->ajax()) {
+			$course = Course::find(\request('courseId'));
+
+			if(
+				(int) $course->status !== Course::PUBLISHED &&
+				! $course->previous_approved &&
+				\request('status') === Course::PUBLISHED
+			) {
+				$course->previous_approved = true;
+			//	\Mail::to($course->teacher->user)->send(new CourseApproved($course));
+			}
+
+			if(
+				(int) $course->status !== Course::REJECTED &&
+				! $course->previous_rejected &&
+				\request('status') === Course::REJECTED
+			) {
+				$course->previous_rejected = true;
+				\Mail::to($course->teacher->user)->send(new CourseRejected($course));
+			}
+
+			$course->status = \request('status');
+			$course->save();
+			return response()->json(['msg' => 'ok']);
+		}
+		return abort(401);
+	}
+
+	public function students () {	
+		
+	/*	$students = Student::with('user', 'courses.reviews')
+		->whereHas('courses', function ($q) {
+			$q->where('status', Course::PUBLISHED)->select('id', 'teacher_id', 'name')->withTrashed();
+		})->get();
+		foreach ($students as $key => $value) {
+			# code...
+			dd($value->courses->teacher);
+		}*/
+		return view('admin.students');
+	}
+	public function dataStudent () {
+		$students = Student::with('user', 'courses.reviews')
+		->whereHas('courses', function ($q) {
+			$q->where('status', Course::PUBLISHED)->select('id', 'teacher_id', 'name')->withTrashed();
+		})->get();
+	//dd($students);
+		return DataTables::of($students)
+		->addColumn('plan',function(Student $student){
+			return $student->user->paypalsubscription->plan;
+		})
+		->addColumn('start_date',function(Student $student){
+			return $student->user->paypalsubscription->start_date;
+		})
+		->addColumn('end_date',function(Student $student){
+			return $student->user->paypalsubscription->end_date;
+		})
+		->rawColumns(['courses_formatted'])->make(true);
+	}
+
+	public function teachers () {
+		$teachers = Teacher::all();		
+		return view('admin.teachers');
+	}
+}
