@@ -21,6 +21,7 @@ use PayPal\Api\AgreementStateDescriptor;
 use PayPal\Api\Payer;
 use PayPal\Api\ShippingAddress;
 use App\PaypalSubscription;
+use App\Course;
 
 class PaypalController extends Controller
 {
@@ -169,15 +170,17 @@ class PaypalController extends Controller
             }
             $user->save();
           //  dd($result->plan->payment_definitions->type);
+            $plan = $result->getPlan();
             $subcription                = new PaypalSubscription;
             $subcription->user_id       = $user->id;
             $subcription->paypal_id     = $result->id;
             $subcription->state         = $result->state;
             $subcription->start_date    = $result->start_date;
-            $subcription->plan          = $result->getPlan();           
+            $subcription->plan          = "REGULAR";           
             $subcription->save();
+            
 
-           // dd($result);
+           
             return redirect(route('subscriptions.paypal'))
             ->with('message', ['success', __("La suscripción se ha llevado a cabo correctamente")]);
            // echo 'New Subscriber Created and Billed';
@@ -191,6 +194,7 @@ class PaypalController extends Controller
         
     }
     public function paypalSuspend(){
+       
         $plan = request('plan');
         $agreementId = $plan;                  
         $agreement = new Agreement();            
@@ -203,9 +207,16 @@ class PaypalController extends Controller
             $agreement->suspend($agreementStateDescriptor, $this->apiContext);
             $cancelAgreementDetails = Agreement::get($agreement->getId(), $this->apiContext); 
             $user = auth()->user();
+            $user->paypal = 0;
+            $user->save();
             $subcription = PaypalSubscription::find($user->id);
             $subcription->state = $cancelAgreementDetails->getState();
             $subcription->save();
+        /*voy a desacioar todos los curos a los que esta inscrito este estudiante, si reauna la subcripcion
+         tiene que inscribirse de nuevo*/
+            $user->student->courses()->detach(); 
+            
+
             
            // dd($cancelAgreementDetails);      
            return redirect(route('subscriptions.paypal'))

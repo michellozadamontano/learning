@@ -17,11 +17,12 @@ class CoursePolicy
 
     public function subscribe (User $user) {
         //return $user->role_id !== Role::ADMIN && ! $user->subscribed('main');
-        return $user->role_id !== Role::ADMIN && ! $user->paypal == 1;
+        return $user->role_id !== Role::ADMIN &&  !$user->paypal;
+       
     }
 
-    public function inscribe (User $user, Course $course) {
-    	return ! $course->students->contains($user->student->id);
+    public function inscribe (User $user, Course $course) {              
+        return  !$course->students->contains($user->student->id);       
     }
 
 	public function review (User $user, Course $course) {
