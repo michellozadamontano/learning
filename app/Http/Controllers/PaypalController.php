@@ -171,13 +171,22 @@ class PaypalController extends Controller
             $user->save();
           //  dd($result->plan->payment_definitions->type);
             $plan = $result->getPlan();
-            $subcription                = new PaypalSubscription;
+           /* $subcription                = new PaypalSubscription;
             $subcription->user_id       = $user->id;
             $subcription->paypal_id     = $result->id;
             $subcription->state         = $result->state;
             $subcription->start_date    = $result->start_date;
             $subcription->plan          = "REGULAR";           
-            $subcription->save();
+            $subcription->save();*/
+            PaypalSubscription::updateOrCreate(
+                ['user_id'  =>$user->id],
+                [
+                    'paypal_id' =>$result->id,
+                    'state'     =>$result->state,
+                    'start_date'=>$result->start_date,
+                    'plan'      => 'REGULAR'
+                ]
+            );
             
 
            
@@ -209,10 +218,10 @@ class PaypalController extends Controller
             $user = auth()->user();
             $user->paypal = 0;
             $user->save();
-            $subcription = PaypalSubscription::find($user->id);
+            $subcription = PaypalSubscription::where('user_id',$user->id)->first();
             $subcription->state = $cancelAgreementDetails->getState();
             $subcription->save();
-        /*voy a desacioar todos los curos a los que esta inscrito este estudiante, si reauna la subcripcion
+        /*voy a desacioar todos los curos a los que esta inscrito este estudiante, si reanuda la subcripcion
          tiene que inscribirse de nuevo*/
             $user->student->courses()->detach(); 
             
@@ -223,6 +232,40 @@ class PaypalController extends Controller
             ->with('message', ['success', __("La suscripción se ha suspendido correctamente")]);
         } catch (Exception $ex) {  
             echo 'Hubo un problema al suspender la subscriccion';                
+        }
+        
+    }
+    public function paypalCancel(){        
+        $plan = request('plan');
+        $agreementId = $plan;                  
+        $agreement = new Agreement();            
+
+        $agreement->setId($agreementId);        
+        $agreementStateDescriptor = new AgreementStateDescriptor();
+        $agreementStateDescriptor->setNote("Cancel the agreement");
+
+        try {
+            $agreement->cancel($agreementStateDescriptor, $this->apiContext);
+            $cancelAgreementDetails = Agreement::get($agreement->getId(), $this->apiContext); 
+           // dd($cancelAgreementDetails);
+            $user = auth()->user();
+            $user->paypal = 0;
+            $user->save();
+            $subcription = PaypalSubscription::where('user_id',$user->id)->first();
+            $subcription->delete();
+           // $subcription->state = $cancelAgreementDetails->getState();
+          //  $subcription->save();
+        /*voy a desacioar todos los curos a los que esta inscrito este estudiante, si reanuda la subcripcion
+         tiene que inscribirse de nuevo*/
+            $user->student->courses()->detach(); 
+            
+
+            
+           // dd($cancelAgreementDetails);      
+           return redirect(route('subscriptions.paypal'))
+            ->with('message', ['success', __("La suscripción se ha cancelado correctamente")]);
+        } catch (Exception $ex) {  
+            echo 'Hubo un problema al cancelar la subscriccion';                
         }
         
     }
@@ -239,7 +282,9 @@ class PaypalController extends Controller
             $agreement->reActivate($agreementStateDescriptor, $this->apiContext);
             $agreementDetails = Agreement::get($agreement->getId(), $this->apiContext); 
             $user = auth()->user();
-            $subcription = PaypalSubscription::find($user->id);
+            $user->paypal = 1;
+            $user->save();
+            $subcription = PaypalSubscription::where('user_id',$user->id)->first();            
             $subcription->state = $agreementDetails->getState();
             $subcription->save();
             

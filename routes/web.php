@@ -71,6 +71,7 @@ Route::group(['middleware' => ['auth']], function () {
 		Route::get('/subscribe/paypal/cancel', 'PaypalController@pyaplCancel')->name('subscriptions.cancel');
 		Route::get('/paypalsubscription','PaypalController@admin')->name('subscriptions.paypal');
 		Route::post('/paypal/suspend','PaypalController@paypalSuspend')->name('subscriptions.suspend');
+		Route::post('/paypal/cancel','PaypalController@paypalCancel')->name('subscriptions.cancelar');
 		Route::post('/paypal/reactivate','PaypalController@paypalReactivate')->name('subscriptions.reactivate');
 	});
 

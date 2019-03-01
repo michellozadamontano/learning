@@ -16,7 +16,7 @@
                         <th scope="col">Alta</th>
                         <th scope="col">Estado</th>
                         <th scope="col">Finaliza en</th>
-                        <th scope="col">Cancelar / Reanudar</th>
+                        <th scope="col">Cancelar / Reanudar / Suspender</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -37,13 +37,29 @@
                                     </button>
                                 </form>
                             @else
-                                <form action="{{ route('subscriptions.suspend') }}" method="POST">
-                                    @csrf
-                                    <input type="hidden" name="plan" value="{{ $subscription->paypal_id }}" />
-                                    <button class="btn btn-danger">
-                                        {{ __("Cancelar") }}
-                                    </button>
-                                </form>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <form action="{{ route('subscriptions.suspend') }}" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="plan" value="{{ $subscription->paypal_id }}" />
+                                            <button class="btn btn-warning">
+                                                {{ __("Suspender") }}
+                                            </button>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form action="{{ route('subscriptions.cancelar') }}" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="plan" value="{{ $subscription->paypal_id }}" />
+                                            <button class="btn btn-danger">
+                                                {{ __("Cancelar") }}
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </table>   
+                                
                             @endif
                         </td>
                     @else
