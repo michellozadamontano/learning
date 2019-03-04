@@ -12,11 +12,18 @@
                     @foreach ($content->files as $file)
                         <p>{{$file->file}}</p>
                         @if($file->path != "")
-                        
-                            <video width="400" controls>
-                                <source src="/images/courses/{{$file->path}}" type="video/mp4">
-                                    Your browser does not support the video tag.
-                            </video>
+                            @php
+                                 $extension = pathinfo($file->path)['extension'];
+                            @endphp
+                              @if($extension=="mp4" || $extension == "ogg")
+                                                               
+                                <video width="400" controls>
+                                    <source src="/images/courses/{{$file->path}}" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                </video>
+                            @else
+                                 {{ url("/images/courses/".$file->path) }}
+                             @endif
                         @endif
                     @endforeach 
                                        
