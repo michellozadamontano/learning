@@ -7,9 +7,11 @@ use App\Mail\CourseApproved;
 use App\Mail\CourseRejected;
 use App\VueTables\EloquentVueTables;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Teacher;
 use App\Student;
 use App\User;
+use App\CourseContentFile;
 use Yajra\DataTables\Facades\DataTables;
 
 class AdminController extends Controller
@@ -52,6 +54,31 @@ class AdminController extends Controller
 			$course->status = \request('status');
 			$course->save();
 			return response()->json(['msg' => 'ok']);
+		}
+		return abort(401);
+	}
+	public function showCourseContent(){
+		//esta funcion la estoy llamando desde vue para mostrar el contenido de los cursos		
+		if(request()->ajax()){
+			$course = Course::find(\request('courseId'));
+			
+			try {
+				//code...
+				$course->load([	
+					'courseContent.files'
+				])->get();			
+		
+				return response()->json($course);
+			} catch (\Exception $exception) {
+				return response()->json($exception);
+			}
+		}
+		return abort(401);
+	}
+	public function showContentFiles(){
+		if(request()->ajax()){
+			$content = CourseContentFile::find(request('contentId'));
+			return response()->json($content);
 		}
 		return abort(401);
 	}

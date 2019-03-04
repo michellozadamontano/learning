@@ -6,7 +6,7 @@ Class EloquentVueTables implements VueTablesInterface {
 
 	public function get( $model, Array $fields, Array $relations = []) {
 		$byColumn  = request( 'byColumn' );
-		$orderBy  = request( 'orderBy' );
+		$orderBy   = request( 'orderBy' );
 		$limit     = request( 'limit' );
 		$page      = request( 'page' );
 		$ascending = request( 'ascending' );

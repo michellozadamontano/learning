@@ -1,5 +1,22 @@
 <template>
     <div>
+        <div>
+            <div class="card" v-for="content in courseContent" :key="content.id">                        
+                    <div class="card-body">
+                    <h4 class="card-title">{{content.titulo}}</h4> 
+                    <hr>                    
+                        <div v-for="file in content.files" :key="file.id">
+                            <p>{{file.file}}</p>
+                             <video width="400" controls >
+                                <source v-bind:src="`/images/courses/${file.path} `" type="video/mp4">
+                                    Your browser does not support the video tag.
+                            </video>
+                        </div>    
+                                    
+                    </div>
+                </div>   
+        </div>
+
         <div class="alert alert-primary text-center" v-if="processing">
             <i class="fa fa-compass"></i> Procesando petición...
         </div>
@@ -23,6 +40,15 @@
                 >
                     <i class="fa fa-rocket"></i> {{ labels.approve }}
                 </button>
+                <button                    
+                    type="button"
+                    class="btn btn-primary btn-block"
+                    @click="showContentCourse(props.row)"
+                >
+                    <i class="fa fa-rocket"></i> Ver contenido
+                </button>
+                
+                
             </div>
 
             <div slot="status" slot-scope="props">
@@ -58,6 +84,8 @@
         },
         data () {
             return {
+                courseContent:[],
+                contentFile:[],
                 processing: false,
                 status: null,
                 url: this.route,
@@ -123,8 +151,57 @@
                             this.processing = false;
                         });
                 }, 1500);
+            },
+            showContentCourse(row){               
+                    this.$http.post(
+                        '/admin/courses/showCourseContent',
+                        {courseId: row.id},
+                        {
+                            headers: {
+                                'x-csrf-token': document.head.querySelector('meta[name=csrf-token]').content
+                            }
+                        }
+                    )
+                        .then(res => {
+                           console.log(res.data);
+                           this.courseContent = res.data.course_content;
+                           
+                        })
+                        .catch(error => {
+
+                        })
+                        .finally(() => {
+                           // this.processing = false;
+                        });
+                
+            },
+            showContentFiles(id){               
+                    this.$http.post(
+                        '/admin/courses/showContentFiles',
+                        {contentId: id},
+                        {
+                            headers: {
+                                'x-csrf-token': document.head.querySelector('meta[name=csrf-token]').content
+                            }
+                        }
+                    )
+                        .then(res => {
+                           console.log(res.data);
+                           this.contentFile = res.data;
+                           
+                        })
+                        .catch(error => {
+
+                        })
+                        .finally(() => {
+                           // this.processing = false;
+                        });
+                
             }
-        }
+        },
+        computed: {
+            
+        },
     }
 </script>
 

@@ -62,14 +62,14 @@ class PaypalController extends Controller
         $paymentDefinition->setName('Regular Payments')
           ->setType('REGULAR')
           ->setFrequency('Month')
-          ->setFrequencyInterval('12')
+          ->setFrequencyInterval('1')
           ->setCycles('0')
-          ->setAmount(new Currency(array('value' => 89.99, 'currency' => 'USD')));
+          ->setAmount(new Currency(array('value' => 9.99, 'currency' => 'USD')));
 
         // Set merchant preferences
         $merchantPreferences = new MerchantPreferences();
-        $merchantPreferences->setReturnUrl('http://learning.online/subscriptions/subscribe/paypal/return')
-          ->setCancelUrl('http://learning.online/subscriptions/subscribe/paypal/cancel')
+        $merchantPreferences->setReturnUrl('https://escueladeinversionistas.online/subscriptions/subscribe/paypal/return')
+          ->setCancelUrl('https://escueladeinversionistas.online/subscriptions/subscribe/paypal/cancel')
           ->setAutoBillAmount('yes')
           ->setInitialFailAmountAction('CONTINUE')
           ->setMaxFailAttempts('0');

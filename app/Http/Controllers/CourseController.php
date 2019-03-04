@@ -128,7 +128,7 @@ class CourseController extends Controller
 	}
 	public function addContentAction(Request $request){
 		$request->validate([
-			'titulo' => 'required|unique:posts|max:255',			
+			'titulo' => 'required|max:255',			
 		]);
 		$content = new CourseContent();
 		$content->titulo = $request->get('titulo');

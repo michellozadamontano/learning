@@ -62930,6 +62930,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -62946,6 +62972,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     data: function data() {
         return {
+            courseContent: [],
+            contentFile: [],
             processing: false,
             status: null,
             url: this.route,
@@ -62999,8 +63027,37 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     _this.processing = false;
                 });
             }, 1500);
+        },
+        showContentCourse: function showContentCourse(row) {
+            var _this2 = this;
+
+            this.$http.post('/admin/courses/showCourseContent', { courseId: row.id }, {
+                headers: {
+                    'x-csrf-token': document.head.querySelector('meta[name=csrf-token]').content
+                }
+            }).then(function (res) {
+                console.log(res.data);
+                _this2.courseContent = res.data.course_content;
+            }).catch(function (error) {}).finally(function () {
+                // this.processing = false;
+            });
+        },
+        showContentFiles: function showContentFiles(id) {
+            var _this3 = this;
+
+            this.$http.post('/admin/courses/showContentFiles', { contentId: id }, {
+                headers: {
+                    'x-csrf-token': document.head.querySelector('meta[name=csrf-token]').content
+                }
+            }).then(function (res) {
+                console.log(res.data);
+                _this3.contentFile = res.data;
+            }).catch(function (error) {}).finally(function () {
+                // this.processing = false;
+            });
         }
-    }
+    },
+    computed: {}
 });
 
 /***/ }),
@@ -63014,6 +63071,45 @@ var render = function() {
   return _c(
     "div",
     [
+      _c(
+        "div",
+        _vm._l(_vm.courseContent, function(content) {
+          return _c("div", { key: content.id, staticClass: "card" }, [
+            _c(
+              "div",
+              { staticClass: "card-body" },
+              [
+                _c("h4", { staticClass: "card-title" }, [
+                  _vm._v(_vm._s(content.titulo))
+                ]),
+                _vm._v(" "),
+                _c("hr"),
+                _vm._v(" "),
+                _vm._l(content.files, function(file) {
+                  return _c("div", { key: file.id }, [
+                    _c("p", [_vm._v(_vm._s(file.file))]),
+                    _vm._v(" "),
+                    _c("video", { attrs: { width: "400", controls: "" } }, [
+                      _c("source", {
+                        attrs: {
+                          src: "/images/courses/" + file.path + " ",
+                          type: "video/mp4"
+                        }
+                      }),
+                      _vm._v(
+                        "\n                                Your browser does not support the video tag.\n                        "
+                      )
+                    ])
+                  ])
+                })
+              ],
+              2
+            )
+          ])
+        }),
+        0
+      ),
+      _vm._v(" "),
       _vm.processing
         ? _c("div", { staticClass: "alert alert-primary text-center" }, [
             _c("i", { staticClass: "fa fa-compass" }),
@@ -63067,7 +63163,24 @@ var render = function() {
                             " " + _vm._s(_vm.labels.approve) + "\n            "
                           )
                         ]
-                      )
+                      ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary btn-block",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.showContentCourse(props.row)
+                        }
+                      }
+                    },
+                    [
+                      _c("i", { staticClass: "fa fa-rocket" }),
+                      _vm._v(" Ver contenido\n            ")
+                    ]
+                  )
                 ])
               }
             },
