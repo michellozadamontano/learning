@@ -120,6 +120,13 @@ class CourseController extends Controller
 			return back()->with('message', ['danger', __("Error al mostrar los datos")]);
 		}
 	}
+	public function showVideo($id)
+	{
+		$file = CourseContentFile::find($id);
+		$course = $file->with('coursecontent.course')->first();
+		$curso = $course->coursecontent->course;		
+		return view('courses.show_video', compact('file','curso'));
+	}
 	//este metodo es para agregar el titulo de la clase al curso
 	public function addContent(Course $course) {
 		$btnText = __("Adicionar");
@@ -137,16 +144,19 @@ class CourseController extends Controller
 		return back();
 	}
 	public function addContentFile(Request $request) {
-		$request->file('video')->isValid();
-		$document = $request->file('video');
-		//$document->move('courses', 'video');		
-		//Storage::disk('public')->put($document, 'courses');
-		//Storage::put('courses',$document);
-		$picture = Helper::uploadFile('video', 'courses');
+		//$request->file('video')->isValid();
+		//$document = $request->file('video');
+		
+		//$picture = Helper::uploadFile('video', 'courses');
 		$content_file = new CourseContentFile();
 		$content_file->course_content_id = $request->get('titulo_id');
-		$content_file->file = $document->getClientOriginalName();
-		$content_file->path = $picture;
+		$content_file->file = request('titulo_video'); //$document->getClientOriginalName();
+		//$content_file->path = $picture;
+		$url = request('url_video');
+		$exp="/v\/?=?([0-9A-Za-z-_]{11})/is";
+		preg_match_all( $exp , $url , $matches );
+		$id = $matches[1][0];
+		$content_file->path = $id;
 		$content_file->save();
 		return back()->with('message', ['success', __("Datos subidos correctamente")]);
 	}

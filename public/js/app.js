@@ -62955,7 +62955,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -63089,17 +63088,13 @@ var render = function() {
                   return _c("div", { key: file.id }, [
                     _c("p", [_vm._v(_vm._s(file.file))]),
                     _vm._v(" "),
-                    _c("video", { attrs: { width: "400", controls: "" } }, [
-                      _c("source", {
-                        attrs: {
-                          src: "/images/courses/" + file.path + " ",
-                          type: "video/mp4"
-                        }
-                      }),
-                      _vm._v(
-                        "\n                                Your browser does not support the video tag.\n                        "
-                      )
-                    ])
+                    _c("iframe", {
+                      attrs: {
+                        width: "620",
+                        height: "300",
+                        src: "https://www.youtube.com/embed/" + file.path
+                      }
+                    })
                   ])
                 })
               ],

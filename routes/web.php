@@ -32,6 +32,7 @@ Route::group(['prefix' => 'courses'], function () {
 		Route::post('/add_review', 'CourseController@addReview')->name('courses.add_review');
 		Route::get('/{course}/content', 'CourseController@showContent')->name('courses.content');
 		Route::get('/{course}/add_content', 'CourseController@addContent')->name('courses.add_content');
+		Route::get('/{id}/show_video', 'CourseController@showVideo')->name('courses.show_video');
 		Route::post('/add_course_class', 'CourseController@addContentAction')->name('course.add_course_class');
 		Route::post('/add_course_class_file', 'CourseController@addContentFile')->name('courses.addFile');
 

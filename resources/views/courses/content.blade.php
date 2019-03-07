@@ -9,22 +9,13 @@
                     <div class="card-body">
                     <h4 class="card-title">{{$content->titulo}}</h4> 
                     <hr>
-                    @foreach ($content->files as $file)
-                        <p>{{$file->file}}</p>
-                        @if($file->path != "")
-                            @php
-                                 $extension = pathinfo($file->path)['extension'];
-                            @endphp
-                              @if($extension=="mp4" || $extension == "ogg")
-                                                               
-                                <video width="400" controls>
-                                    <source src="/images/courses/{{$file->path}}" type="video/mp4">
-                                        Your browser does not support the video tag.
-                                </video>
-                            @else
-                                 {{ url("/images/courses/".$file->path) }}
-                             @endif
-                        @endif
+                    
+                    @foreach ($content->files as $file)                        
+                    <a href="{{route('courses.show_video', ['id' => $file->id])}}">
+                        <i class="fa fa-youtube-play" aria-hidden="true"></i>
+                        <span>{{$file->file}}</span>
+                    </a>
+                        
                     @endforeach 
                                        
                     </div>

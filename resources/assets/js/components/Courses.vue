@@ -6,11 +6,10 @@
                     <h4 class="card-title">{{content.titulo}}</h4> 
                     <hr>                    
                         <div v-for="file in content.files" :key="file.id">
-                            <p>{{file.file}}</p>
-                             <video width="400" controls >
-                                <source v-bind:src="`/images/courses/${file.path} `" type="video/mp4">
-                                    Your browser does not support the video tag.
-                            </video>
+                            <p>{{file.file}}</p>                             
+                            <iframe width="620" height="300"
+                                v-bind:src="`https://www.youtube.com/embed/${file.path}`">
+                            </iframe>  
                         </div>    
                                     
                     </div>
