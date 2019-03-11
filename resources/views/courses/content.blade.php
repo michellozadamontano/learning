@@ -10,12 +10,19 @@
                     <h4 class="card-title">{{$content->titulo}}</h4> 
                     <hr>
                     
-                    @foreach ($content->files as $file)                        
-                    <a href="{{route('courses.show_video', ['id' => $file->id])}}">
-                        <i class="fa fa-youtube-play" aria-hidden="true"></i>
-                        <span>{{$file->file}}</span>
-                    </a>
-                        
+                    @foreach ($content->files as $file)
+                    @if($file->arhivo != "")                    
+                        <a href="{{route('courses.download', ['file' => $file->arhivo])}}">
+                            <i class="fa fa-file" aria-hidden="true"></i>
+                            <span>{{$file->file}}</span><br>
+                        </a>                    
+                    @endif 
+                    @if($file->path != "")
+                        <a href="{{route('courses.show_video', ['id' => $file->id])}}">
+                            <i class="fa fa-youtube-play" aria-hidden="true"></i>
+                            <span>{{$file->file}}</span><br>
+                        </a>
+                    @endif  
                     @endforeach 
                                        
                     </div>

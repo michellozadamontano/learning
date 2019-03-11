@@ -13,13 +13,18 @@
             
             <br>
             <div class="row">
-                <div class="col-md-12">
-                        @if($file->path != "")
-                        
-                        <iframe width="620" height="415"
-                            src="https://www.youtube.com/embed/{{$file->path}}">
-                        </iframe>                
-                        
+                <div class="col-md-12">                   
+                        @if($file->path != "")                        
+                            @if(strlen($file->path) > 9)
+                                <iframe width="620" height="415" frameborder="0"
+                                    src="https://www.youtube.com/embed/{{$file->path}}">
+                                </iframe>
+                                @else
+                                <iframe width="620" height="415" frameborder="0"
+                                    src="https://player.vimeo.com/video/{{$file->path}}">
+                                </iframe> 
+                            @endif         
+                                            
                         @endif
                 </div>
             </div>

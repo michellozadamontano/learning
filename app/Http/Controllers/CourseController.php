@@ -144,20 +144,53 @@ class CourseController extends Controller
 		return back();
 	}
 	public function addContentFile(Request $request) {
+	//	dd($request->file('archivo'));
 		//$request->file('video')->isValid();
-		//$document = $request->file('video');
-		
-		//$picture = Helper::uploadFile('video', 'courses');
+
+		//$document = $request->file('archivo');
 		$content_file = new CourseContentFile();
+		if($request->file('archivo') != null)
+		{
+			$request->validate([
+				'archivo' => 'mimes:pdf,txt,docx',
+			]);
+			$archivo = Helper::uploadFile('archivo', 'courses');
+			$content_file->arhivo = $archivo;
+		}
+		if(request('url_vimeo') == "" && request('url_youtube') == "" && $request->file('archivo') == null)
+		{
+			return back()->with('message', ['danger', __("Al menos tiene que existir o un video o un archivo")]);
+		}
+		
+		
 		$content_file->course_content_id = $request->get('titulo_id');
 		$content_file->file = request('titulo_video'); //$document->getClientOriginalName();
-		//$content_file->path = $picture;
-		$url = request('url_video');
-		$exp="/v\/?=?([0-9A-Za-z-_]{11})/is";
-		preg_match_all( $exp , $url , $matches );
-		$id = $matches[1][0];
-		$content_file->path = $id;
+		
+		
+		if(request('video_radio') == "youtube" && request('url_youtube') != "")
+		{
+			$url = request('url_video');
+			$exp="/v\/?=?([0-9A-Za-z-_]{11})/is";
+			preg_match_all( $exp , $url , $matches );
+			$id = $matches[1][0];
+			$content_file->path = $id;
+			//$content_file->save();
+		}
+		if(request('video_radio') == "vimeo" && request('url_vimeo') != "")
+		{
+			$url = request('url_vimeo');
+			$exp="/(https?:\/\/)?(www\.)?(player\.)?vimeo\.com\/([a-z]*\/)*([0-9]{6,11})[?]?.*/";
+			preg_match_all( $exp , $url , $matches );
+			$id = $matches[5][0];
+			$content_file->path = $id;
+			//$content_file->save();
+		}
 		$content_file->save();
+		
 		return back()->with('message', ['success', __("Datos subidos correctamente")]);
+	}
+	public function download($file){
+		$file_path = public_path('images/courses/'.$file);
+		return response()->download($file_path);
 	}
 }

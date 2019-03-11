@@ -14,8 +14,16 @@
         >    
 
             @csrf
-
-            <div class="row justify-content-center">
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            <div class="row justify-content-center">                    
                 <div class="col-md-8">
                     <div class="card">
                         <div class="card-header">
@@ -79,10 +87,24 @@
                                             @endforeach
                                         </select>
                                     </div>
+                                </div>
+                                <div class="form-group row">
+                                        <div class="form-check offset-4">
+                                            <input class="form-check-input" type="radio" name="video_radio" id="youtube_radio" value="youtube" checked>
+                                            <label class="form-check-label" for="youtube">
+                                                Videos de Youtube
+                                            </label>
+                                            </div>
+                                            <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="video_radio" id="vimeo_radio" value="vimeo">
+                                            <label class="form-check-label" for="vimeo">
+                                                Videos de Vimeo
+                                            </label>
+                                        </div>
                                 </div> 
                                 <div class="form-group row"> 
-                                        <label for="url_video" class="col-md-4 col-form-label text-md-right">
-                                            {{ __("Titulo Video") }}
+                                        <label for="titulo_video" class="col-md-4 col-form-label text-md-right">
+                                            {{ __("Titulo Contenido") }}
                                         </label>
                                         <div class="col-md-6">                                            
                                             <input
@@ -110,8 +132,7 @@
                                                 name="url_video"
                                                 id="url_video"
                                                 class="form-control{{ $errors->has('url_video') ? ' is-invalid' : '' }}"
-                                                value=""
-                                                required
+                                                value=""                                                
                                                 autofocus
                                             />
         
@@ -121,7 +142,39 @@
                                                 </span>
                                             @endif
                                         </div>
-                                </div>                    
+                                </div>  
+                                <div class="form-group row"> 
+                                        <label for="url_vimeo" class="col-md-4 col-form-label text-md-right">
+                                            {{ __("Url video Vimeo") }}
+                                        </label>
+                                        <div class="col-md-6">                                            
+                                            <input
+                                                name="url_vimeo"
+                                                id="url_vimeo"
+                                                class="form-control{{ $errors->has('url_vimeo') ? ' is-invalid' : '' }}"
+                                                value=""                                                
+                                                autofocus
+                                            />
+        
+                                            @if ($errors->has('url_vimeo'))
+                                                <span class="invalid-feedback">
+                                                    <strong>{{ $errors->first('url_vimeo') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+                                </div> 
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label text-md-right" for="archivo">Archivo (Opcional,pdf,txt,docx)</label>
+                                    <div class="col-md-6">
+                                        <input type="file" class="form-control-file" id="archivo" name="archivo">
+                                    </div>
+                                    @if ($errors->has('archivo'))
+                                            <span class="invalid-feedback">
+                                                <strong>{{ $errors->first('archivo') }}</strong>
+                                            </span>
+                                    @endif
+                                    
+                                </div>                  
                                 <button type="submit" class="btn btn-success offset-4">
                                     Aceptar
                                 </button>                                                  
@@ -130,8 +183,23 @@
                         </div>                                     
                 </div>  
             </div>              
-        </form>
-        
-        
+        </form>    
     </div>
 @endsection
+
+@push('scripts')    
+    <script>
+       
+        jQuery(document).ready(function() {
+            $( "#url_vimeo" ).hide();
+            $( "#youtube_radio" ).on( "click", function() {
+                $( "#url_video" ).show();
+                $( "#url_vimeo" ).hide();
+            });
+            $( "#vimeo_radio" ).on( "click", function() {
+                $( "#url_video" ).hide();
+                $( "#url_vimeo" ).show();
+            });
+        })
+    </script>
+@endpush
