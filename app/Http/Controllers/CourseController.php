@@ -169,22 +169,35 @@ class CourseController extends Controller
 		$content_file->file = request('titulo_video'); //$document->getClientOriginalName();
 		
 		
-		if(request('video_radio') == "youtube" && request('url_youtube') != "")
+		if(request('video_radio') == "youtube" && request('url_youtube') != null)
 		{
 			$url = request('url_youtube');
 			$exp="/v\/?=?([0-9A-Za-z-_]{11})/is";
-			preg_match_all( $exp , $url , $matches );
-			$id = $matches[1][0];
-			$content_file->path = $id;
+			$result = preg_match_all( $exp , $url , $matches );
+			//dd($result);
+			if($result){
+				$id = $matches[1][0];			
+				$content_file->path = $id;
+			}
+			else {
+				return back()->with('message', ['danger', __("La url no es correcta")]);
+			}
+			
 			//$content_file->save();
 		}
-		if(request('video_radio') == "vimeo" && request('url_vimeo') != "")
+		if(request('video_radio') == "vimeo" && request('url_vimeo') != null)
 		{
 			$url = request('url_vimeo');
 			$exp="/(https?:\/\/)?(www\.)?(player\.)?vimeo\.com\/([a-z]*\/)*([0-9]{6,11})[?]?.*/";
-			preg_match_all( $exp , $url , $matches );
-			$id = $matches[5][0];
-			$content_file->path = $id;
+			$result = preg_match_all( $exp , $url , $matches );
+			if($result){
+				$id = $matches[5][0];
+				$content_file->path = $id;
+			}
+			else {
+				return back()->with('message', ['danger', __("La url no es correcta")]);
+			}
+			
 			//$content_file->save();
 		}
 		$content_file->save();

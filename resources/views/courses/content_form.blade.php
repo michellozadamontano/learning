@@ -193,11 +193,11 @@
         jQuery(document).ready(function() {
             $( "#url_vimeo" ).hide();
             $( "#youtube_radio" ).on( "click", function() {
-                $( "#url_video" ).show();
+                $( "#url_youtube" ).show();
                 $( "#url_vimeo" ).hide();
             });
             $( "#vimeo_radio" ).on( "click", function() {
-                $( "#url_video" ).hide();
+                $( "#url_youtube" ).hide();
                 $( "#url_vimeo" ).show();
             });
         })
