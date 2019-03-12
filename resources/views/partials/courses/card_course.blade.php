@@ -26,7 +26,7 @@
         </a>
         @endguest
         @auth
-        @if(($course->students->contains(auth()->user()->student->id) && auth()->user()->paypal)||auth()->user()->teacher)
+        @if(($course->students->contains(auth()->user()->student->id) && auth()->user()->paypal))
         <a
             href="{{route('courses.content', ['slug' => $course->slug])}}"
             class="btn btn-course btn-block"

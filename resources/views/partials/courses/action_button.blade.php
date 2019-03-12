@@ -17,7 +17,7 @@
                  @endcan
              @endcan
         @else
-            <a class="btn btn-subscribe btn-bottom btn-block" href="#">
+            <a class="btn btn-subscribe btn-bottom btn-block" href="{{route('courses.content', ['slug' => $course->slug])}}">
                 <i class="fa fa-user"></i> {{ __("Soy autor") }}
             </a>
         @endcan
