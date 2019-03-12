@@ -124,21 +124,21 @@
                                         </div>
                                 </div>
                                 <div class="form-group row"> 
-                                        <label for="url_video" class="col-md-4 col-form-label text-md-right">
+                                        <label for="url_youtube" class="col-md-4 col-form-label text-md-right">
                                             {{ __("Url video youtube") }}
                                         </label>
                                         <div class="col-md-6">                                            
                                             <input
-                                                name="url_video"
-                                                id="url_video"
-                                                class="form-control{{ $errors->has('url_video') ? ' is-invalid' : '' }}"
+                                                name="url_youtube"
+                                                id="url_youtube"
+                                                class="form-control{{ $errors->has('url_youtube') ? ' is-invalid' : '' }}"
                                                 value=""                                                
                                                 autofocus
                                             />
         
-                                            @if ($errors->has('url_video'))
+                                            @if ($errors->has('url_youtube'))
                                                 <span class="invalid-feedback">
-                                                    <strong>{{ $errors->first('url_video') }}</strong>
+                                                    <strong>{{ $errors->first('url_youtube') }}</strong>
                                                 </span>
                                             @endif
                                         </div>

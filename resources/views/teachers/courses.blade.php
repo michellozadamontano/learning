@@ -8,8 +8,8 @@
     <div class="pl-5 pr-5">
         <div class="row justify-content-center">
             @forelse($courses as $course)
-                <div class="col-md-8 offset-2 listing-block">
-                    <div class="media" style="height: 200px;">
+                <div class="col-md-10 offset-2 listing-block">
+                    <div class="media" style="height: 250px;">
                         <img
                             style="height: 200px; width: 300px;"
                             class="img-rounded"
@@ -17,7 +17,7 @@
                             alt="{{ $course->name }}"
                         />
 
-                        <div class="media-body pl-3" style="height: 200px">
+                        <div class="media-body pl-3" style="height: 250px">
                             <div class="price">
                                 <small class="badge-danger text-white text-center">
                                     {{ $course->category->name }}

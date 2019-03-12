@@ -114,7 +114,7 @@ class CourseController extends Controller
 				'courseContent'
 			])->get();		
 			//dd($course);
-	
+			
 			return view('courses.content', compact('course'));
 		} catch (\Exception $exception) {
 			return back()->with('message', ['danger', __("Error al mostrar los datos")]);
@@ -122,10 +122,11 @@ class CourseController extends Controller
 	}
 	public function showVideo($id)
 	{
-		$file = CourseContentFile::find($id);
-		$course = $file->with('coursecontent.course')->first();
-		$curso = $course->coursecontent->course;		
-		return view('courses.show_video', compact('file','curso'));
+		$file = CourseContentFile::find($id);		
+		$content = CourseContent::find($file->course_content_id);		
+		$course = Course::find($content->course_id);		
+				
+		return view('courses.show_video', compact('file','course'));
 	}
 	//este metodo es para agregar el titulo de la clase al curso
 	public function addContent(Course $course) {
@@ -144,7 +145,7 @@ class CourseController extends Controller
 		return back();
 	}
 	public function addContentFile(Request $request) {
-	//	dd($request->file('archivo'));
+		//dd($request);
 		//$request->file('video')->isValid();
 
 		//$document = $request->file('archivo');
@@ -157,7 +158,8 @@ class CourseController extends Controller
 			$archivo = Helper::uploadFile('archivo', 'courses');
 			$content_file->arhivo = $archivo;
 		}
-		if(request('url_vimeo') == "" && request('url_youtube') == "" && $request->file('archivo') == null)
+
+		if(request('url_vimeo') == null && request('url_youtube') == null && $request->file('archivo') == null)
 		{
 			return back()->with('message', ['danger', __("Al menos tiene que existir o un video o un archivo")]);
 		}
@@ -169,7 +171,7 @@ class CourseController extends Controller
 		
 		if(request('video_radio') == "youtube" && request('url_youtube') != "")
 		{
-			$url = request('url_video');
+			$url = request('url_youtube');
 			$exp="/v\/?=?([0-9A-Za-z-_]{11})/is";
 			preg_match_all( $exp , $url , $matches );
 			$id = $matches[1][0];

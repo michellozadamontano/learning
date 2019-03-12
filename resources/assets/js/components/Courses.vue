@@ -22,30 +22,39 @@
         <v-server-table ref="table" :columns="columns" :url="url" :options="options">
 
             <div slot="activate_deactivate" slot-scope="props">
-                <button
-                    v-if="parseInt(props.row.status) === 1"
-                    type="button"
-                    class="btn btn-danger btn-block"
-                    @click="updateStatus(props.row, 3)"
-                >
-                    <i class="fa fa-ban"></i> {{ labels.reject }}
-                </button>
+                <div class="row">
+                    <div class="col-md-6">
+                        <button
+                            v-if="parseInt(props.row.status) === 1"
+                            type="button"
+                            class="btn btn-danger btn-block"
+                            @click="updateStatus(props.row, 3)"
+                        >
+                            <i class="fa fa-ban"></i> {{ labels.reject }}
+                        </button>
 
-                <button
-                    v-else
-                    type="button"
-                    class="btn btn-success btn-block"
-                    @click="updateStatus(props.row, 1)"
-                >
-                    <i class="fa fa-rocket"></i> {{ labels.approve }}
-                </button>
-                <button                    
+                        <button
+                            v-else
+                            type="button"
+                            class="btn btn-success btn-block"
+                            @click="updateStatus(props.row, 1)"
+                        >
+                            <i class="fa fa-rocket"></i> {{ labels.approve }}
+                        </button>
+                    </div>
+                    <div class="col-md-6">
+                        <a class="btn btn-primary btn-block" v-bind:href="`/courses/${props.row.slug}/content`">Ver curso</a>
+                    </div>
+                </div>
+                
+                <!--<button                    
                     type="button"
                     class="btn btn-primary btn-block"
                     @click="showContentCourse(props.row)"
                 >
                     <i class="fa fa-rocket"></i> Ver contenido
-                </button>
+                </button>-->
+                
                 
                 
             </div>

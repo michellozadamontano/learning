@@ -62955,6 +62955,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -63122,60 +63131,64 @@ var render = function() {
               key: "activate_deactivate",
               fn: function(props) {
                 return _c("div", {}, [
-                  parseInt(props.row.status) === 1
-                    ? _c(
-                        "button",
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-md-6" }, [
+                      parseInt(props.row.status) === 1
+                        ? _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-danger btn-block",
+                              attrs: { type: "button" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.updateStatus(props.row, 3)
+                                }
+                              }
+                            },
+                            [
+                              _c("i", { staticClass: "fa fa-ban" }),
+                              _vm._v(
+                                " " +
+                                  _vm._s(_vm.labels.reject) +
+                                  "\n                    "
+                              )
+                            ]
+                          )
+                        : _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-success btn-block",
+                              attrs: { type: "button" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.updateStatus(props.row, 1)
+                                }
+                              }
+                            },
+                            [
+                              _c("i", { staticClass: "fa fa-rocket" }),
+                              _vm._v(
+                                " " +
+                                  _vm._s(_vm.labels.approve) +
+                                  "\n                    "
+                              )
+                            ]
+                          )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-6" }, [
+                      _c(
+                        "a",
                         {
-                          staticClass: "btn btn-danger btn-block",
-                          attrs: { type: "button" },
-                          on: {
-                            click: function($event) {
-                              return _vm.updateStatus(props.row, 3)
-                            }
+                          staticClass: "btn btn-primary btn-block",
+                          attrs: {
+                            href: "/courses/" + props.row.slug + "/content"
                           }
                         },
-                        [
-                          _c("i", { staticClass: "fa fa-ban" }),
-                          _vm._v(
-                            " " + _vm._s(_vm.labels.reject) + "\n            "
-                          )
-                        ]
+                        [_vm._v("Ver curso")]
                       )
-                    : _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-success btn-block",
-                          attrs: { type: "button" },
-                          on: {
-                            click: function($event) {
-                              return _vm.updateStatus(props.row, 1)
-                            }
-                          }
-                        },
-                        [
-                          _c("i", { staticClass: "fa fa-rocket" }),
-                          _vm._v(
-                            " " + _vm._s(_vm.labels.approve) + "\n            "
-                          )
-                        ]
-                      ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary btn-block",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.showContentCourse(props.row)
-                        }
-                      }
-                    },
-                    [
-                      _c("i", { staticClass: "fa fa-rocket" }),
-                      _vm._v(" Ver contenido\n            ")
-                    ]
-                  )
+                    ])
+                  ])
                 ])
               }
             },

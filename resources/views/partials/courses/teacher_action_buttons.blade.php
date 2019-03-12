@@ -13,9 +13,12 @@
     @elseif((int) $course->status === \App\Course::PENDING)
         <a class="btn btn-primary text-white" href="#">
             <i class="fa fa-history"></i> {{ __("Curso pendiente de revisión") }}
-        </a>
+        </a>        
         <a class="btn btn-course" href="{{ route('courses.detail', ["slug" => $course->slug]) }}">
             <i class="fa fa-eye"></i> {{ __("Detalle") }}
+        </a>
+        <a class="btn btn-primary text-white" href="{{ route('courses.add_content', ["slug" => $course->slug]) }}">
+                <i class="fa fa-plus-square-o"></i> {{ __("Agregar Contenido") }}
         </a>
         <a class="btn btn-warning text-white" href="{{ route('courses.edit', ["slug" => $course->slug]) }}">
             <i class="fa fa-pencil"></i> {{ __("Editar curso") }}

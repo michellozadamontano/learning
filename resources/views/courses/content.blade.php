@@ -2,7 +2,10 @@
 
 @section('content')
     <div class="pl-5 pr-5">
-        <div class="row justify-content-center">
+            <a class="btn btn-course" href="{{ route('courses.detail', ["slug" => $course->slug]) }}">
+                    <i class="fa fa-eye"></i> {{ __("Detalle") }}
+            </a>
+        <div class="row justify-content-center">                
             <div class="col-sm">  
                 @forelse($course->courseContent as $content)
                 <div class="card">                        
@@ -26,6 +29,7 @@
                     @endforeach 
                                        
                     </div>
+                   
                 </div>      
                 @empty
                     <div class="alert alert-dark">

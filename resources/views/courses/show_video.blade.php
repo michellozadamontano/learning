@@ -4,7 +4,7 @@
         <div class="row justify-content-center">
             <div class="row">
                 <div class="col-md-3">
-                        <a href="{{route('courses.content',['slug'=>$curso->slug])}}" class="btn btn-success">
+                        <a href="{{route('courses.content',['slug'=>$course->slug])}}" class="btn btn-success">
                             <i class="fa fa-backward" aria-hidden="true"></i>
                             Regresar
                         </a>
