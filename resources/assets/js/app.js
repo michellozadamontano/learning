@@ -26,8 +26,10 @@ Vue.use(VueResource);
 import StripeForm from './components/StripeForm';
 Vue.component('stripe-form', StripeForm);
 
-import Courses from './components/Courses';
+import Courses  from './components/Courses';
+import Teachers from './components/Teachers';
 Vue.component('courses-list', Courses);
+Vue.component('teacher-list', Teachers);
 
 const app = new Vue({
     el: '#app'

@@ -65,7 +65,7 @@
                     {data: 'plan'},
                     {data: 'start_date'},
                     {data: 'end_date'},
-                    {data: 'actions'}
+                   
                 ]
             });
         })

@@ -17569,6 +17569,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_StripeForm___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_StripeForm__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Courses__ = __webpack_require__(242);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Courses___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_Courses__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_Teachers__ = __webpack_require__(254);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_Teachers___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_Teachers__);
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -17598,7 +17600,9 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_resource__["a" /* default */]);
 Vue.component('stripe-form', __WEBPACK_IMPORTED_MODULE_2__components_StripeForm___default.a);
 
 
+
 Vue.component('courses-list', __WEBPACK_IMPORTED_MODULE_3__components_Courses___default.a);
+Vue.component('teacher-list', __WEBPACK_IMPORTED_MODULE_4__components_Teachers___default.a);
 
 var app = new Vue({
   el: '#app'
@@ -62957,13 +62961,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -63079,41 +63076,6 @@ var render = function() {
   return _c(
     "div",
     [
-      _c(
-        "div",
-        _vm._l(_vm.courseContent, function(content) {
-          return _c("div", { key: content.id, staticClass: "card" }, [
-            _c(
-              "div",
-              { staticClass: "card-body" },
-              [
-                _c("h4", { staticClass: "card-title" }, [
-                  _vm._v(_vm._s(content.titulo))
-                ]),
-                _vm._v(" "),
-                _c("hr"),
-                _vm._v(" "),
-                _vm._l(content.files, function(file) {
-                  return _c("div", { key: file.id }, [
-                    _c("p", [_vm._v(_vm._s(file.file))]),
-                    _vm._v(" "),
-                    _c("iframe", {
-                      attrs: {
-                        width: "620",
-                        height: "300",
-                        src: "https://www.youtube.com/embed/" + file.path
-                      }
-                    })
-                  ])
-                })
-              ],
-              2
-            )
-          ])
-        }),
-        0
-      ),
-      _vm._v(" "),
       _vm.processing
         ? _c("div", { staticClass: "alert alert-primary text-center" }, [
             _c("i", { staticClass: "fa fa-compass" }),
@@ -63133,47 +63095,58 @@ var render = function() {
                 return _c("div", {}, [
                   _c("div", { staticClass: "row" }, [
                     _c("div", { staticClass: "col-md-6" }, [
-                      parseInt(props.row.status) === 1
-                        ? _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-danger btn-block",
-                              attrs: { type: "button" },
-                              on: {
-                                click: function($event) {
-                                  return _vm.updateStatus(props.row, 3)
-                                }
-                              }
-                            },
-                            [
-                              _c("i", { staticClass: "fa fa-ban" }),
-                              _vm._v(
-                                " " +
-                                  _vm._s(_vm.labels.reject) +
-                                  "\n                    "
+                      _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col-md-6" }, [
+                          parseInt(props.row.status) === 1 ||
+                          parseInt(props.row.status) === 2
+                            ? _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-danger btn-block",
+                                  attrs: { type: "button" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.updateStatus(props.row, 3)
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("i", { staticClass: "fa fa-ban" }),
+                                  _vm._v(
+                                    " " +
+                                      _vm._s(_vm.labels.reject) +
+                                      "\n                            "
+                                  )
+                                ]
                               )
-                            ]
-                          )
-                        : _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-success btn-block",
-                              attrs: { type: "button" },
-                              on: {
-                                click: function($event) {
-                                  return _vm.updateStatus(props.row, 1)
-                                }
-                              }
-                            },
-                            [
-                              _c("i", { staticClass: "fa fa-rocket" }),
-                              _vm._v(
-                                " " +
-                                  _vm._s(_vm.labels.approve) +
-                                  "\n                    "
+                            : _vm._e()
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-md-6" }, [
+                          parseInt(props.row.status) === 2
+                            ? _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-success btn-block",
+                                  attrs: { type: "button" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.updateStatus(props.row, 1)
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("i", { staticClass: "fa fa-rocket" }),
+                                  _vm._v(
+                                    " " +
+                                      _vm._s(_vm.labels.approve) +
+                                      "\n                            "
+                                  )
+                                ]
                               )
-                            ]
-                          )
+                            : _vm._e()
+                        ])
+                      ])
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-md-6" }, [
@@ -63284,6 +63257,217 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 251 */,
+/* 252 */,
+/* 253 */,
+/* 254 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(255)
+}
+var normalizeComponent = __webpack_require__(42)
+/* script */
+var __vue_script__ = __webpack_require__(257)
+/* template */
+var __vue_template__ = __webpack_require__(258)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/Teachers.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-34454cf0", Component.options)
+  } else {
+    hotAPI.reload("data-v-34454cf0", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 255 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(256);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(246)("8516e72c", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-34454cf0\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Teachers.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-34454cf0\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Teachers.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 256 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(245)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.table-bordered>thead>tr>th, .table-bordered>thead>tr>td, .table-bordered>tbody>tr>th, .table-bordered>tbody>tr>td, .table-bordered>tfoot>tr>th, .table-bordered>tfoot>tr>td {\n    text-align: center !important;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 257 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_tables_2__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_tables_2___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_tables_2__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: "teachers",
+    props: {
+        labels: {
+            type: Object,
+            required: true
+        },
+        route: {
+            type: String,
+            required: true
+        }
+    },
+    data: function data() {
+        return {
+            processing: false,
+            name: null,
+            url: this.route,
+            columns: ['id', 'name', 'email'],
+            options: {
+                filterByColumn: true,
+                perPage: 10,
+                perPageValues: [10, 25, 50, 100, 500],
+                headings: {
+                    id: 'ID',
+                    name: this.labels.name,
+                    email: this.labels.email
+                },
+                customFilters: ['name'],
+                sortable: ['id', 'name'],
+                filterable: ['name'],
+                requestFunction: function requestFunction(data) {
+                    return window.axios.get(this.url, {
+                        params: data
+
+                    }).catch(function (e) {
+                        this.dispatch('error', e);
+                    }.bind(this));
+                }
+            }
+        };
+    },
+
+    methods: {
+        filterByName: function filterByName() {
+            parseInt(this.name) !== 0 ? __WEBPACK_IMPORTED_MODULE_0_vue_tables_2__["Event"].$emit('vue-tables.filter::name', this.name) : null;
+        }
+    },
+    computed: {},
+    mounted: function mounted() {
+        this.$http.get(this.url).then(function (res) {
+            console.log(res.body);
+        });
+    }
+});
+
+/***/ }),
+/* 258 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _vm.processing
+        ? _c("div", { staticClass: "alert alert-primary text-center" }, [
+            _c("i", { staticClass: "fa fa-compass" }),
+            _vm._v(" Procesando petición...\n    ")
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _c("v-server-table", {
+        ref: "table",
+        attrs: { columns: _vm.columns, url: _vm.url, options: _vm.options }
+      })
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-34454cf0", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

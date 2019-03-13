@@ -1,20 +1,5 @@
 <template>
-    <div>
-        <div>
-            <div class="card" v-for="content in courseContent" :key="content.id">                        
-                    <div class="card-body">
-                    <h4 class="card-title">{{content.titulo}}</h4> 
-                    <hr>                    
-                        <div v-for="file in content.files" :key="file.id">
-                            <p>{{file.file}}</p>                             
-                            <iframe width="620" height="300"
-                                v-bind:src="`https://www.youtube.com/embed/${file.path}`">
-                            </iframe>  
-                        </div>    
-                                    
-                    </div>
-                </div>   
-        </div>
+    <div>       
 
         <div class="alert alert-primary text-center" v-if="processing">
             <i class="fa fa-compass"></i> Procesando petición...
@@ -24,23 +9,31 @@
             <div slot="activate_deactivate" slot-scope="props">
                 <div class="row">
                     <div class="col-md-6">
-                        <button
-                            v-if="parseInt(props.row.status) === 1"
-                            type="button"
-                            class="btn btn-danger btn-block"
-                            @click="updateStatus(props.row, 3)"
-                        >
-                            <i class="fa fa-ban"></i> {{ labels.reject }}
-                        </button>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <button
+                                    v-if="parseInt(props.row.status) === 1 || parseInt(props.row.status) === 2"
+                                    type="button"
+                                    class="btn btn-danger btn-block"
+                                    @click="updateStatus(props.row, 3)"
+                                >
+                                    <i class="fa fa-ban"></i> {{ labels.reject }}
+                                </button>
+                            </div>
+                            <div class="col-md-6">
+                                <button
+                                    v-if="parseInt(props.row.status) === 2"
+                                    type="button"
+                                    class="btn btn-success btn-block"
+                                    @click="updateStatus(props.row, 1)"
+                                >
+                                    <i class="fa fa-rocket"></i> {{ labels.approve }}
+                                </button>
+                            </div>
+                        </div>
+                        
 
-                        <button
-                            v-else
-                            type="button"
-                            class="btn btn-success btn-block"
-                            @click="updateStatus(props.row, 1)"
-                        >
-                            <i class="fa fa-rocket"></i> {{ labels.approve }}
-                        </button>
+                        
                     </div>
                     <div class="col-md-6">
                         <a class="btn btn-primary btn-block" v-bind:href="`/courses/${props.row.slug}/content`">Ver curso</a>

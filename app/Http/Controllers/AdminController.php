@@ -28,6 +28,19 @@ class AdminController extends Controller
 		}
 		return abort(401);
 	}
+	public function teachersJson() {
+	//	if(request()->ajax()) {
+			$vueTables = new EloquentVueTables;
+			$data = $vueTables->get(new User, ['id', 'name','email'], ['teacher.courses']);
+			/* $data = Teacher::with('user')
+			 ->whereHas('courses', function ($q) {
+				$q->where('status', Course::PUBLISHED)->select('id', 'teacher_id', 'name')->withTrashed();
+			})->get();	*/	
+			//dd($data);
+			return response()->json($data);
+	//	}
+	//	return abort(401);
+	}
 
 	public function updateCourseStatus () {
 		if (\request()->ajax()) {
