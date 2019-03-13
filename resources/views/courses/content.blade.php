@@ -6,14 +6,14 @@
                     <i class="fa fa-eye"></i> {{ __("Detalle") }}
             </a>
         <div class="row justify-content-center">       
-            @forelse ($course->courseContent as $content)
+            @forelse ($contents as $content)
             <div class="col-md-10  listing-block">
                 <div class="media" style="height: 250px;" >
                     <img
                         style="height: 200px; width: 300px;"
                         class="img-rounded"
-                        src="{{ $course->pathAttachment() }}"
-                        alt="{{ $course->name }}"
+                        src="{{ $content->course->pathAttachment() }}"
+                        alt="{{ $content->course->name }}"
                     />
 
                     <div class="media-body pl-3" style="height: 250px;overflow: scroll">
@@ -51,14 +51,14 @@
                         
                     </div>
                 </div>
-            </div>
-            {{-- $course->courseContent->links() --}}
+            </div>   
+            
             @empty
             <div class="alert alert-dark">
                 {{ __("No hay ningún dato disponible") }}
             </div>
-            @endforelse
-            
-        </div>        
+            @endforelse    
+        </div> 
+        {{ $contents->links()}}       
     </div>
 @endsection

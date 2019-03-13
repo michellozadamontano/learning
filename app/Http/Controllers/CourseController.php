@@ -106,17 +106,18 @@ class CourseController extends Controller
 	}
 
 	//aqui voy a mostrar el contenido del curso
-	public function showContent(Course $course) {
-		
+	public function showContent(Course $course) {		
 		try {
 			//code...
-			$course->load([	
+		/*	$course->load([	
 				'courseContent'
-			])->get();		
-			//dd($course);
-		//	$temp =  $course->with('courseContent')->paginate(2);
-			//dd($course);
-			return view('courses.content', compact('course'));
+			])->paginate(2);	*/	
+		//	dd($course);
+
+			//$course =  $course->with('courseContent')->paginate(2);
+			$contents = CourseContent::where('course_id',$course->id)->paginate(10);
+		//	dd($contents);
+			return view('courses.content', compact('contents','course'));
 		} catch (\Exception $exception) {
 			return back()->with('message', ['danger', __("Error al mostrar los datos")]);
 		}
