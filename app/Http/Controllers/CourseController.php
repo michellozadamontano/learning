@@ -114,7 +114,8 @@ class CourseController extends Controller
 				'courseContent'
 			])->get();		
 			//dd($course);
-			
+		//	$temp =  $course->with('courseContent')->paginate(2);
+			//dd($course);
 			return view('courses.content', compact('course'));
 		} catch (\Exception $exception) {
 			return back()->with('message', ['danger', __("Error al mostrar los datos")]);
@@ -149,6 +150,9 @@ class CourseController extends Controller
 		//$request->file('video')->isValid();
 
 		//$document = $request->file('archivo');
+		$request->validate([
+			'description' => 'required|max:255'
+		]);
 		$content_file = new CourseContentFile();
 		if($request->file('archivo') != null)
 		{
@@ -200,6 +204,7 @@ class CourseController extends Controller
 			
 			//$content_file->save();
 		}
+		$content_file->description = request('description');
 		$content_file->save();
 		
 		return back()->with('message', ['success', __("Datos subidos correctamente")]);

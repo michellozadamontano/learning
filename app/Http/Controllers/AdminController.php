@@ -48,7 +48,7 @@ class AdminController extends Controller
 				\request('status') === Course::REJECTED
 			) {
 				$course->previous_rejected = true;
-				\Mail::to($course->teacher->user)->send(new CourseRejected($course));
+			//	\Mail::to($course->teacher->user)->send(new CourseRejected($course));
 			}
 
 			$course->status = \request('status');
