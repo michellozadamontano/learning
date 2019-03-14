@@ -2,17 +2,34 @@
 
 @section('content')
     <div class="pl-5 pr-5">
-            <a class="btn btn-course" href="{{ route('courses.detail', ["slug" => $course->slug]) }}">
-                    <i class="fa fa-eye"></i> {{ __("Detalle") }}
-            </a>
-        <div class="row justify-content-center">       
+        <div class="row mb-2">
+            <div class="col-sm-3">
+                <a class="btn btn-course" href="{{ route('courses.detail', ["slug" => $course->slug]) }}">
+                        <i class="fa fa-eye"></i> {{ __("Detalle") }}
+                </a>
+            </div>
+            <div class="col-sm-3">
+                <form action="{{ route('courses.content',["slug" => $course->slug])}}" method="GET" id="form_paginate">
+                    <select name="paginate" id="paginate" class="form-control" onchange="this.form.submit()">
+                        <option value="">[Seleccionar]</option>          
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="15">15</option>      
+                        <option value="20">20</option>                  
+                    </select>
+                </form>
+            </div>
+        </div>        
+            
+        <div class="row justify-content-center">      
+                      
             @forelse ($contents as $content)
             <div class="col-md-10  listing-block">
                 <div class="media" style="height: 250px;" >
                     <img
                         style="height: 200px; width: 300px;"
                         class="img-rounded"
-                        src="{{ $content->course->pathAttachment() }}"
+                        src="/images/courses/{{ $content->picture }}"
                         alt="{{ $content->course->name }}"
                     />
 

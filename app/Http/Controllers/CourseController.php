@@ -106,7 +106,7 @@ class CourseController extends Controller
 	}
 
 	//aqui voy a mostrar el contenido del curso
-	public function showContent(Course $course) {		
+	public function showContent(Course $course,$paginate = 5) {		
 		try {
 			//code...
 		/*	$course->load([	
@@ -115,7 +115,7 @@ class CourseController extends Controller
 		//	dd($course);
 
 			//$course =  $course->with('courseContent')->paginate(2);
-			$contents = CourseContent::where('course_id',$course->id)->paginate(10);
+			$contents = CourseContent::where('course_id',$course->id)->paginate($paginate);
 		//	dd($contents);
 			return view('courses.content', compact('contents','course'));
 		} catch (\Exception $exception) {
@@ -141,18 +141,84 @@ class CourseController extends Controller
 			'titulo' => 'required|max:255',			
 		]);
 		$content = new CourseContent();
+		if($request->file('picture') != null)
+		{
+			$request->validate([
+				'picture' => 'mimes:jpeg,png,bmp,gif',
+			]);					
+			$pic = Helper::uploadFile('picture', 'courses');
+			$content->picture = $pic;
+		}
+
 		$content->titulo = $request->get('titulo');
 		$content->course_id = $request->get('course_id');
 		$content->save();
-		return back();
+		return back()->with('message', ['success', __("Seccion creada correctamente")]);
 	}
+	//voy a editar los contenidos
+	public function editContent(Course $course){
+		$contents = CourseContent::where('course_id',$course->id)->get();
+		return view('courses.edit_content',compact('contents'));		
+
+	}
+	public function editContentAction(Request $request) {
+		try {
+			// actualizar la tabla content files
+
+			//dd($request->file);
+			$id = $request->id;//request('content_id');
+			
+			$content = CourseContent::find($id);
+			$request->validate([
+				'title' => 'required|max:255',			
+			]);
+			if($request->file('picture') != null)
+			{
+				$request->validate([
+					'picture' => 'mimes:jpeg,png,bmp,gif',
+				]);
+				if($content->picture != ""){
+					\Storage::delete('courses/' . $content->picture);
+				}	
+				$pic = Helper::uploadFile('picture', 'courses');
+				$content->picture = $pic;
+			}
+			$content->titulo = request('title');
+			$content->save();
+			return back()->with('message', ['success', __("Seccion actualizada correctamente")]);
+		} catch (\Exception $exception) {			
+			return back()->with('message', ['danger', __("Error al actualizar los datos ".$exception)]);
+		}		
+
+	}
+	public function deleteContentAction(Request $request){
+		try {
+			$id = $request->delete_id;	
+			$content = CourseContent::find($id);			
+			if($content->picture != ""){
+				\Storage::delete('courses/' . $content->picture);
+			}
+			$content->delete();
+			return back()->with('message', ['success', __("Seccion eliminada correctamente")]);
+		} catch (\Throwable $th) {
+			return back()->with('message', ['danger', __("Error al eliminar los datos ".$th)]);
+		}
+
+		
+
+	}
+	//editar los archivos segun la clase seleccionada
+	public function editContentFiles($id){
+		$contenFiles = CourseContentFile::where('course_content_id',$id)->get();
+	}
+
 	public function addContentFile(Request $request) {
 		//dd($request);
 		//$request->file('video')->isValid();
 
 		//$document = $request->file('archivo');
 		$request->validate([
-			'description' => 'required|max:255'
+			'description' => 'required'
 		]);
 		$content_file = new CourseContentFile();
 		if($request->file('archivo') != null)

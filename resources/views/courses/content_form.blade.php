@@ -10,7 +10,7 @@
             method="POST"
             action="{{ route('course.add_course_class')}}"
             novalidate
-           
+            enctype="multipart/form-data"           
         >    
 
             @csrf
@@ -32,7 +32,7 @@
                         <div class="card-body">
                             <div class="form-group row">
                                 <label for="name" class="col-md-4 col-form-label text-md-right">
-                                    {{ __("Nombre nombre Clase") }}
+                                    {{ __("Nombre Clase") }}
                                 </label>
                                 <div class="col-md-6">
                                     <input
@@ -49,11 +49,23 @@
                                             <strong>{{ $errors->first('titulo') }}</strong>
                                         </span>
                                     @endif
+                                </div>                                
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4 col-form-label text-md-right" for="archivo">Imagen (Opcional,jpg,png,jpeg)</label>
+                                <div class="col-md-6">
+                                    <input type="file" class="form-control-file" id="picture" name="picture">
                                 </div>
-                                <button type="submit" class="btn btn-danger">
-                                    {{ __($btnText) }}
-                                </button>
-                            </div>                                                  
+                                @if ($errors->has('picture'))
+                                        <span class="invalid-feedback">
+                                            <strong>{{ $errors->first('picture') }}</strong>
+                                        </span>
+                                @endif
+                                    
+                            </div> 
+                            <button type="submit" class="btn btn-danger offset-4">
+                                {{ __($btnText) }}
+                            </button>                                                  
                         </div>    
                     </div>
                 </div>  

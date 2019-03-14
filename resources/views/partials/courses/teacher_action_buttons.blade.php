@@ -9,6 +9,9 @@
         <a class="btn btn-primary text-white" href="{{ route('courses.add_content', ["slug" => $course->slug]) }}">
             <i class="fa fa-plus-square-o"></i> {{ __("Agregar Contenido") }}
         </a>
+        <a class="btn btn-warning text-white" href="{{ route('courses.edit_content', ["slug" => $course->slug]) }}">
+            <i class="fa fa-plus-square-o"></i> {{ __("Editar Contenido") }}
+        </a>
         @include('partials.courses.btn_forms.delete')
     @elseif((int) $course->status === \App\Course::PENDING)
         <a class="btn btn-primary text-white" href="#">
@@ -19,6 +22,9 @@
         </a>
         <a class="btn btn-primary text-white" href="{{ route('courses.add_content', ["slug" => $course->slug]) }}">
                 <i class="fa fa-plus-square-o"></i> {{ __("Agregar Contenido") }}
+        </a>
+        <a class="btn btn-danger text-white" href="{{ route('courses.edit_content', ["slug" => $course->slug]) }}">
+            <i class="fa fa-plus-square-o"></i> {{ __("Editar Contenido") }}
         </a>
         <a class="btn btn-warning text-white" href="{{ route('courses.edit', ["slug" => $course->slug]) }}">
             <i class="fa fa-pencil"></i> {{ __("Editar curso") }}
