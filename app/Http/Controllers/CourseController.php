@@ -106,7 +106,7 @@ class CourseController extends Controller
 	}
 
 	//aqui voy a mostrar el contenido del curso
-	public function showContent(Course $course,$paginate = 5) {		
+	public function showContent(Course $course,$paginate = null) {		
 		try {
 			//code...
 		/*	$course->load([	
@@ -115,6 +115,13 @@ class CourseController extends Controller
 		//	dd($course);
 
 			//$course =  $course->with('courseContent')->paginate(2);
+			//dd(request('paginate'));
+			if(request('paginate') == null){
+				$paginate = 5;
+			}
+			else{
+				$paginate = request('paginate');
+			}
 			$contents = CourseContent::where('course_id',$course->id)->paginate($paginate);
 		//	dd($contents);
 			return view('courses.content', compact('contents','course'));
