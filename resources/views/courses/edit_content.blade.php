@@ -32,6 +32,9 @@
                                         <a href="" class="btn btn-danger" data-id="{{$item->id}}"  data-toggle="modal" data-target="#myModalDelete">
                                             <i class=" fa fa-trash"> eliminar</i>
                                         </a>
+                                        <a href="{{route('courses.editContentFiles',["id"=>$item->id])}}" class="btn btn-warning">
+                                            <i class=" fa fa-edit">editar contenido curso</i>
+                                        </a>
                                     </td>
                                 </tr> 
                              @endforeach

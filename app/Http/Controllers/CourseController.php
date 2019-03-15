@@ -213,11 +213,7 @@ class CourseController extends Controller
 
 		
 
-	}
-	//editar los archivos segun la clase seleccionada
-	public function editContentFiles($id){
-		$contenFiles = CourseContentFile::where('course_content_id',$id)->get();
-	}
+	}	
 
 	public function addContentFile(Request $request) {
 		//dd($request);
@@ -287,4 +283,89 @@ class CourseController extends Controller
 		$file_path = public_path('images/courses/'.$file);
 		return response()->download($file_path);
 	}
+	//editar los archivos segun la clase seleccionada
+	public function editContentFiles($id){
+		$contenFiles = CourseContentFile::where('course_content_id',$id)->get();
+		return view('courses.edit_content_files', compact('contenFiles'));
+	}
+	public function editContentFilesAction(Request $request) {
+		try{
+			$id = request('course_content_id');
+			$request->validate([
+				'description' => 'required'
+			]);
+			$content_file = CourseContentFile::find($id);
+			if($request->file('archivo') != null)
+			{
+				$request->validate([
+					'archivo' => 'mimes:pdf,txt,docx',
+				]);
+				if($content_file->arhivo != "")
+				{
+					\Storage::delete('courses/' . $content_file->arhivo);
+				}
+				$archivo = Helper::uploadFile('archivo', 'courses');
+				$content_file->arhivo = $archivo;
+			}
+	
+		/*	if(request('url_vimeo') == null && request('url_youtube') == null && $request->file('archivo') == null)
+			{
+				return back()->with('message', ['danger', __("Al menos tiene que existir o un video o un archivo")]);
+			}*/
+			
+			$content_file->file = request('titulo_video'); //$document->getClientOriginalName();
+			
+			
+			if(request('video_radio') == "youtube" && request('url_youtube') != null)
+			{
+				$url = request('url_youtube');
+				$exp="/v\/?=?([0-9A-Za-z-_]{11})/is";
+				$result = preg_match_all( $exp , $url , $matches );
+				//dd($result);
+				if($result){
+					$id = $matches[1][0];			
+					$content_file->path = $id;
+				}
+				else {
+					return back()->with('message', ['danger', __("La url no es correcta")]);
+				}
+				
+				//$content_file->save();
+			}
+			if(request('video_radio') == "vimeo" && request('url_vimeo') != null)
+			{
+				$url = request('url_vimeo');
+				$exp="/(https?:\/\/)?(www\.)?(player\.)?vimeo\.com\/([a-z]*\/)*([0-9]{6,11})[?]?.*/";
+				$result = preg_match_all( $exp , $url , $matches );
+				if($result){
+					$id = $matches[5][0];
+					$content_file->path = $id;
+				}
+				else {
+					return back()->with('message', ['danger', __("La url no es correcta")]);
+				}
+				
+				//$content_file->save();
+			}
+			$content_file->description = request('description');
+			$content_file->save();
+			
+			return back()->with('message', ['success', __("Datos actualizados correctamente")]);
+			
+		}
+		catch(\Throwable $th){
+			return back()->with('message', ['danger', __("Problemas en actualizar")]);
+		}
+
+	}
+	public function deleteContentFile(Request $request) {
+		try {
+			$content_file = CourseContentFile::find($request->delete_id);
+			$content_file->delete();
+			return back()->with('message', ['success', __("Datos eliminados correctamente")]);
+		} catch (\Throwable $th) {
+			return back()->with('message', ['danger', __("Problemas en eliminar")]);
+		}
+	}
+
 }

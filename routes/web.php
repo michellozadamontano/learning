@@ -34,6 +34,9 @@ Route::group(['prefix' => 'courses'], function () {
 		Route::get('/{course}/add_content', 'CourseController@addContent')->name('courses.add_content');
 		Route::get('/{course}/edit_content', 'CourseController@editContent')->name('courses.edit_content');
 		Route::post('/edit_content_action', 'CourseController@editContentAction')->name('courses.editContentAction');
+		Route::get('/{id}/edit_content_file', 'CourseController@editContentFiles')->name('courses.editContentFiles');
+		Route::post('/edit_content_file_action', 'CourseController@editContentFilesAction')->name('courses.editFileAction');
+		Route::post('/deleteContentFile', 'CourseController@deleteContentFile')->name('courses.deleteContentFile');
 		Route::post('/delete_content_action', 'CourseController@deleteContentAction')->name('courses.deleteContentAction');
 		Route::get('/{id}/show_video', 'CourseController@showVideo')->name('courses.show_video');
 		Route::post('/add_course_class', 'CourseController@addContentAction')->name('course.add_course_class');
