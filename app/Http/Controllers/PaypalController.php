@@ -22,6 +22,8 @@ use PayPal\Api\Payer;
 use PayPal\Api\ShippingAddress;
 use App\PaypalSubscription;
 use App\Course;
+use Illuminate\Support\Facades\Route;
+
 
 class PaypalController extends Controller
 {
@@ -52,6 +54,10 @@ class PaypalController extends Controller
     public function create_plan(){
 
         // Create a new billing plan
+        $route = request()->root(); 
+        $frequency_interval = request('plan');
+        $price = request('price');
+       // return response()->json($frequency_interval);
         $plan = new Plan();
         $plan->setName('Subscription to Edwin Course')
           ->setDescription('Monthly Subscription to Edwin Course')
@@ -62,14 +68,14 @@ class PaypalController extends Controller
         $paymentDefinition->setName('Regular Payments')
           ->setType('REGULAR')
           ->setFrequency('Month')
-          ->setFrequencyInterval('1')
+          ->setFrequencyInterval($frequency_interval)
           ->setCycles('0')
-          ->setAmount(new Currency(array('value' => 9.99, 'currency' => 'USD')));
+          ->setAmount(new Currency(array('value' => $price, 'currency' => 'USD')));
 
         // Set merchant preferences
         $merchantPreferences = new MerchantPreferences();
-        $merchantPreferences->setReturnUrl('https://escueladeinversionistas.online/subscriptions/subscribe/paypal/return')
-          ->setCancelUrl('https://escueladeinversionistas.online/subscriptions/subscribe/paypal/cancel')
+        $merchantPreferences->setReturnUrl($route.'/subscriptions/subscribe/paypal/return')
+          ->setCancelUrl($route.'/subscriptions/subscribe/paypal/cancel')
           ->setAutoBillAmount('yes')
           ->setInitialFailAmountAction('CONTINUE')
           ->setMaxFailAttempts('0');
@@ -93,8 +99,10 @@ class PaypalController extends Controller
                 $plan = Plan::get($createdPlan->getId(), $this->apiContext);
 
                 // Output plan id
-                echo 'Plan ID:' . $plan->getId();
+               // echo 'Plan ID:' . $plan->getId();
+                return response()->json($plan->getId());
             } catch (PayPal\Exception\PayPalConnectionException $ex) {
+                return response()->json($ex->getCode());
                 echo $ex->getCode();
                 echo $ex->getData();
                 die($ex);
@@ -102,10 +110,12 @@ class PaypalController extends Controller
                 die($ex);
             }
         } catch (PayPal\Exception\PayPalConnectionException $ex) {
+            return response()->json($ex->getCode());
             echo $ex->getCode();
             echo $ex->getData();
             die($ex);
         } catch (Exception $ex) {
+            return response()->json($ex);
             die($ex);
         }
 

@@ -28,8 +28,10 @@ Vue.component('stripe-form', StripeForm);
 
 import Courses  from './components/Courses';
 import Teachers from './components/Teachers';
+import Paypal   from './components/Paypal';
 Vue.component('courses-list', Courses);
 Vue.component('teacher-list', Teachers);
+Vue.component('paypal', Paypal);
 
 const app = new Vue({
     el: '#app'

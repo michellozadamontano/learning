@@ -72,7 +72,7 @@ Route::group(['middleware' => ['auth']], function () {
 		// paypal plan subscriptionredirect
 	//	Route:get('execute-agreement/{success}', 'PlanController@execute')
 	//	->name('subscriptions.agreement');
-		Route::get('plan/create', 'PaypalController@create_plan')->name('subscriptions.paypalplan');
+		Route::post('/plan/create', 'PaypalController@create_plan')->name('subscriptions.paypalplan');
 		Route::get('/subscribe/paypal', 'PaypalController@paypalRedirect')->name('subscriptions.redirect');
 		Route::get('/subscribe/paypal/return', 'PaypalController@paypalReturn')->name('subscriptions.return');
 		Route::get('/subscribe/paypal/cancel', 'PaypalController@pyaplCancel')->name('subscriptions.cancel');
@@ -105,6 +105,7 @@ Route::group(['prefix' => "teacher", "middleware" => ["auth"]], function() {
 
 Route::group(['prefix' => "admin", "middleware" => ['auth', sprintf("role:%s", \App\Role::ADMIN)]], function() {
 	Route::get('/courses', 'AdminController@courses')->name('admin.courses');
+	Route::get('/paypal', 'AdminController@paypal')->name('admin.paypal');
 	Route::get('/teachers', 'AdminController@teachers')->name('admin.teachers');
 	Route::get('/students', 'AdminController@student')->name('admin.students');
 	Route::get('/student_data', 'AdminController@dataStudent')->name('admin.datastudents');

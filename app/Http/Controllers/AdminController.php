@@ -19,6 +19,9 @@ class AdminController extends Controller
 	public function courses () {
 		return view('admin.courses');
 	}
+	public function paypal () {
+		return view('admin.paypal');
+	}
 
 	public function coursesJson () {
 		if(request()->ajax()) {
