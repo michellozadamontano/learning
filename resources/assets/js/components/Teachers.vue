@@ -4,13 +4,17 @@
         <div class="alert alert-primary text-center" v-if="processing">
             <i class="fa fa-compass"></i> Procesando petición...
         </div>
-        <v-server-table ref="table" :columns="columns" :url="url" :options="options">
-         
-                
+        <v-client-table 
+          :data="tableData"
+          :columns="columns" 
+          :options="options">
+      </v-client-table>
+        <!--<v-server-table ref="table" :columns="columns" :url="url" :options="options">   
+            
                 
                   
 
-        </v-server-table>
+        </v-server-table>-->
     </div>
 </template>
 
@@ -33,7 +37,20 @@
                 processing: false,
                 name: null,
                 url: this.route,
-                columns: ['id', 'name', 'email'],
+                columns: ['id', 'user.name', 'user.email','courses[0].name'],
+                tableData: [],
+                options: {
+                    perPage: 10,                    
+                    headings: {
+                        id: 'ID',
+                        name: 'Name',
+                        email: 'Email',
+                        cursos: 'Cursos'
+                    },
+                    sortable: ['user.name', 'user.email'],
+                    filterable: ['user.name', 'user.email']
+                }
+               /* columns: ['id', 'name', 'email'],
                 options: {
                     filterByColumn: true,
                     perPage: 10,
@@ -55,7 +72,7 @@
                             this.dispatch('error', e);
                         }.bind(this));
                     }
-                }
+                }*/
             }
         },
         methods: {
@@ -79,7 +96,8 @@
         },
         mounted() {
         this.$http.get(this.url).then(res => {
-           console.log(res.body);
+            this.tableData = res.data;
+           console.log(res.data);
             
         })
     }

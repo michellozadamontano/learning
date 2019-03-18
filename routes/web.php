@@ -80,6 +80,7 @@ Route::group(['middleware' => ['auth']], function () {
 		Route::post('/paypal/suspend','PaypalController@paypalSuspend')->name('subscriptions.suspend');
 		Route::post('/paypal/cancel','PaypalController@paypalCancel')->name('subscriptions.cancelar');
 		Route::post('/paypal/reactivate','PaypalController@paypalReactivate')->name('subscriptions.reactivate');
+		Route::get('/paypalplans', 'PaypalController@paypalPlans')->name('subscriptions.paypalPlans');
 	});
 
 	Route::group(['prefix' => "invoices"], function() {

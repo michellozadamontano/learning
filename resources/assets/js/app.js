@@ -15,8 +15,10 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-import {ServerTable} from 'vue-tables-2';
+import {ServerTable}    from 'vue-tables-2';
+import { ClientTable}   from 'vue-tables-2';
 Vue.use(ServerTable, {}, false, 'bootstrap4', 'default');
+Vue.use(ClientTable);
 
 //VUE HTTP RESOURCE
 import VueResource from 'vue-resource'

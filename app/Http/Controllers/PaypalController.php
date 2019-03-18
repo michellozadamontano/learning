@@ -23,6 +23,8 @@ use PayPal\Api\ShippingAddress;
 use App\PaypalSubscription;
 use App\Course;
 use Illuminate\Support\Facades\Route;
+use App\PaypalPlan;
+use App\PaypalPrice;
 
 
 class PaypalController extends Controller
@@ -38,11 +40,11 @@ class PaypalController extends Controller
 
     public function __construct()
     {
-        $this->client_id = config('services.paypal.id') ;
-        $this->secret    = config('services.paypal.secret');
-        $this->plan_id   = env('PAYPAL_PLAN_ID');
-        $this->plan_id_trimestral = env('PAYPAL_PLAN_ID_2');
-        $this->plan_id_anual = env('PAYPAL_PLAN_ID_3');
+        $this->client_id            = config('services.paypal.id') ;
+        $this->secret               = config('services.paypal.secret');
+        $this->plan_id              = PaypalPrice::with('paypal_plan')->where('plan_id',1)->first()->paypal_code; //env('PAYPAL_PLAN_ID');
+        $this->plan_id_trimestral   = PaypalPrice::with('paypal_plan')->where('plan_id',2)->first()->paypal_code; //env('PAYPAL_PLAN_ID_2');
+        $this->plan_id_anual        = PaypalPrice::with('paypal_plan')->where('plan_id',3)->first()->paypal_code; //env('PAYPAL_PLAN_ID_3');
 
 
         // Set the Paypal API Context/Credentials
@@ -56,8 +58,8 @@ class PaypalController extends Controller
         // Create a new billing plan
         $route = request()->root(); 
         $frequency_interval = request('plan');
-        $price = request('price');
-       // return response()->json($frequency_interval);
+        $price = request('price'); 
+
         $plan = new Plan();
         $plan->setName('Subscription to Edwin Course')
           ->setDescription('Monthly Subscription to Edwin Course')
@@ -100,7 +102,15 @@ class PaypalController extends Controller
 
                 // Output plan id
                // echo 'Plan ID:' . $plan->getId();
-                return response()->json($plan->getId());
+                $paypalPrice                = PaypalPrice::find($frequency_interval);
+                $paypalPrice->price         = $price;
+                $paypalPrice->paypal_code   = $plan->getId();
+                $paypalPrice->save();
+                
+                $prices     = PaypalPrice::with('paypal_plan')->get();
+                $response   = ['price' => $paypalPrice,'prices' => $prices];
+                return response()->json($response);
+                //return response()->json($plan->getId());
             } catch (PayPal\Exception\PayPalConnectionException $ex) {
                 return response()->json($ex->getCode());
                 echo $ex->getCode();
@@ -310,6 +320,14 @@ class PaypalController extends Controller
         $subscription = auth()->user()->paypalSubscription;
         //dd($subscription);
         return view('subscriptions.paypal', compact('subscription'));
+    }
+
+    public function paypalPlans()
+    {
+        $plans = PaypalPlan::with('paypal_price')->get();
+        $prices = PaypalPrice::with('paypal_plan')->get();
+        $response = ['plans' => $plans,'prices' => $prices];
+        return response()->json($response);
     }
 
  

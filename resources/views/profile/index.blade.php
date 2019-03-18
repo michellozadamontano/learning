@@ -100,7 +100,7 @@
                     </div>
                 </div>
 
-                @if( ! $user->teacher)
+                @if( ! $user->teacher && $user->paypal)
                     <div class="card">
                         <div class="card-header">
                             {{ __("Convertirme en profesor de la plataforma") }}
@@ -115,7 +115,8 @@
                         </div>
                     </div>
                 @else
-                    <div class="card">
+                @if ($user->teacher)
+                <div class="card">
                         <div class="card-header">
                             {{ __("Administrar los cursos que imparto") }}
                         </div>
@@ -148,6 +149,8 @@
                             </table>
                         </div>
                     </div>
+                @endif
+                    
                 @endif
 
                 @if($user->socialAccount)

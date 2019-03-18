@@ -17901,7 +17901,9 @@ window.Vue = __webpack_require__(8);
  */
 
 
+
 Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue_tables_2__["ServerTable"], {}, false, 'bootstrap4', 'default');
+Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue_tables_2__["ClientTable"]);
 
 //VUE HTTP RESOURCE
 
@@ -63371,6 +63373,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -63390,29 +63396,42 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             processing: false,
             name: null,
             url: this.route,
-            columns: ['id', 'name', 'email'],
+            columns: ['id', 'user.name', 'user.email', 'courses[0].name'],
+            tableData: [],
             options: {
-                filterByColumn: true,
                 perPage: 10,
-                perPageValues: [10, 25, 50, 100, 500],
                 headings: {
                     id: 'ID',
-                    name: this.labels.name,
-                    email: this.labels.email
+                    name: 'Name',
+                    email: 'Email',
+                    cursos: 'Cursos'
                 },
-                customFilters: ['name'],
-                sortable: ['id', 'name'],
-                filterable: ['name'],
-                requestFunction: function requestFunction(data) {
-                    return window.axios.get(this.url, {
-                        params: data
-
-                    }).catch(function (e) {
-                        this.dispatch('error', e);
-                    }.bind(this));
-                }
-            }
-        };
+                sortable: ['user.name', 'user.email'],
+                filterable: ['user.name', 'user.email']
+                /* columns: ['id', 'name', 'email'],
+                 options: {
+                     filterByColumn: true,
+                     perPage: 10,
+                     perPageValues: [10, 25, 50, 100, 500],
+                     headings: {
+                         id: 'ID',
+                         name: this.labels.name,
+                         email: this.labels.email,                        
+                     },
+                     customFilters: ['name'],
+                     sortable: ['id', 'name'],
+                     filterable: ['name'],
+                     requestFunction: function (data) {
+                         return window.axios.get(this.url, {
+                             params: data,    
+                             
+                         })
+                         .catch(function (e) {
+                             this.dispatch('error', e);
+                         }.bind(this));
+                     }
+                 }*/
+            } };
     },
 
     methods: {
@@ -63422,8 +63441,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     computed: {},
     mounted: function mounted() {
+        var _this = this;
+
         this.$http.get(this.url).then(function (res) {
-            console.log(res.body);
+            _this.tableData = res.data;
+            console.log(res.data);
         });
     }
 });
@@ -63446,9 +63468,12 @@ var render = function() {
           ])
         : _vm._e(),
       _vm._v(" "),
-      _c("v-server-table", {
-        ref: "table",
-        attrs: { columns: _vm.columns, url: _vm.url, options: _vm.options }
+      _c("v-client-table", {
+        attrs: {
+          data: _vm.tableData,
+          columns: _vm.columns,
+          options: _vm.options
+        }
       })
     ],
     1
@@ -63561,6 +63586,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -63568,24 +63612,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             processing: false,
             plan: "",
             price: "",
-            code: ""
-
+            code: "",
+            paypaldata: []
         };
+    },
+    created: function created() {
+        var _this = this;
+
+        axios.get('/subscriptions/paypalplans').then(function (res) {
+            _this.paypaldata = res.data.prices;
+            console.log(res.data);
+        });
     },
 
     methods: {
         processForm: function processForm() {
-            var _this = this;
+            var _this2 = this;
 
             this.processing = true;
-            console.log({ plan: this.plan, price: this.price });
             axios.post('/subscriptions/plan/create', {
                 plan: this.plan,
                 price: this.price
             }).then(function (response) {
-                _this.code = response.data;
-                console.log(response.data);
-                _this.processing = false;
+                _this2.code = response.data.price.paypal_code;
+                _this2.paypaldata = response.data.prices;
+                _this2.processing = false;
             });
         }
     }
@@ -63735,11 +63786,7 @@ var render = function() {
                   staticClass: "form-text text-muted",
                   attrs: { id: "helpId" }
                 },
-                [
-                  _vm._v(
-                    "Introduce este codigo en el fichero de configuracion para el plan seleccionado"
-                  )
-                ]
+                [_vm._v("Codigo paypal para el plan seleccionado")]
               )
             ]),
             _vm._v(" "),
@@ -63751,10 +63798,57 @@ var render = function() {
           ]
         )
       ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "justify-content-center mt-4" }, [
+      _c("div", { staticClass: "col-sm-8 offset-2" }, [
+        _c(
+          "table",
+          { staticClass: "table table-striped table-inverse table-responsive" },
+          [
+            _vm._m(0),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              _vm._l(_vm.paypaldata, function(item) {
+                return _c("tr", { key: item.id }, [
+                  _c("td", { attrs: { scope: "row" } }, [
+                    _vm._v(_vm._s(item.paypal_plan.plan))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { attrs: { scope: "row" } }, [
+                    _vm._v(_vm._s(item.price))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { attrs: { scope: "row" } }, [
+                    _vm._v(_vm._s(item.paypal_code))
+                  ])
+                ])
+              }),
+              0
+            )
+          ]
+        )
+      ])
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "thead-inverse" }, [
+      _c("tr", [
+        _c("th", [_vm._v("PLAN")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("PRECIO")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("PAYPAL ID")])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

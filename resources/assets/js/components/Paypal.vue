@@ -23,12 +23,31 @@
                     <label for="">Codigo Paypal</label>
                     <input v-model="code" readonly type="text"
                         class="form-control" name="" id="" aria-describedby="helpId" placeholder="" >
-                    <small id="helpId" class="form-text text-muted">Introduce este codigo en el fichero de configuracion para el plan seleccionado</small>
+                    <small id="helpId" class="form-text text-muted">Codigo paypal para el plan seleccionado</small>
                     </div>
                     <button type="submit" class="btn btn-primary">Enviar</button>
                 </form>
+            </div>   
+        </div>
+        <div class="justify-content-center mt-4">
+            <div class="col-sm-8 offset-2">
+                <table class="table table-striped table-inverse table-responsive">
+                    <thead class="thead-inverse">
+                        <tr>
+                            <th>PLAN</th>
+                            <th>PRECIO</th>
+                            <th>PAYPAL ID</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="item in paypaldata" :key="item.id">
+                                <td scope="row">{{item.paypal_plan.plan}}</td>
+                                <td  scope="row">{{item.price}}</td>
+                                <td  scope="row">{{item.paypal_code}}</td>
+                            </tr>                            
+                        </tbody>
+                </table>
             </div>
-            
         </div>
     </div>
 </template>
@@ -41,13 +60,19 @@
                 plan:"",
                 price:"",
                 code:"",
-                
+                paypaldata:[],              
             }
+        },
+        created(){
+            axios.get('/subscriptions/paypalplans').then(res => {
+                this.paypaldata = res.data.prices;
+                console.log(res.data);
+                
+            })
         },
         methods: {
             processForm: function() {
-                this.processing = true;
-                console.log({ plan: this.plan, price: this.price });
+                this.processing = true;               
                 axios
                     .post('/subscriptions/plan/create',
                     {
@@ -55,8 +80,8 @@
                         price: this.price
                     })
                     .then(response =>{
-                      this.code = response.data
-                      console.log(response.data); 
+                      this.code = response.data.price.paypal_code;
+                      this.paypaldata = response.data.prices;                          
                       this.processing = false;                     
                     } )
                 

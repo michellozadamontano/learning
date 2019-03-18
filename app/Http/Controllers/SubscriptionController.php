@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Paypal\CreatePlan;
+use App\PaypalPrice;
 
 class SubscriptionController extends Controller
 {
@@ -18,8 +19,12 @@ class SubscriptionController extends Controller
 		->only(['plans', 'processSubscription']);
 	}
 
-	public function plans () {
-		return view('subscriptions.plans');
+	public function plans () {		
+		$plan_mensual 		= PaypalPrice::with('paypal_plan')->where('plan_id',1)->first()->price;
+		$plan_trimestral 	= PaypalPrice::with('paypal_plan')->where('plan_id',2)->first()->price;
+		$plan_anual 		= PaypalPrice::with('paypal_plan')->where('plan_id',3)->first()->price;
+		
+		return view('subscriptions.plans',compact('plan_mensual','plan_trimestral','plan_anual'));
     }
 
     public function processSubscription () {

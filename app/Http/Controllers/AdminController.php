@@ -34,12 +34,9 @@ class AdminController extends Controller
 	public function teachersJson() {
 	//	if(request()->ajax()) {
 			$vueTables = new EloquentVueTables;
-			$data = $vueTables->get(new User, ['id', 'name','email'], ['teacher.courses']);
-			/* $data = Teacher::with('user')
-			 ->whereHas('courses', function ($q) {
-				$q->where('status', Course::PUBLISHED)->select('id', 'teacher_id', 'name')->withTrashed();
-			})->get();	*/	
-			//dd($data);
+			//$data = $vueTables->get(new User, ['id', 'name','email'], ['teacher.courses']);
+			//$data = User::with('teacher.courses')->get();
+			$data = Teacher::with('user','courses')->get();
 			return response()->json($data);
 	//	}
 	//	return abort(401);

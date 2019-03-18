@@ -30,9 +30,7 @@
                                     <th>{{ __("Cursos") }}</th>
                                     <th>{{ __("Plan") }}</th>
                                     <th>{{ __("Comenzo") }}</th>
-                                    <th>{{ __("Termina") }}</th>
-                                    <th>{{ __("Profesor") }}</th>
-                                    <th>{{ __("Email-Prof") }}</th>                                    
+                                    <th>{{ __("Termina") }}</th>                                        
                                     <th>{{ __("Acciones") }}</th>
                                 </tr>
                             </thead>
