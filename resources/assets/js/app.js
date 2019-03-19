@@ -20,6 +20,40 @@ import { ClientTable}   from 'vue-tables-2';
 Vue.use(ServerTable, {}, false, 'bootstrap4', 'default');
 Vue.use(ClientTable);
 
+import moment from 'moment';
+import { Form, HasError, AlertError } from 'vform';
+import VTooltip from 'v-tooltip'
+Vue.use(VTooltip)
+
+import swal from 'sweetalert2'
+window.swal = swal;
+
+const toast = swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000
+  });
+
+  window.toast = toast;
+
+
+  window.Form = Form;
+  Vue.component(HasError.name, HasError)
+  Vue.component(AlertError.name, AlertError)
+
+  Vue.component('pagination', require('laravel-vue-pagination'));
+
+  import VueRouter from 'vue-router'
+  Vue.use(VueRouter)
+
+ import VueProgressBar from 'vue-progressbar'
+  Vue.use(VueProgressBar, {
+      color: 'rgb(143, 255, 199)',
+      failedColor: 'red',
+      height: '3px'
+    })
+
 //VUE HTTP RESOURCE
 import VueResource from 'vue-resource'
 Vue.use(VueResource);
@@ -28,13 +62,32 @@ Vue.use(VueResource);
 import StripeForm from './components/StripeForm';
 Vue.component('stripe-form', StripeForm);
 
-import Courses  from './components/Courses';
-import Teachers from './components/Teachers';
-import Paypal   from './components/Paypal';
+import Dashboard    from './components/Dashboard';
+import Courses      from './components/Courses';
+import Teachers     from './components/Teachers';
+import Paypal       from './components/Paypal';
+import Content      from './components/Content';
+
+let routes = [
+    //{  name: 'dashboard',path: '/dashboard', component: require('./components/Dashboard.vue') },
+    { path: '/dashboard'    , component: Dashboard },
+    { path: '/courses'      , component: Courses },
+    { path: '/teachers'     , component: Teachers },
+    { path: '/paypal'       , component: Paypal },
+    { path: '/content/:id'  , component: Content },
+
+
+  ]
+
+const router = new VueRouter({
+    mode: 'history',
+    routes // short for `routes: routes`
+  })
 Vue.component('courses-list', Courses);
 Vue.component('teacher-list', Teachers);
 Vue.component('paypal', Paypal);
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    router,
 });

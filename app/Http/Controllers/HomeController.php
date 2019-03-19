@@ -14,12 +14,29 @@ class HomeController extends Controller
      */
     public function index()
     {
-    	$courses = Course::withCount(['students'])
+        if(auth()->check()){
+            if(auth()->user()->role->name == "admin"){
+                return view('admin.index');
+            } 
+            else{
+                $courses = Course::withCount(['students'])
+                ->with('category', 'teacher', 'reviews')
+                ->where('status', Course::PUBLISHED)
+                ->latest()
+                ->paginate(12);
+    
+            return view('home', compact('courses'));
+            }
+        }       
+        else{
+            $courses = Course::withCount(['students'])
 		    ->with('category', 'teacher', 'reviews')
 		    ->where('status', Course::PUBLISHED)
 		    ->latest()
 		    ->paginate(12);
 
         return view('home', compact('courses'));
+        }
+       
     }
 }

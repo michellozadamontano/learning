@@ -22,7 +22,7 @@
     import {Event} from 'vue-tables-2';
     export default {
         name: "teachers",
-        props: {
+       /* props: {
             labels: {
                 type: Object,
                 required: true
@@ -31,12 +31,12 @@
                 type: String,
                 required: true
             }
-        },
+        },*/
         data () {
             return {               
                 processing: false,
                 name: null,
-                url: this.route,
+                url: '/admin/teachers_json',//this.route,
                 columns: ['id', 'user.name', 'user.email','courses[0].name'],
                 tableData: [],
                 options: {
