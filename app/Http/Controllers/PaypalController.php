@@ -365,7 +365,7 @@ class PaypalController extends Controller
         
     }
     public function paypalReactivate(){
-        $plan = request('plan');
+        $plan = request('plan');        
         $agreementId = $plan;                  
         $agreement = new Agreement();            
 
