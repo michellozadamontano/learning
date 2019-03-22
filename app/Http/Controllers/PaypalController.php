@@ -145,7 +145,7 @@ class PaypalController extends Controller
         if(\request('type') == 'monthly')
         {
             //Compruebo se se introdujo un coupon
-            if(request()->has('coupon')){
+            if(request('coupon')!= ""){
                 $coupon = request('coupon');
                //valido el coupon que sea correcto y que tenga existencia
                 if($this->checkCoupon($coupon)){
@@ -169,7 +169,7 @@ class PaypalController extends Controller
         if(\request('type') == 'quarterly')
         {
              //Compruebo se se introdujo un coupon
-             if(request()->has('coupon')){
+             if(request('coupon')!= ""){
                 $coupon = request('coupon');
                //valido el coupon que sea correcto y que tenga existencia
                 if($this->checkCoupon($coupon)){
@@ -193,7 +193,7 @@ class PaypalController extends Controller
         if(\request('type') == 'yearly')
         {
              //Compruebo se se introdujo un coupon
-             if(request()->has('coupon')){
+             if(request('coupon')!= ""){
                 $coupon = request('coupon');
                //valido el coupon que sea correcto y que tenga existencia
                 if($this->checkCoupon($coupon)){
@@ -255,6 +255,19 @@ class PaypalController extends Controller
           //  dd($result->plan->payment_definitions->type);
             $plan = $result->plan;
             $payer = $result->payer;     
+            $mebresia = "";
+            if($plan->payment_definitions[0]->frequency_interval == 1)
+            {
+                $mebresia = "MENSUAL";
+            }
+            if($plan->payment_definitions[0]->frequency_interval == 3)
+            {
+                $mebresia = "TRIMESTRAL";
+            }
+            if($plan->payment_definitions[0]->frequency_interval == 12)
+            {
+                $mebresia = "ANUAL";
+            }
 
            
             PaypalSubscription::updateOrCreate(
@@ -263,10 +276,11 @@ class PaypalController extends Controller
                     'paypal_id'     =>  $result->id,
                     'state'         =>  $result->state,
                     'start_date'    =>  $result->start_date,
-                    'plan'          =>  "REGULAR",
+                    'plan'          =>  $mebresia,
                     'paypal_email'  =>  $payer->payer_info->email,
                     'country'       =>  $payer->payer_info->shipping_address->country_code,
-                    'city'          =>  $payer->payer_info->shipping_address->city
+                    'city'          =>  $payer->payer_info->shipping_address->city,
+                    'amount'        =>  $plan->payment_definitions[0]->amount->value
                 ]
             );
            // dd($result);
@@ -279,8 +293,9 @@ class PaypalController extends Controller
         }
     }
     public function pyaplCancel(Request $request){
-        dd($request);
-        
+       // dd($request);
+       return redirect(route('home'))
+       ->with('message', ['danger', __("Operación cancelada")]);
     }
     public function paypalSuspend(){
        

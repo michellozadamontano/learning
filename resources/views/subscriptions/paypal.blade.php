@@ -12,6 +12,7 @@
                     <tr>
                         <th scope="col">#</th>                        
                         <th scope="col">Plan</th>
+                        <th scope="col">Costo</th>
                         <th scope="col">ID Suscripción</th>                        
                         <th scope="col">Alta</th>
                         <th scope="col">Estado</th>
@@ -23,6 +24,7 @@
                     @if($subscription != null)
                         <td>{{ $subscription->id }}</td>                        
                         <td>{{ $subscription->plan }}</td>
+                        <td>{{ $subscription->amount }}</td>
                         <td>{{ $subscription->paypal_id }}</td>                       
                         <td>{{ $subscription->created_at->format('d/m/Y') }}</td>
                         <td>{{ $subscription->state }}</td>  
