@@ -110,10 +110,12 @@
                     sortable: ['id', 'name', 'status'],
                     filterable: ['name'],
                     requestFunction: function (data) {
-                        return window.axios.get(this.url, {
-                            params: data
+                         this.$Progress.start();
+                        return window.axios.get(this.url, {                             
+                            params: data                            
                         })
                         .catch(function (e) {
+                            this.$Progress.fail();
                             this.dispatch('error', e);
                         }.bind(this));
                     }

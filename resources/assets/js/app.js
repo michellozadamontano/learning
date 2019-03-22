@@ -15,10 +15,9 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-import {ServerTable}    from 'vue-tables-2';
-import { ClientTable}   from 'vue-tables-2';
+import {ServerTable, ClientTable, Event}    from 'vue-tables-2';
 Vue.use(ServerTable, {}, false, 'bootstrap4', 'default');
-Vue.use(ClientTable);
+Vue.use(ClientTable, {}, false, 'bootstrap4', 'default');
 
 import moment from 'moment';
 import { Form, HasError, AlertError } from 'vform';
@@ -67,6 +66,7 @@ import Courses      from './components/Courses';
 import Teachers     from './components/Teachers';
 import Paypal       from './components/Paypal';
 import Content      from './components/Content';
+import Coupon       from './components/Coupon';
 
 let routes = [
     //{  name: 'dashboard',path: '/dashboard', component: require('./components/Dashboard.vue') },
@@ -75,7 +75,7 @@ let routes = [
     { path: '/teachers'     , component: Teachers },
     { path: '/paypal'       , component: Paypal },
     { path: '/content/:id'  , component: Content },
-
+    { path: '/coupon'       , component: Coupon },
 
   ]
 
@@ -83,9 +83,16 @@ const router = new VueRouter({
     mode: 'history',
     routes // short for `routes: routes`
   })
+
+
 Vue.component('courses-list', Courses);
 Vue.component('teacher-list', Teachers);
 Vue.component('paypal', Paypal);
+
+Vue.filter('myDate',function(created){
+  return moment(created).format('MMMM Do YYYY');
+});
+window.Fire =  new Vue();
 
 const app = new Vue({
     el: '#app',

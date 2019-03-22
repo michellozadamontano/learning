@@ -72,7 +72,8 @@
         },
         methods: {
             processForm: function() {
-                this.processing = true;               
+                this.processing = true;
+                this.$Progress.start();               
                 axios
                     .post('/subscriptions/plan/create',
                     {
@@ -82,7 +83,8 @@
                     .then(response =>{
                       this.code = response.data.price.paypal_code;
                       this.paypaldata = response.data.prices;                          
-                      this.processing = false;                     
+                      this.processing = false;  
+                      this.$Progress.finish();                   
                     } )
                 
             }

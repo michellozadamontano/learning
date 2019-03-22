@@ -36,8 +36,9 @@ class AdminController extends Controller
 			$vueTables = new EloquentVueTables;
 			//$data = $vueTables->get(new User, ['id', 'name','email'], ['teacher.courses']);
 			//$data = User::with('teacher.courses')->get();
-			$data = Teacher::with('user','courses')->get();
-			return response()->json($data);
+		//	$data = Teacher::with('user','courses')->get();
+		//	return response()->json($data);
+		return Teacher::with('user','courses')->paginate(5);
 	//	}
 	//	return abort(401);
 	}

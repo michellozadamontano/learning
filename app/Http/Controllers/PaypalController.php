@@ -25,6 +25,7 @@ use App\Course;
 use Illuminate\Support\Facades\Route;
 use App\PaypalPlan;
 use App\PaypalPrice;
+use App\Coupon;
 
 
 class PaypalController extends Controller
@@ -131,6 +132,7 @@ class PaypalController extends Controller
 
     }
     public function paypalRedirect(){
+        $route = request()->root();
         // Create new agreement
         $agreement = new Agreement();
         $agreement->setName('App Name Monthly Subscription Agreement')
@@ -141,15 +143,75 @@ class PaypalController extends Controller
         $plan = new Plan();
         if(\request('type') == 'monthly')
         {
-            $plan->setId($this->plan_id);
+            //Compruebo se se introdujo un coupon
+            if(request()->has('coupon')){
+                $coupon = request('coupon');
+               //valido el coupon que sea correcto y que tenga existencia
+                if($this->checkCoupon($coupon)){
+                    //ahora aplico el descuento para este coupon
+                    $price      = PaypalPrice::with('paypal_plan')->where('plan_id',1)->first()->price;                    
+                    $percent    = Coupon::where('code',$coupon)->first()->percent;
+                    $new_price  = $price - ($price * $percent);
+                    //ahora genero un nuevo plan id para este nuevo precio y en esta membresia
+                    $plan_coupon_monthly_id = $this->getPlanIdByCoupon($new_price,1,$route);                    
+                    $plan->setId($plan_coupon_monthly_id);
+                }
+                else{
+                    return back()->with('message', ['danger', __("Cupon No Valido")]);
+                }
+            }
+            else {
+                $plan->setId($this->plan_id);
+            }
+           
         }
         if(\request('type') == 'quarterly')
         {
-            $plan->setId($this->plan_id_trimestral);
+             //Compruebo se se introdujo un coupon
+             if(request()->has('coupon')){
+                $coupon = request('coupon');
+               //valido el coupon que sea correcto y que tenga existencia
+                if($this->checkCoupon($coupon)){
+                    //ahora aplico el descuento para este coupon
+                    $price      = PaypalPrice::with('paypal_plan')->where('plan_id',2)->first()->price;                    
+                    $percent    = Coupon::where('code',$coupon)->first()->percent;
+                    $new_price  = $price - ($price * $percent);
+                    //ahora genero un nuevo plan id para este nuevo precio y en esta membresia
+                    $plan_coupon_monthly_id = $this->getPlanIdByCoupon($new_price,3,$route);                    
+                    $plan->setId($plan_coupon_monthly_id);
+                }
+                else{
+                    return back()->with('message', ['danger', __("Cupon No Valido")]);
+                }
+            }
+            else{
+                $plan->setId($this->plan_id_trimestral);
+            }
+            
         }
         if(\request('type') == 'yearly')
         {
-            $plan->setId($this->plan_id_anual);
+             //Compruebo se se introdujo un coupon
+             if(request()->has('coupon')){
+                $coupon = request('coupon');
+               //valido el coupon que sea correcto y que tenga existencia
+                if($this->checkCoupon($coupon)){
+                    //ahora aplico el descuento para este coupon
+                    $price      = PaypalPrice::with('paypal_plan')->where('plan_id',3)->first()->price;                    
+                    $percent    = Coupon::where('code',$coupon)->first()->percent;
+                    $new_price  = $price - ($price * $percent);
+                    //ahora genero un nuevo plan id para este nuevo precio y en esta membresia
+                    $plan_coupon_monthly_id = $this->getPlanIdByCoupon($new_price,12,$route);                    
+                    $plan->setId($plan_coupon_monthly_id);
+                }
+                else{
+                    return back()->with('message', ['danger', __("Cupon No Valido")]);
+                }
+            }
+            else {
+                $plan->setId($this->plan_id_anual);
+            }
+           
         }
        
         $agreement->setPlan($plan);
@@ -190,32 +252,29 @@ class PaypalController extends Controller
             }
             $user->save();
           //  dd($result->plan->payment_definitions->type);
-            $plan = $result->getPlan();
-           /* $subcription                = new PaypalSubscription;
-            $subcription->user_id       = $user->id;
-            $subcription->paypal_id     = $result->id;
-            $subcription->state         = $result->state;
-            $subcription->start_date    = $result->start_date;
-            $subcription->plan          = "REGULAR";           
-            $subcription->save();*/
+            $plan = $result->plan;
+            $payer = $result->payer;     
+
+           
             PaypalSubscription::updateOrCreate(
                 ['user_id'  =>$user->id],
                 [
-                    'paypal_id' =>$result->id,
-                    'state'     =>$result->state,
-                    'start_date'=>$result->start_date,
-                    'plan'      => 'REGULAR'
+                    'paypal_id'     =>  $result->id,
+                    'state'         =>  $result->state,
+                    'start_date'    =>  $result->start_date,
+                    'plan'          =>  "REGULAR",
+                    'paypal_email'  =>  $payer->payer_info->email,
+                    'country'       =>  $payer->payer_info->shipping_address->country_code,
+                    'city'          =>  $payer->payer_info->shipping_address->city
                 ]
             );
-            
-
-           
+           // dd($result);
             return redirect(route('subscriptions.paypal'))
             ->with('message', ['success', __("La suscripción se ha llevado a cabo correctamente")]);
            // echo 'New Subscriber Created and Billed';
 
         } catch (\PayPal\Exception\PayPalConnectionException $ex) {
-            echo 'Hubo un problema con la subscriccion';
+            echo 'Hubo un problema con la subscriccion' + $ex;
         }
     }
     public function pyaplCancel(Request $request){
@@ -329,6 +388,83 @@ class PaypalController extends Controller
         $response = ['plans' => $plans,'prices' => $prices];
         return response()->json($response);
     }
+    public function checkCoupon($coupon){
+        $result = false;
+        $coup = Coupon::where('code',$coupon)->first();
+        if($coup){
+            if($coup->quantity > 0)
+            {
+                $result = true;
+                $coup->quantity--;
+                $coup->save();
+            }
+        }
 
+        return $result;
+    }
+
+    public function getPlanIdByCoupon($price,$frequency,$route){
+        $plan = new Plan();
+        $plan->setName('Subscription to Edwin Course')
+          ->setDescription('Monthly Subscription to Edwin Course')
+          ->setType('infinite');
+
+        // Set billing plan definitions
+        $paymentDefinition = new PaymentDefinition();
+        $paymentDefinition->setName('Regular Payments')
+          ->setType('REGULAR')
+          ->setFrequency('Month')
+          ->setFrequencyInterval($frequency)
+          ->setCycles('0')
+          ->setAmount(new Currency(array('value' => $price, 'currency' => 'USD')));
+
+        // Set merchant preferences
+        $merchantPreferences = new MerchantPreferences();
+        $merchantPreferences->setReturnUrl($route.'/subscriptions/subscribe/paypal/return')
+          ->setCancelUrl($route.'/subscriptions/subscribe/paypal/cancel')
+          ->setAutoBillAmount('yes')
+          ->setInitialFailAmountAction('CONTINUE')
+          ->setMaxFailAttempts('0');
+
+        $plan->setPaymentDefinitions(array($paymentDefinition));
+        $plan->setMerchantPreferences($merchantPreferences);
+
+        //create the plan
+        try {
+            $createdPlan = $plan->create($this->apiContext);
+
+            try {
+                $patch = new Patch();
+                $value = new PayPalModel('{"state":"ACTIVE"}');
+                $patch->setOp('replace')
+                  ->setPath('/')
+                  ->setValue($value);
+                $patchRequest = new PatchRequest();
+                $patchRequest->addPatch($patch);
+                $createdPlan->update($patchRequest, $this->apiContext);
+                $plan = Plan::get($createdPlan->getId(), $this->apiContext);
+
+                
+                return $plan->getId();
+                
+            } catch (PayPal\Exception\PayPalConnectionException $ex) {
+                return response()->json($ex->getCode());
+                echo $ex->getCode();
+                echo $ex->getData();
+                die($ex);
+            } catch (Exception $ex) {
+                die($ex);
+            }
+        } catch (PayPal\Exception\PayPalConnectionException $ex) {
+            return response()->json($ex->getCode());
+            echo $ex->getCode();
+            echo $ex->getData();
+            die($ex);
+        } catch (Exception $ex) {
+            return response()->json($ex);
+            die($ex);
+        }
+
+    }
  
 }

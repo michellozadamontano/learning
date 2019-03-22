@@ -101,7 +101,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <i class="fas fa-chalkboard-teacher"></i>
                     <p>Profesores</p>
                 </router-link>
-                </li>
+              </li>
+              <li class="nav-item">
+                <router-link to="/coupon" class="nav-link">
+                    <i class="fas fa-comment-dollar green"></i>                    
+                    <p>Cupones</p>
+                </router-link>
+              </li>
 
             </ul>
           </li>

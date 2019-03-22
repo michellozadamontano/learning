@@ -94,6 +94,12 @@ Route::group(["prefix" => "profile", "middleware" => ["auth"]], function() {
 	Route::get('/', 'ProfileController@index')->name('profile.index');
 	Route::put('/', 'ProfileController@update')->name('profile.update');
 });
+Route::group(["prefix" => "coupon", "middleware" => ["auth"]], function() {
+	Route::get('/', 'CouponController@index')->name('coupon.index');
+	Route::post('/', 'CouponController@store')->name('coupon.store');
+	Route::put('/{id}', 'CouponController@update')->name('coupon.update');
+	Route::delete('/{id}', 'CouponController@destroy')->name('coupon.delete');
+});
 
 Route::group(['prefix' => "solicitude"], function() {
 	Route::post('/teacher', 'SolicitudeController@teacher')->name('solicitude.teacher');
