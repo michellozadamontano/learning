@@ -82,6 +82,7 @@ Route::group(['middleware' => ['auth']], function () {
 		Route::post('/paypal/cancel','PaypalController@paypalCancel')->name('subscriptions.cancelar');
 		Route::post('/paypal/reactivate','PaypalController@paypalReactivate')->name('subscriptions.reactivate');
 		Route::get('/paypalplans', 'PaypalController@paypalPlans')->name('subscriptions.paypalPlans');
+		Route::get('/users_subscribed','PaypalController@getUserSubscribed');
 	});
 
 	Route::group(['prefix' => "invoices"], function() {

@@ -1,9 +1,12 @@
 <template>
     <div class="container">        
 
-        <div class="alert alert-primary text-center" v-if="processing">
-            <i class="fa fa-compass"></i> Procesando petición...
-        </div>
+        <loading :active.sync="isLoading" 
+            :can-cancel="true" 
+            :on-cancel="onCancel"
+            :is-full-page="fullPage">
+        </loading>
+        
         <div class="row mt-5">
           <div class="col-md-12">
             <div class="card">
@@ -15,38 +18,19 @@
                 </div>
               </div>
               <!-- /.card-header -->
-              <div class="card-body table-responsive p-0">
-                <table class="table table-hover">
-                  <tbody>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Email</th>
-                        <th>Cursos</th>
-                        <th>Registrado</th>
-                        <th>Acciones</th>
-                  </tr>
-
-                  <tr v-for="teacher in tableData.data" :key="teacher.id">
-
-                    <td>{{teacher.id}}</td>
-                    <td>{{teacher.user.name}}</td>
-                    <td>{{teacher.user.email}}</td>
-                    <td></td>
-                    <td>{{teacher.created_at | myDate}}</td>
-
-                    <td>
-                        <a href="#" >
-                            <i class="fa fa-edit blue"></i>
-                        </a>
-                        /
-                        <a href="#" >
-                            <i class="fa fa-trash red"></i>
-                        </a>
-
-                    </td>
-                  </tr>
-                </tbody></table>
+              <div class="card-body table-responsive p-2">
+                  <v-client-table :data="tableData" :columns="columns" :options="options">
+                        <div slot="actions" slot-scope="">
+                            <a href="#" >
+                                <i class="fa fa-edit blue"></i>
+                            </a>
+                            /
+                            <a href="#">
+                                <i class="fa fa-trash red"></i>
+                            </a>
+                        </div>
+                    </v-client-table>
+               
               </div>
               <!-- /.card-body -->
               <div class="card-footer">                  
@@ -61,14 +45,54 @@
 
 <script>
     import {Event} from 'vue-tables-2';
+    // Import component
+    import Loading from 'vue-loading-overlay';
+    // Import stylesheet
+    import 'vue-loading-overlay/dist/vue-loading.css';
     export default {
-        name: "teachers",       
+        name: "teachers",
+        components: {
+           Loading
+        },       
         data () {
             return {               
                 processing: false,
                 name: null,
                 url: '/admin/teachers_json',//this.route,
-                tableData:{},              
+                tableData:{},
+                isLoading: false,
+                fullPage: true,
+                columns: ['id', 'name', 'email','cursos','actions'],
+                tableData:[],
+                options: {
+                    filterByColumn: false,
+                    perPage: 10,
+                    perPageValues: [10, 25, 50, 100, 500],
+                     headings: {
+                        id: 'ID',
+                        name: 'Nombre',
+                        email: 'Email',
+                        cursos: 'Cursos',
+                        actions: "Acciones",    
+                    },
+                    templates:{
+                        name: function(h,row){
+                            return row.user.name
+                        },
+                        email: function (h,row){
+                            return row.user.email
+                        },
+                        cursos: function (h,row) {
+                            let value = "";
+                             row.courses.forEach(element => {
+                                 value  += element.name + ' ' ;                      
+                                                               
+                            });
+                            return value
+                        }
+
+                    }
+                },              
                
             }
         },
@@ -85,14 +109,20 @@
                     
                 })
             },
-            getResults(page = 1) {
-                this.processing = true;
-                axios.get('/admin/teachers_json?page=' + page)
+            getResults() {               
+                this.isLoading = true;
+                axios.get('/admin/teachers_json')
                     .then(response => {
                         this.tableData = response.data;
                         this.processing = false;
+                        this.isLoading = false;
+                        console.log(response.data);
+                        
                     });
             },
+            onCancel() {
+              console.log('Se cancelo el loading.')
+            }
            
             
            
@@ -100,13 +130,8 @@
         computed: {
             
         },
-        mounted() {
-       /* this.$http.get(this.url).then(res => {
-            this.tableData = res.data;
-           console.log(this.tableData);
-            
-        })*/
-        //this.loadTeacher();
+        mounted() {        
+       
         this.getResults();
     }
     }

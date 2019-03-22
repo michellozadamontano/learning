@@ -38,7 +38,7 @@ class AdminController extends Controller
 			//$data = User::with('teacher.courses')->get();
 		//	$data = Teacher::with('user','courses')->get();
 		//	return response()->json($data);
-		return Teacher::with('user','courses')->paginate(5);
+		return Teacher::with('user','courses')->get();
 	//	}
 	//	return abort(401);
 	}

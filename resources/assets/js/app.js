@@ -47,12 +47,13 @@ const toast = swal.mixin({
   Vue.use(VueRouter)
 
  import VueProgressBar from 'vue-progressbar'
+ 
   Vue.use(VueProgressBar, {
       color: 'rgb(143, 255, 199)',
       failedColor: 'red',
       height: '3px'
     })
-
+ 
 //VUE HTTP RESOURCE
 import VueResource from 'vue-resource'
 Vue.use(VueResource);
@@ -70,6 +71,7 @@ import Coupon       from './components/Coupon';
 
 let routes = [
     //{  name: 'dashboard',path: '/dashboard', component: require('./components/Dashboard.vue') },
+    { path: '/'             , component: Dashboard },
     { path: '/dashboard'    , component: Dashboard },
     { path: '/courses'      , component: Courses },
     { path: '/teachers'     , component: Teachers },

@@ -36,4 +36,7 @@ class Teacher extends Model
 	public function user () {
 		return $this->belongsTo(User::class);
 	}
+	public function getCoursesFormattedAttribute () {
+    	return $this->courses->pluck('name')->implode('<br />');
+	}
 }

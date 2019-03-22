@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Route;
 use App\PaypalPlan;
 use App\PaypalPrice;
 use App\Coupon;
+use App\User;
 
 
 class PaypalController extends Controller
@@ -465,6 +466,12 @@ class PaypalController extends Controller
             die($ex);
         }
 
+    }
+
+    // aqui voy a obtener los usuarios subscritos
+    public function getUserSubscribed(){
+        $users = User::where('paypal',1)->count();
+        return $users;
     }
  
 }
