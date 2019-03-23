@@ -132,4 +132,9 @@ class AdminController extends Controller
 		$teachers = Teacher::all();		
 		return view('admin.teachers');
 	}
+	public function traiding($value = "")
+	{
+		$pepe = $value . " edwing colombia";
+		return view('admin.traiding',compact('pepe'));
+	}
 }

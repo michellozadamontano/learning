@@ -1,5 +1,9 @@
 <template>
     <div class="container">
+        <loading :active.sync="isLoading" 
+            :can-cancel="true"           
+            :is-full-page="true">
+        </loading>
         <div class="row mt-5" >
           <div class="col-md-12">
             <div class="card">
@@ -7,7 +11,7 @@
                 <h3 class="card-title">Cupones</h3>
 
                 <div class="card-tools">
-                    <button class="btn btn-success" @click="newModal">Adicionar <i class="fas fa-user-plus fa-fw"></i></button>
+                    <button class="btn btn-success" @click="newModal">Adicionar <i class="fas fa-plus fa-fw"></i></button>
                 </div>
               </div>
               <!-- /.card-header -->
@@ -87,11 +91,17 @@
     </div>
 
 </template>
-<script>
+<script>    
+    import Loading from 'vue-loading-overlay';   
+    import 'vue-loading-overlay/dist/vue-loading.css';
     export default {
+         components: {
+           Loading
+        },  
         data() {
             return {
                 editmode: false,
+                isLoading: false,
                 coupons : {},
                 columns: ['id', 'code', 'quantity','percent','actions'],
                 tableData:[],
@@ -117,7 +127,8 @@
         },
         methods: {           
             updateCoupon(){
-                this.$Progress.start();
+               // this.$Progress.start();
+                this.isLoading = true;
                 // console.log('Editing data');
                 this.form.put('coupon/'+this.form.id)
                 .then(() => {
@@ -128,11 +139,13 @@
                         'Information has been updated.',
                         'success'
                         )
-                        this.$Progress.finish();
+                        //this.$Progress.finish();
+                        this.isLoading = false;
                          Fire.$emit('AfterCreate');
                 })
                 .catch(() => {
-                    this.$Progress.fail();
+                    //this.$Progress.fail();
+                    this.isLoading = false;
                 });
 
             },
@@ -174,17 +187,20 @@
                     })
             },
             loadCoupons(){
+                this.isLoading = true;
                axios.get("coupon").then((resp) => {
                    this.coupons = resp.data;
                    this.tableData = resp.data;
+                   this.isLoading = false;
                 });
             },
 
             createCoupon(){
-                this.$Progress.start();
-
+               // this.$Progress.start();
+                this.isLoading = true;
                 this.form.post('coupon')
                 .then(()=>{
+                    this.isLoading = false;
                     Fire.$emit('AfterCreate');
                     $('#addNew').modal('hide')
 
@@ -192,11 +208,11 @@
                         type: 'success',
                         title: 'Cupon Creado Correctamente'
                         })
-                    this.$Progress.finish();
+                    //this.$Progress.finish();
 
                 })
                 .catch(()=>{
-
+                    this.isLoading = false;
                 })
             }
         },

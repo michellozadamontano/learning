@@ -120,6 +120,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </p>
                 </router-link>
          </li>
+         <li class="nav-item">
+          <a class="nav-link" href="{{ route('admin.traiding') }}">Traiding</a></li>
+         </li>
         {{-- @endcan--}}          
 
           <li class="nav-item">

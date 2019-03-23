@@ -55,12 +55,12 @@ class PaypalController extends Controller
 
     }
 
-    public function create_plan(){
+    public function create_plan(Request $request){       
 
         // Create a new billing plan
         $route = request()->root(); 
-        $frequency_interval = request('plan');
-        $price = request('price'); 
+        $frequency_interval = request('plan');    
+        $price  = request('price'); 
 
         $plan = new Plan();
         $plan->setName('Subscription to Edwin Course')
@@ -104,7 +104,20 @@ class PaypalController extends Controller
 
                 // Output plan id
                // echo 'Plan ID:' . $plan->getId();
-                $paypalPrice                = PaypalPrice::find($frequency_interval);
+                $price_id = 1;
+                if($frequency_interval == 1)
+                {
+                    $price_id = 1;
+                }
+                if($frequency_interval == 3)
+                {
+                    $price_id = 2;
+                }
+                if($frequency_interval == 12)
+                {
+                    $price_id = 3;
+                }
+                $paypalPrice                = PaypalPrice::find($price_id);
                 $paypalPrice->price         = $price;
                 $paypalPrice->paypal_code   = $plan->getId();
                 $paypalPrice->save();
@@ -147,8 +160,10 @@ class PaypalController extends Controller
             //Compruebo se se introdujo un coupon
             if(request('coupon')!= ""){
                 $coupon = request('coupon');
+                
                //valido el coupon que sea correcto y que tenga existencia
                 if($this->checkCoupon($coupon)){
+                    session(['coupon' => $coupon]); // almaceno el coupon en una session para una vez que se confirme la subscripcion rebajarlo del total
                     //ahora aplico el descuento para este coupon
                     $price      = PaypalPrice::with('paypal_plan')->where('plan_id',1)->first()->price;                    
                     $percent    = Coupon::where('code',$coupon)->first()->percent;
@@ -171,8 +186,10 @@ class PaypalController extends Controller
              //Compruebo se se introdujo un coupon
              if(request('coupon')!= ""){
                 $coupon = request('coupon');
+                
                //valido el coupon que sea correcto y que tenga existencia
                 if($this->checkCoupon($coupon)){
+                    session(['coupon' => $coupon]);
                     //ahora aplico el descuento para este coupon
                     $price      = PaypalPrice::with('paypal_plan')->where('plan_id',2)->first()->price;                    
                     $percent    = Coupon::where('code',$coupon)->first()->percent;
@@ -195,8 +212,10 @@ class PaypalController extends Controller
              //Compruebo se se introdujo un coupon
              if(request('coupon')!= ""){
                 $coupon = request('coupon');
+                
                //valido el coupon que sea correcto y que tenga existencia
                 if($this->checkCoupon($coupon)){
+                    session(['coupon' => $coupon]);
                     //ahora aplico el descuento para este coupon
                     $price      = PaypalPrice::with('paypal_plan')->where('plan_id',3)->first()->price;                    
                     $percent    = Coupon::where('code',$coupon)->first()->percent;
@@ -283,6 +302,17 @@ class PaypalController extends Controller
                     'amount'        =>  $plan->payment_definitions[0]->amount->value
                 ]
             );
+            if($request->session()->has('coupon')){
+                $coupon = session('coupon');               
+                $coup = Coupon::where('code',$coupon)->first();
+                if($coup){
+                    if($coup->quantity > 0)
+                    {    
+                        $coup->quantity--;
+                        $coup->save();
+                    }
+                }
+            }
            // dd($result);
             return redirect(route('subscriptions.paypal'))
             ->with('message', ['success', __("La suscripción se ha llevado a cabo correctamente")]);
@@ -411,7 +441,7 @@ class PaypalController extends Controller
             if($coup->quantity > 0)
             {
                 $result = true;
-                $coup->quantity--;
+               // $coup->quantity--;
                 $coup->save();
             }
         }

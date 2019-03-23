@@ -3,12 +3,16 @@
         <div class="alert alert-primary text-center" v-if="processing">
             <i class="fa fa-compass"></i> Procesando petición...
         </div>
+        <loading :active.sync="isLoading" 
+            :can-cancel="true"           
+            :is-full-page="true">
+        </loading>
         <div class="row justify-content-center">
             <div class="col-sm-8">
                 <form @submit.prevent="processForm">
                     <div class="form-group">
                     <label for="">Seleccione Plan</label>
-                    <select v-model="plan" class="form-control" name="" id="">
+                    <select v-model="form.plan" class="form-control" name="plan" id="plan">
                         <option value="1">Mensual</option>
                         <option value="3">Trimestral</option>
                         <option value="12">Anual</option>
@@ -16,13 +20,13 @@
                     </div>
                     <div class="form-group">
                     <label for="">Precio</label>
-                    <input v-model="price" type=number step=0.01
-                        class="form-control" name="" id="" aria-describedby="helpId" placeholder="">              
+                    <input v-model="form.price" type=number step=0.01
+                        class="form-control" name="price" id="price" aria-describedby="helpId" placeholder="">              
                     </div>
                     <div class="form-group">
                     <label for="">Codigo Paypal</label>
-                    <input v-model="code" readonly type="text"
-                        class="form-control" name="" id="" aria-describedby="helpId" placeholder="" >
+                    <input v-model="form.code" readonly type="text"
+                        class="form-control" name="code" id="code" aria-describedby="helpId" placeholder="" >
                     <small id="helpId" class="form-text text-muted">Codigo paypal para el plan seleccionado</small>
                     </div>
                     <button type="submit" class="btn btn-primary">Enviar</button>
@@ -52,40 +56,71 @@
     </div>
 </template>
 
-<script>
+<script>    
+    import Loading from 'vue-loading-overlay';    
+    import 'vue-loading-overlay/dist/vue-loading.css';
     export default {
+         components: {
+           Loading
+        },  
         data() {
             return {
                 processing: false,
+                isLoading: false,
                 plan:"",
                 price:"",
                 code:"",
-                paypaldata:[],              
+                paypaldata:[],
+                 form: new Form({
+                    plan:"",
+                    price:"",
+                    code:"",                   
+                })              
             }
         },
         created(){
+            this.isLoading = true;
             axios.get('/subscriptions/paypalplans').then(res => {
                 this.paypaldata = res.data.prices;
+                this.isLoading = false;
                 console.log(res.data);
                 
             })
         },
         methods: {
             processForm: function() {
-                this.processing = true;
-                this.$Progress.start();               
-                axios
+                this.isLoading = true;
+                //this.$Progress.start();
+                this.form.post('/subscriptions/plan/create')
+                .then((response)=>{
+                    console.log(response.data);                    
+                    this.form.code = response.data.price.paypal_code;
+                    this.paypaldata = response.data.prices; 
+                    this.isLoading = false;
+                })
+                .catch((error)=>{
+                    console.log('Este es el error', error);
+                    this.isLoading = false;
+                    
+                })            
+               /* axios
                     .post('/subscriptions/plan/create',
                     {
                         plan:this.plan,
                         price: this.price
                     })
                     .then(response =>{
-                      this.code = response.data.price.paypal_code;
-                      this.paypaldata = response.data.prices;                          
-                      this.processing = false;  
-                      this.$Progress.finish();                   
-                    } )
+                        console.log(response.data);
+                        this.isLoading = false;
+                     // this.code = response.data.price.paypal_code;
+                     // this.paypaldata = response.data.prices;                          
+                     // this.processing = false;  
+                    //  this.$Progress.finish();                   
+                    } ) .catch((error)=>{
+                    console.log('Este es el error', error);
+                    this.isLoading = false;
+                    
+                }) */
                 
             }
         },
