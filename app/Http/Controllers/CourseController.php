@@ -137,6 +137,10 @@ class CourseController extends Controller
 				
 		return view('courses.show_video', compact('file','course'));
 	}
+	public function showVideoAjax($id) {
+		$file = CourseContentFile::find($id);
+		return response()->json($file);	
+	}
 	//este metodo es para agregar el titulo de la clase al curso
 	public function addContent(Course $course) {
 		$btnText = __("Adicionar");

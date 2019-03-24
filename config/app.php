@@ -147,6 +147,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         alchemyguy\YoutubeLaravelApi\YoutubeLaravelApiServiceProvider::class,
+        
 
         /*
          * Package Service Providers...

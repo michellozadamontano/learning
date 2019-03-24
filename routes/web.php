@@ -40,6 +40,7 @@ Route::group(['prefix' => 'courses'], function () {
 		Route::post('/deleteContentFile', 'CourseController@deleteContentFile')->name('courses.deleteContentFile');
 		Route::post('/delete_content_action', 'CourseController@deleteContentAction')->name('courses.deleteContentAction');
 		Route::get('/{id}/show_video', 'CourseController@showVideo')->name('courses.show_video');
+		Route::get('/video_ajax/{id}', 'CourseController@showVideoAjax');
 		Route::post('/add_course_class', 'CourseController@addContentAction')->name('course.add_course_class');
 		Route::post('/add_course_class_file', 'CourseController@addContentFile')->name('courses.addFile');
 		Route::get('/{file}/download', 'CourseController@download')->name('courses.download');
@@ -128,4 +129,8 @@ Route::group(['prefix' => "admin", "middleware" => ['auth', sprintf("role:%s", \
 	Route::get('/teachers', 'AdminController@teachers')->name('admin.teachers');
 	Route::get('/teachers_json', 'AdminController@teachersJson')->name('admin.teachers_json');
 	Route::get('/traiding/{value?}', 'AdminController@traiding')->name('admin.traiding');
+});
+
+Route::group(['prefix' => "traiding", "middleware" => ["auth"]], function() {
+	Route::get('/quote/{symbol}', 'IexController@stockQuote');	
 });

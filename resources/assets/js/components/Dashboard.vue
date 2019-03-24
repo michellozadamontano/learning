@@ -14,15 +14,14 @@
                 <a href="#" class="small-box-footer">Mas info <i class="fa fa-arrow-circle-right"></i></a>
               </div>
             </div><!-- ./col -->
-        </div>
-        
-
+        </div>    
+        <grafica></grafica>
     </div>
 
 </template>
 
 <script>
-    export default {
+    export default {       
         data() {
             return {
                 student:''
@@ -38,8 +37,8 @@
             }
         },
         mounted() {
-            this.registeredStudent();
-            console.log('Component mounted.')
+            this.registeredStudent(); 
+            
         }
     }
 </script>

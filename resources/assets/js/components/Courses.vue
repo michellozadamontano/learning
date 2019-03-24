@@ -1,9 +1,10 @@
 <template>
-    <div>       
+    <div class="container">       
 
-        <div class="alert alert-primary text-center" v-if="processing">
-            <i class="fa fa-compass"></i> Procesando petición...
-        </div>
+        <loading :active.sync="isLoading" 
+            :can-cancel="true"           
+            :is-full-page="true">
+        </loading>
         <v-server-table ref="table" :columns="columns" :url="url" :options="options">
 
             <div slot="activate_deactivate" slot-scope="props">
@@ -22,7 +23,7 @@
                             </div>
                             <div class="col-md-6">
                                 <button
-                                    v-if="parseInt(props.row.status) === 2"
+                                    v-if="parseInt(props.row.status) === 3"
                                     type="button"
                                     class="btn btn-success btn-block"                                    
                                     @click="updateStatus(props.row, 1)"
@@ -31,8 +32,6 @@
                                 </button>
                             </div>
                         </div>
-                        
-
                         
                     </div>
                     <div class="col-md-6">
@@ -72,20 +71,16 @@
 
 <script>
     import {Event} from 'vue-tables-2';
+    import Loading from 'vue-loading-overlay';   
+    import 'vue-loading-overlay/dist/vue-loading.css';
     export default {
         name: "courses",
-       /* props: {
-            labels: {
-                type: Object,
-                required: true
-            },
-            route: {
-                type: String,
-                required: true
-            }
-        },*/
+        components: {
+           Loading
+        }, 
         data () {
             return {
+                isLoading: false,
                 courseContent:[],
                 contentFile:[],
                 processing: false,
@@ -110,12 +105,12 @@
                     sortable: ['id', 'name', 'status'],
                     filterable: ['name'],
                     requestFunction: function (data) {
-                         this.$Progress.start();
+                         this.isLoading = true;
                         return window.axios.get(this.url, {                             
                             params: data                            
                         })
                         .catch(function (e) {
-                            this.$Progress.fail();
+                            this.isLoading = false;
                             this.dispatch('error', e);
                         }.bind(this));
                     }
@@ -136,7 +131,8 @@
                 return statuses[status];
             },
             updateStatus (row, newStatus) {
-                this.processing = true;
+                //this.processing = true;
+                this.isLoading = true;
                 setTimeout(() => {
                     this.$http.post(
                         '/admin/courses/updateStatus',
@@ -148,13 +144,15 @@
                         }
                     )
                         .then(response => {
+                            this.isLoading = false;
                             this.$refs.table.refresh();
                         })
                         .catch(error => {
-
+                            console.log(error);                            
+                            this.isLoading = false;
                         })
-                        .finally(() => {
-                            this.processing = false;
+                        .finally(() => {                           
+                            this.isLoading = false;
                         });
                 }, 1500);
             },

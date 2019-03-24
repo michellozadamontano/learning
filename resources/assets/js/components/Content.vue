@@ -1,5 +1,9 @@
 <template>
     <div>
+        <loading :active.sync="isLoading" 
+            :can-cancel="true"           
+            :is-full-page="true">
+        </loading>
         <div class="col-md-10  listing-block" v-for="content in contents" :key="content.id">
                 <div class="media" style="height: 250px;" >
                     <img
@@ -17,18 +21,18 @@
                            
                             <div class="alert alert-primary" role="alert" v-for="file in content.files" :key="file.id">
                                
-                                    <small v-if="file.archivo">
-                                            <a :href="`/courses/${file.arhivo}/download`">
-                                                <i class="fa fa-file" aria-hidden="true"></i>
+                                    <small v-if="file.arhivo">
+                                            <a :href="`/courses/${file.arhivo}/download`" style="color:red">
+                                                <i class="fas fa-file" aria-hidden="true"></i>
                                                 <span>{{file.file}}</span><br>
                                             </a> 
                                     </small>         
                                                               
-                                    <small v-if="file.path" data-toggle="tooltip" data-placement="top" :title="file.description">
-                                        <a :href="`/courses/${file.id}/show_video`">
-                                            <i class="fa fa-youtube-play" aria-hidden="true"></i>
+                                    <small v-if="file.path" data-toggle="tooltip" data-placement="top" :title="file.description">                                       
+                                        <router-link :to="'/video/' + file.id + '/'+ course_id" style="color: blue">
+                                            <i class="fas fa-youtube-play" aria-hidden="true"></i>                                            
                                             <span>{{file.file}}</span><br>
-                                        </a>
+                                        </router-link>
                                     </small>                            
                                                                  
                                    <small>Descripción: {{file.description}}</small>
@@ -44,26 +48,36 @@
 </template>
 
 <script>
-export default {   
+    import Loading from 'vue-loading-overlay';   
+    import 'vue-loading-overlay/dist/vue-loading.css';
+export default { 
+    components: {
+           Loading
+    },   
     data() {
         return {
-            contents:[]
+            isLoading: false,
+            contents:[],
+            course_id:""
         }
     },
     methods: {
         
     },
     created() {
+        this.isLoading = true;
         let id = this.$route.params.id;
+        this.course_id = id;
         axios.post('/admin/courses/showCourseContent', {courseId: id})
         .then(res => {
-            console.log(res.data);
+            this.isLoading = false;            
             this.contents = res.data.course_content;
             
         })
         .catch((error)=> {
             // handle error
             console.log(error);
+            this.isLoading = false;
         })
     },
     mounted() {

@@ -110,10 +110,11 @@ class AdminController extends Controller
 		return view('admin.students');
 	}
 	public function dataStudent () {
-		$students = Student::with('user', 'courses.reviews')
+		$students = Student::with('user.paypalSubscription', 'courses.reviews')
 		->whereHas('courses', function ($q) {
 			$q->where('status', Course::PUBLISHED)->select('id', 'teacher_id', 'name')->withTrashed();
 		})->get();
+		return response()->json($students);
 	//dd($students);
 		return DataTables::of($students)
 		->addColumn('plan',function(Student $student){

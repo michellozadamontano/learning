@@ -103,6 +103,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </router-link>
               </li>
               <li class="nav-item">
+                <router-link to="/students" class="nav-link">
+                  <i class="fas fa-users indigo" aria-hidden="true"></i>                    
+                  <p>Estudiantes</p>
+                </router-link>
+              </li>
+              <li class="nav-item">
                 <router-link to="/coupon" class="nav-link">
                     <i class="fas fa-comment-dollar green"></i>                    
                     <p>Cupones</p>
@@ -120,9 +126,30 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </p>
                 </router-link>
          </li>
-         <li class="nav-item">
-          <a class="nav-link" href="{{ route('admin.traiding') }}">Traiding</a></li>
-         </li>
+         <li class="nav-item has-treeview">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fa fa-cog green"></i>
+            <p>
+              Area de Traiding
+              <i class="right fa fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <router-link to="/company" class="nav-link">
+                  <i class="fas fa-building indigo"></i>                 
+                  <p>Company</p>
+              </router-link>
+            </li> 
+            <li class="nav-item">
+              <router-link to="/quote" class="nav-link">
+                <i class="fas fa-quote-right red"></i>                  
+                <p>Quote</p>
+              </router-link>
+            </li>                    
+
+          </ul>
+        </li>
         {{-- @endcan--}}          
 
           <li class="nav-item">

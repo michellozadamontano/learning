@@ -59,13 +59,13 @@
                 processing: false,
                 name: null,
                 url: '/admin/teachers_json',//this.route,
-                tableData:{},
+                //tableData:{},
                 isLoading: false,
                 fullPage: true,
                 columns: ['id', 'name', 'email','cursos','actions'],
                 tableData:[],
                 options: {
-                    filterByColumn: false,
+                    filterByColumn: true,
                     perPage: 10,
                     perPageValues: [10, 25, 50, 100, 500],
                      headings: {
@@ -76,21 +76,20 @@
                         actions: "Acciones",    
                     },
                     templates:{
-                        name: function(h,row){
+                        name: function(h,row,index){
                             return row.user.name
                         },
-                        email: function (h,row){
+                        email: function (h,row,index){
                             return row.user.email
                         },
                         cursos: function (h,row) {
                             let value = "";
                              row.courses.forEach(element => {
-                                 value  += element.name + ' ' ;                      
+                                 value  += element.name + ' , ' ;                      
                                                                
                             });
                             return value
                         }
-
                     }
                 },              
                
@@ -116,7 +115,7 @@
                         this.tableData = response.data;
                         this.processing = false;
                         this.isLoading = false;
-                        console.log(response.data);
+                      //  console.log(response.data);
                         
                     });
             },
