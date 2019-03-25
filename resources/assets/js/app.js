@@ -76,9 +76,11 @@ import Coupon       from './components/Coupon';
 import ShowVideo    from './components/ShowVideo';
 import Grafica      from './components/Graficas';
 import Student      from './components/Student';
+import Category     from './components/Category';
 import TBook        from './components/TBook';
 import TCompany     from './components/TCompany';
-import Category     from './components/Category';
+import TPrevious    from './components/TPrevious';
+import TKeyStat      from './components/TKeyStat';
 
 
 let routes = [
@@ -87,14 +89,16 @@ let routes = [
     { path: '/dashboard'    , component: Dashboard },
     { path: '/courses'      , component: Courses },
     { path: '/teachers'     , component: Teachers },
-    { path: '/students'      , component: Student },
+    { path: '/students'     , component: Student },
     { path: '/paypal'       , component: Paypal },
     { path: '/content/:id'  , component: Content },
     { path: '/coupon'       , component: Coupon },
     { path: '/video/:id/:course'    , component: ShowVideo },  
-    { path: '/category'       , component: Category },
+    { path: '/category'      , component: Category },
     { path: '/quote'         , component: TBook },
     { path: '/company'       , component: TCompany },
+    { path: '/previous'      , component: TPrevious },
+    { path: '/keystat'       , component: TKeyStat },
 
   ]
 

@@ -31,7 +31,45 @@
                             <li>companyName             : <span class="purple">{{api.companyName}}</span></li>                            
                             <li>sector                  : <span class="yellow">{{api.sector}}</span></li>
                             <li>calculationPrice        : <span class="cyan">{{api.calculationPrice}}</span></li>
+                            <li>open                    : <span class="red">{{api.open}}</span></li>
+                            <li>openTime                : <span class="purple">{{api.openTime}}</span></li>
+                            <li>close                   : <span class="yellow">{{api.close}}</span></li>
+                            <li>closeTime               : <span class="cyan">{{api.closeTime}}</span></li>
+                            <li>high                    : <span class="red">{{api.high}}</span></li>
+                            <li>low                     : <span class="purple">{{api.low}}</span></li>
                             <li>latestPrice             : <span class="yellow">{{api.latestPrice}}</span></li>
+                            <li>latestSource            : <span class="cyan">{{api.latestSource}}</span></li>
+                            <li>latestTime              : <span class="red">{{api.latestTime}}</span></li>
+                            <li>latestUpdate            : <span class="purple">{{api.latestUpdate}}</span></li>
+                            <li>latestVolume            : <span class="yellow">{{api.latestVolume}}</span></li>
+                            <li>iexRealtimePrice        : <span class="cyan">{{api.iexRealtimePrice}}</span></li>
+                            <li>iexRealtimeSize         : <span class="red">{{api.iexRealtimeSize}}</span></li>
+                            <li>iexLastUpdated          : <span class="purple">{{api.iexLastUpdated}}</span></li>
+                            <li>delayedPrice             : <span class="yellow">{{api.delayedPrice}}</span></li>
+                        </ul>
+                    </div>
+                    <div class="col-6">
+                        <ul>
+                            <li>delayedPriceTime        : <span class="red">{{api.delayedPriceTime}}</span></li>                            
+                            <li>extendedPrice           : <span class="purple">{{api.extendedPrice}}</span></li>                            
+                            <li>extendedChange          : <span class="yellow">{{api.extendedChange}}</span></li>
+                            <li>extendedChangePercent   : <span class="cyan">{{api.extendedChangePercent}}</span></li>
+                            <li>extendedPriceTime       : <span class="red">{{api.extendedPriceTime}}</span></li>
+                            <li>previousClose           : <span class="purple">{{api.previousClose}}</span></li>
+                            <li>change                  : <span class="yellow">{{api.change}}</span></li>
+                            <li>changePercent           : <span class="cyan">{{api.changePercent}}</span></li>
+                            <li>iexMarketPercent        : <span class="red">{{api.iexMarketPercent}}</span></li>
+                            <li>iexVolume               : <span class="purple">{{api.iexVolume}}</span></li>
+                            <li>avgTotalVolume          : <span class="yellow">{{api.avgTotalVolume}}</span></li>
+                            <li>iexBidPrice             : <span class="cyan">{{api.iexBidPrice}}</span></li>
+                            <li>iexBidSize              : <span class="red">{{api.iexBidSize}}</span></li>
+                            <li>iexAskPrice             : <span class="purple">{{api.iexAskPrice}}</span></li>
+                            <li>iexAskSize              : <span class="yellow">{{api.iexAskSize}}</span></li>
+                            <li>marketCap               : <span class="cyan">{{api.marketCap}}</span></li>
+                            <li>peRatio                 : <span class="red">{{api.peRatio}}</span></li>
+                            <li>week52High              : <span class="purple">{{api.week52High}}</span></li>
+                            <li>week52Low               : <span class="yellow">{{api.week52Low}}</span></li>
+                            <li>ytdChange               : <span class="cyan">{{api.ytdChange}}</span></li>
                         </ul>
                     </div>
                 </div>

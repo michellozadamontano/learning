@@ -152,7 +152,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <i class="fas fa-quote-right red"></i>                  
                 <p>Quote</p>
               </router-link>
-            </li>                    
+            </li>  
+            <li class="nav-item">
+              <router-link to="/previous" class="nav-link">
+                <i class="fas fa-angle-double-left yellow"></i>                  
+                <p>Previous</p>
+              </router-link>
+            </li>    
+            <li class="nav-item">
+              <router-link to="/keystat" class="nav-link">
+                <i class="fas fa-key purple"></i>                  
+                <p>KeyStat</p>
+              </router-link>
+            </li>                
 
           </ul>
         </li>

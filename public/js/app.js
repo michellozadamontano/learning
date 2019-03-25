@@ -34759,12 +34759,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_Graficas___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_18__components_Graficas__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_Student__ = __webpack_require__(422);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_Student___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_19__components_Student__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__components_TBook__ = __webpack_require__(425);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__components_TBook___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_20__components_TBook__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__components_TCompany__ = __webpack_require__(428);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__components_TCompany___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_21__components_TCompany__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__components_Category__ = __webpack_require__(445);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__components_Category___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_22__components_Category__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__components_Category__ = __webpack_require__(445);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__components_Category___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_20__components_Category__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__components_TBook__ = __webpack_require__(425);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__components_TBook___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_21__components_TBook__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__components_TCompany__ = __webpack_require__(428);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__components_TCompany___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_22__components_TCompany__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__components_TPrevious__ = __webpack_require__(448);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__components_TPrevious___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_23__components_TPrevious__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__components_TKeyStat__ = __webpack_require__(451);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__components_TKeyStat___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_24__components_TKeyStat__);
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -34846,9 +34850,11 @@ Vue.component('stripe-form', __WEBPACK_IMPORTED_MODULE_10__components_StripeForm
 
 
 
+
+
 var routes = [
 //{  name: 'dashboard',path: '/dashboard', component: require('./components/Dashboard.vue') },
-{ path: '/', component: __WEBPACK_IMPORTED_MODULE_11__components_Dashboard___default.a }, { path: '/dashboard', component: __WEBPACK_IMPORTED_MODULE_11__components_Dashboard___default.a }, { path: '/courses', component: __WEBPACK_IMPORTED_MODULE_12__components_Courses___default.a }, { path: '/teachers', component: __WEBPACK_IMPORTED_MODULE_13__components_Teachers___default.a }, { path: '/students', component: __WEBPACK_IMPORTED_MODULE_19__components_Student___default.a }, { path: '/paypal', component: __WEBPACK_IMPORTED_MODULE_14__components_Paypal___default.a }, { path: '/content/:id', component: __WEBPACK_IMPORTED_MODULE_15__components_Content___default.a }, { path: '/coupon', component: __WEBPACK_IMPORTED_MODULE_16__components_Coupon___default.a }, { path: '/video/:id/:course', component: __WEBPACK_IMPORTED_MODULE_17__components_ShowVideo___default.a }, { path: '/category', component: __WEBPACK_IMPORTED_MODULE_22__components_Category___default.a }, { path: '/quote', component: __WEBPACK_IMPORTED_MODULE_20__components_TBook___default.a }, { path: '/company', component: __WEBPACK_IMPORTED_MODULE_21__components_TCompany___default.a }];
+{ path: '/', component: __WEBPACK_IMPORTED_MODULE_11__components_Dashboard___default.a }, { path: '/dashboard', component: __WEBPACK_IMPORTED_MODULE_11__components_Dashboard___default.a }, { path: '/courses', component: __WEBPACK_IMPORTED_MODULE_12__components_Courses___default.a }, { path: '/teachers', component: __WEBPACK_IMPORTED_MODULE_13__components_Teachers___default.a }, { path: '/students', component: __WEBPACK_IMPORTED_MODULE_19__components_Student___default.a }, { path: '/paypal', component: __WEBPACK_IMPORTED_MODULE_14__components_Paypal___default.a }, { path: '/content/:id', component: __WEBPACK_IMPORTED_MODULE_15__components_Content___default.a }, { path: '/coupon', component: __WEBPACK_IMPORTED_MODULE_16__components_Coupon___default.a }, { path: '/video/:id/:course', component: __WEBPACK_IMPORTED_MODULE_17__components_ShowVideo___default.a }, { path: '/category', component: __WEBPACK_IMPORTED_MODULE_20__components_Category___default.a }, { path: '/quote', component: __WEBPACK_IMPORTED_MODULE_21__components_TBook___default.a }, { path: '/company', component: __WEBPACK_IMPORTED_MODULE_22__components_TCompany___default.a }, { path: '/previous', component: __WEBPACK_IMPORTED_MODULE_23__components_TPrevious___default.a }, { path: '/keystat', component: __WEBPACK_IMPORTED_MODULE_24__components_TKeyStat___default.a }];
 
 var router = new __WEBPACK_IMPORTED_MODULE_7_vue_router__["a" /* default */]({
   mode: 'history',
@@ -113319,6 +113325,44 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -113463,9 +113507,251 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("li", [
+                      _vm._v("open                    : "),
+                      _c("span", { staticClass: "red" }, [
+                        _vm._v(_vm._s(_vm.api.open))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("openTime                : "),
+                      _c("span", { staticClass: "purple" }, [
+                        _vm._v(_vm._s(_vm.api.openTime))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("close                   : "),
+                      _c("span", { staticClass: "yellow" }, [
+                        _vm._v(_vm._s(_vm.api.close))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("closeTime               : "),
+                      _c("span", { staticClass: "cyan" }, [
+                        _vm._v(_vm._s(_vm.api.closeTime))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("high                    : "),
+                      _c("span", { staticClass: "red" }, [
+                        _vm._v(_vm._s(_vm.api.high))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("low                     : "),
+                      _c("span", { staticClass: "purple" }, [
+                        _vm._v(_vm._s(_vm.api.low))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
                       _vm._v("latestPrice             : "),
                       _c("span", { staticClass: "yellow" }, [
                         _vm._v(_vm._s(_vm.api.latestPrice))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("latestSource            : "),
+                      _c("span", { staticClass: "cyan" }, [
+                        _vm._v(_vm._s(_vm.api.latestSource))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("latestTime              : "),
+                      _c("span", { staticClass: "red" }, [
+                        _vm._v(_vm._s(_vm.api.latestTime))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("latestUpdate            : "),
+                      _c("span", { staticClass: "purple" }, [
+                        _vm._v(_vm._s(_vm.api.latestUpdate))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("latestVolume            : "),
+                      _c("span", { staticClass: "yellow" }, [
+                        _vm._v(_vm._s(_vm.api.latestVolume))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("iexRealtimePrice        : "),
+                      _c("span", { staticClass: "cyan" }, [
+                        _vm._v(_vm._s(_vm.api.iexRealtimePrice))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("iexRealtimeSize         : "),
+                      _c("span", { staticClass: "red" }, [
+                        _vm._v(_vm._s(_vm.api.iexRealtimeSize))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("iexLastUpdated          : "),
+                      _c("span", { staticClass: "purple" }, [
+                        _vm._v(_vm._s(_vm.api.iexLastUpdated))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("delayedPrice             : "),
+                      _c("span", { staticClass: "yellow" }, [
+                        _vm._v(_vm._s(_vm.api.delayedPrice))
+                      ])
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-6" }, [
+                  _c("ul", [
+                    _c("li", [
+                      _vm._v("delayedPriceTime        : "),
+                      _c("span", { staticClass: "red" }, [
+                        _vm._v(_vm._s(_vm.api.delayedPriceTime))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("extendedPrice           : "),
+                      _c("span", { staticClass: "purple" }, [
+                        _vm._v(_vm._s(_vm.api.extendedPrice))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("extendedChange          : "),
+                      _c("span", { staticClass: "yellow" }, [
+                        _vm._v(_vm._s(_vm.api.extendedChange))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("extendedChangePercent   : "),
+                      _c("span", { staticClass: "cyan" }, [
+                        _vm._v(_vm._s(_vm.api.extendedChangePercent))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("extendedPriceTime       : "),
+                      _c("span", { staticClass: "red" }, [
+                        _vm._v(_vm._s(_vm.api.extendedPriceTime))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("previousClose           : "),
+                      _c("span", { staticClass: "purple" }, [
+                        _vm._v(_vm._s(_vm.api.previousClose))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("change                  : "),
+                      _c("span", { staticClass: "yellow" }, [
+                        _vm._v(_vm._s(_vm.api.change))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("changePercent           : "),
+                      _c("span", { staticClass: "cyan" }, [
+                        _vm._v(_vm._s(_vm.api.changePercent))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("iexMarketPercent        : "),
+                      _c("span", { staticClass: "red" }, [
+                        _vm._v(_vm._s(_vm.api.iexMarketPercent))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("iexVolume               : "),
+                      _c("span", { staticClass: "purple" }, [
+                        _vm._v(_vm._s(_vm.api.iexVolume))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("avgTotalVolume          : "),
+                      _c("span", { staticClass: "yellow" }, [
+                        _vm._v(_vm._s(_vm.api.avgTotalVolume))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("iexBidPrice             : "),
+                      _c("span", { staticClass: "cyan" }, [
+                        _vm._v(_vm._s(_vm.api.iexBidPrice))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("iexBidSize              : "),
+                      _c("span", { staticClass: "red" }, [
+                        _vm._v(_vm._s(_vm.api.iexBidSize))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("iexAskPrice             : "),
+                      _c("span", { staticClass: "purple" }, [
+                        _vm._v(_vm._s(_vm.api.iexAskPrice))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("iexAskSize              : "),
+                      _c("span", { staticClass: "yellow" }, [
+                        _vm._v(_vm._s(_vm.api.iexAskSize))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("marketCap               : "),
+                      _c("span", { staticClass: "cyan" }, [
+                        _vm._v(_vm._s(_vm.api.marketCap))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("peRatio                 : "),
+                      _c("span", { staticClass: "red" }, [
+                        _vm._v(_vm._s(_vm.api.peRatio))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("week52High              : "),
+                      _c("span", { staticClass: "purple" }, [
+                        _vm._v(_vm._s(_vm.api.week52High))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("week52Low               : "),
+                      _c("span", { staticClass: "yellow" }, [
+                        _vm._v(_vm._s(_vm.api.week52Low))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("ytdChange               : "),
+                      _c("span", { staticClass: "cyan" }, [
+                        _vm._v(_vm._s(_vm.api.ytdChange))
                       ])
                     ])
                   ])
@@ -114410,6 +114696,994 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-02ec8735", module.exports)
+  }
+}
+
+/***/ }),
+/* 448 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(3)
+/* script */
+var __vue_script__ = __webpack_require__(449)
+/* template */
+var __vue_template__ = __webpack_require__(450)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/TPrevious.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-23a36de4", Component.options)
+  } else {
+    hotAPI.reload("data-v-23a36de4", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 449 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_loading_overlay__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_loading_overlay___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_loading_overlay__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_loading_overlay_dist_vue_loading_css__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_loading_overlay_dist_vue_loading_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_loading_overlay_dist_vue_loading_css__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    components: {
+        Loading: __WEBPACK_IMPORTED_MODULE_0_vue_loading_overlay___default.a
+    },
+    data: function data() {
+        return {
+            api: {},
+            ticker: "",
+            isLoading: false
+        };
+    },
+
+    methods: {
+        getTrade: function getTrade() {
+            var _this = this;
+
+            this.isLoading = true;
+            iex.stockPrevious(this.ticker).then(function (res) {
+                _this.isLoading = false;
+                _this.api = res;
+            }).catch(function (error) {
+                console.log(error);
+                _this.isLoading = false;
+            });
+        }
+    },
+    mounted: function mounted() {}
+});
+
+/***/ }),
+/* 450 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "container" },
+    [
+      _c("loading", {
+        attrs: {
+          active: _vm.isLoading,
+          "can-cancel": true,
+          "is-full-page": true
+        },
+        on: {
+          "update:active": function($event) {
+            _vm.isLoading = $event
+          }
+        }
+      }),
+      _vm._v(" "),
+      _c("div", { staticClass: "row mt-5" }, [
+        _c("div", { staticClass: "col-md-12" }, [
+          _c("div", { staticClass: "card" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-body table-responsive p-2" }, [
+              _c("div", { staticClass: "col-3" }, [
+                _c("div", { staticClass: "input-group mb-3" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.ticker,
+                        expression: "ticker"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "text",
+                      placeholder: "Intrduzca el symbol",
+                      "aria-label": "Intrduzca el symbol",
+                      "aria-describedby": "button-addon2"
+                    },
+                    domProps: { value: _vm.ticker },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.ticker = $event.target.value
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "input-group-append" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-outline-secondary green",
+                        attrs: { type: "button", id: "button-addon2" },
+                        on: {
+                          click: function($event) {
+                            return _vm.getTrade()
+                          }
+                        }
+                      },
+                      [_vm._v("Mostrar")]
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-6" }, [
+                  _c("ul", [
+                    _c("li", [
+                      _vm._v("symbol                  : "),
+                      _c("span", { staticClass: "red" }, [
+                        _vm._v(_vm._s(_vm.api.symbol))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("date                    : "),
+                      _c("span", { staticClass: "purple" }, [
+                        _vm._v(_vm._s(_vm.api.date))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("open                    : "),
+                      _c("span", { staticClass: "red" }, [
+                        _vm._v(_vm._s(_vm.api.open))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("high                    : "),
+                      _c("span", { staticClass: "red" }, [
+                        _vm._v(_vm._s(_vm.api.high))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("low                     : "),
+                      _c("span", { staticClass: "purple" }, [
+                        _vm._v(_vm._s(_vm.api.low))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("close                   : "),
+                      _c("span", { staticClass: "yellow" }, [
+                        _vm._v(_vm._s(_vm.api.close))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("volume                  : "),
+                      _c("span", { staticClass: "cyan" }, [
+                        _vm._v(_vm._s(_vm.api.volume))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("unadjustedVolume        : "),
+                      _c("span", { staticClass: "red" }, [
+                        _vm._v(_vm._s(_vm.api.unadjustedVolume))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("change                  : "),
+                      _c("span", { staticClass: "purple" }, [
+                        _vm._v(_vm._s(_vm.api.change))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("changePercent           : "),
+                      _c("span", { staticClass: "yellow" }, [
+                        _vm._v(_vm._s(_vm.api.changePercent))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("vwap                    : "),
+                      _c("span", { staticClass: "cyan" }, [
+                        _vm._v(_vm._s(_vm.api.vwap))
+                      ])
+                    ])
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-footer" })
+          ])
+        ])
+      ])
+    ],
+    1
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _c("h3", { staticClass: "card-title" }, [_vm._v("Previous Traiding")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-tools" })
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-23a36de4", module.exports)
+  }
+}
+
+/***/ }),
+/* 451 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(3)
+/* script */
+var __vue_script__ = __webpack_require__(452)
+/* template */
+var __vue_template__ = __webpack_require__(453)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/TKeyStat.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-668a0014", Component.options)
+  } else {
+    hotAPI.reload("data-v-668a0014", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 452 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_loading_overlay__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_loading_overlay___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_loading_overlay__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_loading_overlay_dist_vue_loading_css__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_loading_overlay_dist_vue_loading_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_loading_overlay_dist_vue_loading_css__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    components: {
+        Loading: __WEBPACK_IMPORTED_MODULE_0_vue_loading_overlay___default.a
+    },
+    data: function data() {
+        return {
+            api: {},
+            ticker: "",
+            isLoading: false
+        };
+    },
+
+    methods: {
+        getTrade: function getTrade() {
+            var _this = this;
+
+            this.isLoading = true;
+            iex.stockKeyStats(this.ticker).then(function (res) {
+                _this.isLoading = false;
+                _this.api = res;
+            }).catch(function (error) {
+                console.log(error);
+                _this.isLoading = false;
+            });
+        }
+    },
+    mounted: function mounted() {}
+});
+
+/***/ }),
+/* 453 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "container" },
+    [
+      _c("loading", {
+        attrs: {
+          active: _vm.isLoading,
+          "can-cancel": true,
+          "is-full-page": true
+        },
+        on: {
+          "update:active": function($event) {
+            _vm.isLoading = $event
+          }
+        }
+      }),
+      _vm._v(" "),
+      _c("div", { staticClass: "row mt-5" }, [
+        _c("div", { staticClass: "col-md-12" }, [
+          _c("div", { staticClass: "card" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-body table-responsive p-2" }, [
+              _c("div", { staticClass: "col-3" }, [
+                _c("div", { staticClass: "input-group mb-3" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.ticker,
+                        expression: "ticker"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "text",
+                      placeholder: "Intrduzca el symbol",
+                      "aria-label": "Intrduzca el symbol",
+                      "aria-describedby": "button-addon2"
+                    },
+                    domProps: { value: _vm.ticker },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.ticker = $event.target.value
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "input-group-append" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-outline-secondary green",
+                        attrs: { type: "button", id: "button-addon2" },
+                        on: {
+                          click: function($event) {
+                            return _vm.getTrade()
+                          }
+                        }
+                      },
+                      [_vm._v("Mostrar")]
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-6" }, [
+                  _c("ul", [
+                    _c("li", [
+                      _vm._v("companyName             : "),
+                      _c("span", { staticClass: "red" }, [
+                        _vm._v(_vm._s(_vm.api.companyName))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("marketcap               : "),
+                      _c("span", { staticClass: "purple" }, [
+                        _vm._v(_vm._s(_vm.api.marketcap))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("beta                    : "),
+                      _c("span", { staticClass: "red" }, [
+                        _vm._v(_vm._s(_vm.api.beta))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("week52high              : "),
+                      _c("span", { staticClass: "red" }, [
+                        _vm._v(_vm._s(_vm.api.week52high))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("week52low               : "),
+                      _c("span", { staticClass: "purple" }, [
+                        _vm._v(_vm._s(_vm.api.week52low))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("week52change            : "),
+                      _c("span", { staticClass: "yellow" }, [
+                        _vm._v(_vm._s(_vm.api.week52change))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("shortInterest           : "),
+                      _c("span", { staticClass: "cyan" }, [
+                        _vm._v(_vm._s(_vm.api.shortInterest))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("shortDate               : "),
+                      _c("span", { staticClass: "red" }, [
+                        _vm._v(_vm._s(_vm.api.shortDate))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("dividendRate            : "),
+                      _c("span", { staticClass: "purple" }, [
+                        _vm._v(_vm._s(_vm.api.dividendRate))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("dividendYield           : "),
+                      _c("span", { staticClass: "yellow" }, [
+                        _vm._v(_vm._s(_vm.api.dividendYield))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("exDividendDate          : "),
+                      _c("span", { staticClass: "cyan" }, [
+                        _vm._v(_vm._s(_vm.api.exDividendDate))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("latestEPS               : "),
+                      _c("span", { staticClass: "red" }, [
+                        _vm._v(_vm._s(_vm.api.latestEPS))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("latestEPSDate           : "),
+                      _c("span", { staticClass: "purple" }, [
+                        _vm._v(_vm._s(_vm.api.latestEPSDate))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("sharesOutstanding       : "),
+                      _c("span", { staticClass: "yellow" }, [
+                        _vm._v(_vm._s(_vm.api.sharesOutstanding))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("float                   : "),
+                      _c("span", { staticClass: "cyan" }, [
+                        _vm._v(_vm._s(_vm.api.float))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("returnOnEquity          : "),
+                      _c("span", { staticClass: "red" }, [
+                        _vm._v(_vm._s(_vm.api.returnOnEquity))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("consensusEPS            : "),
+                      _c("span", { staticClass: "purple" }, [
+                        _vm._v(_vm._s(_vm.api.consensusEPS))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("numberOfEstimates       : "),
+                      _c("span", { staticClass: "yellow" }, [
+                        _vm._v(_vm._s(_vm.api.numberOfEstimates))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("EPSSurpriseDollar       : "),
+                      _c("span", { staticClass: "cyan" }, [
+                        _vm._v(_vm._s(_vm.api.EPSSurpriseDollar))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("EPSSurprisePercent      : "),
+                      _c("span", { staticClass: "red" }, [
+                        _vm._v(_vm._s(_vm.api.EPSSurprisePercent))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("symbol                  : "),
+                      _c("span", { staticClass: "purple" }, [
+                        _vm._v(_vm._s(_vm.api.symbol))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("EBITDA                  : "),
+                      _c("span", { staticClass: "yellow" }, [
+                        _vm._v(_vm._s(_vm.api.EBITDA))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("revenue                 : "),
+                      _c("span", { staticClass: "cyan" }, [
+                        _vm._v(_vm._s(_vm.api.revenue))
+                      ])
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-6" }, [
+                  _c("ul", [
+                    _c("li", [
+                      _vm._v("grossProfit             : "),
+                      _c("span", { staticClass: "red" }, [
+                        _vm._v(_vm._s(_vm.api.grossProfit))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("cash                    : "),
+                      _c("span", { staticClass: "purple" }, [
+                        _vm._v(_vm._s(_vm.api.cash))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("debt                    : "),
+                      _c("span", { staticClass: "red" }, [
+                        _vm._v(_vm._s(_vm.api.debt))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("ttmEPS                  : "),
+                      _c("span", { staticClass: "red" }, [
+                        _vm._v(_vm._s(_vm.api.ttmEPS))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("revenuePerShare         : "),
+                      _c("span", { staticClass: "purple" }, [
+                        _vm._v(_vm._s(_vm.api.revenuePerShare))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("revenuePerEmployee      : "),
+                      _c("span", { staticClass: "yellow" }, [
+                        _vm._v(_vm._s(_vm.api.revenuePerEmployee))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("peRatioHigh             : "),
+                      _c("span", { staticClass: "cyan" }, [
+                        _vm._v(_vm._s(_vm.api.peRatioHigh))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("peRatioLow              : "),
+                      _c("span", { staticClass: "red" }, [
+                        _vm._v(_vm._s(_vm.api.peRatioLow))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("returnOnAssets          : "),
+                      _c("span", { staticClass: "purple" }, [
+                        _vm._v(_vm._s(_vm.api.returnOnAssets))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("returnOnCapital         : "),
+                      _c("span", { staticClass: "yellow" }, [
+                        _vm._v(_vm._s(_vm.api.returnOnCapital))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("profitMargin            : "),
+                      _c("span", { staticClass: "cyan" }, [
+                        _vm._v(_vm._s(_vm.api.profitMargin))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("priceToSales            : "),
+                      _c("span", { staticClass: "red" }, [
+                        _vm._v(_vm._s(_vm.api.priceToSales))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("priceToBook             : "),
+                      _c("span", { staticClass: "purple" }, [
+                        _vm._v(_vm._s(_vm.api.priceToBook))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("day200MovingAvg         : "),
+                      _c("span", { staticClass: "yellow" }, [
+                        _vm._v(_vm._s(_vm.api.day200MovingAvg))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("day50MovingAvg          : "),
+                      _c("span", { staticClass: "cyan" }, [
+                        _vm._v(_vm._s(_vm.api.day50MovingAvg))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("institutionPercent      : "),
+                      _c("span", { staticClass: "red" }, [
+                        _vm._v(_vm._s(_vm.api.institutionPercent))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("insiderPercent          : "),
+                      _c("span", { staticClass: "purple" }, [
+                        _vm._v(_vm._s(_vm.api.insiderPercent))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("shortRatio              : "),
+                      _c("span", { staticClass: "yellow" }, [
+                        _vm._v(_vm._s(_vm.api.shortRatio))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("year5ChangePercent      : "),
+                      _c("span", { staticClass: "cyan" }, [
+                        _vm._v(_vm._s(_vm.api.year5ChangePercent))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("year2ChangePercent      : "),
+                      _c("span", { staticClass: "red" }, [
+                        _vm._v(_vm._s(_vm.api.year2ChangePercent))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("year1ChangePercent      : "),
+                      _c("span", { staticClass: "purple" }, [
+                        _vm._v(_vm._s(_vm.api.year1ChangePercent))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("ytdChangePercent        : "),
+                      _c("span", { staticClass: "yellow" }, [
+                        _vm._v(_vm._s(_vm.api.ytdChangePercent))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("month6ChangePercent     : "),
+                      _c("span", { staticClass: "cyan" }, [
+                        _vm._v(_vm._s(_vm.api.month6ChangePercent))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("month3ChangePercent     : "),
+                      _c("span", { staticClass: "red" }, [
+                        _vm._v(_vm._s(_vm.api.month3ChangePercent))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("month1ChangePercent     : "),
+                      _c("span", { staticClass: "purple" }, [
+                        _vm._v(_vm._s(_vm.api.month1ChangePercent))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("day5ChangePercent       : "),
+                      _c("span", { staticClass: "yellow" }, [
+                        _vm._v(_vm._s(_vm.api.day5ChangePercent))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _vm._v("day30ChangePercent      : "),
+                      _c("span", { staticClass: "cyan" }, [
+                        _vm._v(_vm._s(_vm.api.day30ChangePercent))
+                      ])
+                    ])
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-footer" })
+          ])
+        ])
+      ])
+    ],
+    1
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _c("h3", { staticClass: "card-title" }, [_vm._v("KeyStats Traiding")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-tools" })
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-668a0014", module.exports)
   }
 }
 
