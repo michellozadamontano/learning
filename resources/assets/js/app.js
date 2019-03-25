@@ -78,6 +78,7 @@ import Grafica      from './components/Graficas';
 import Student      from './components/Student';
 import TBook        from './components/TBook';
 import TCompany     from './components/TCompany';
+import Category     from './components/Category';
 
 
 let routes = [
@@ -90,7 +91,8 @@ let routes = [
     { path: '/paypal'       , component: Paypal },
     { path: '/content/:id'  , component: Content },
     { path: '/coupon'       , component: Coupon },
-    { path: '/video/:id/:course'    , component: ShowVideo },    
+    { path: '/video/:id/:course'    , component: ShowVideo },  
+    { path: '/category'       , component: Category },
     { path: '/quote'         , component: TBook },
     { path: '/company'       , component: TCompany },
 

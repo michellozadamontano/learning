@@ -114,6 +114,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <p>Cupones</p>
                 </router-link>
               </li>
+              <li class="nav-item">
+                <router-link to="/category" class="nav-link">
+                  <i class="fas fa-certificate  indigo  "></i>                                       
+                    <p>Categorias</p>
+                </router-link>
+              </li>
 
             </ul>
           </li>

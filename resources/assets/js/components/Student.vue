@@ -65,7 +65,13 @@ export default {
                         return row.user.email
                     },   
                     plan: function(h,row){
-                        return row.user.paypal_subscription.plan
+                        let plan = ""
+                        if(row.user.paypal_subscription != null)
+                        {
+                            plan =  row.user.paypal_subscription.plan
+                        }
+                        return plan;
+                        
                     }
                 }
             }
