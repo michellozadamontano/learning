@@ -67,20 +67,21 @@ Vue.use(VueResource);
 import StripeForm from './components/StripeForm';
 Vue.component('stripe-form', StripeForm);
 
-import Dashboard    from './components/Dashboard';
-import Courses      from './components/Courses';
-import Teachers     from './components/Teachers';
-import Paypal       from './components/Paypal';
-import Content      from './components/Content';
-import Coupon       from './components/Coupon';
-import ShowVideo    from './components/ShowVideo';
-import Grafica      from './components/Graficas';
-import Student      from './components/Student';
-import Category     from './components/Category';
-import TBook        from './components/TBook';
-import TCompany     from './components/TCompany';
-import TPrevious    from './components/TPrevious';
-import TKeyStat      from './components/TKeyStat';
+import Dashboard            from './components/Dashboard';
+import Courses              from './components/Courses';
+import Teachers             from './components/Teachers';
+import Paypal               from './components/Paypal';
+import Content              from './components/Content';
+import Coupon               from './components/Coupon';
+import ShowVideo            from './components/ShowVideo';
+import Grafica              from './components/Graficas';
+import Student              from './components/Student';
+import Category             from './components/Category';
+import StudentSubscribed    from './components/StudentSuscribed';
+import TBook                from './components/TBook';
+import TCompany             from './components/TCompany';
+import TPrevious            from './components/TPrevious';
+import TKeyStat             from './components/TKeyStat';
 
 
 let routes = [
@@ -95,6 +96,7 @@ let routes = [
     { path: '/coupon'       , component: Coupon },
     { path: '/video/:id/:course'    , component: ShowVideo },  
     { path: '/category'      , component: Category },
+    { path: '/subscribed'    , component: StudentSubscribed },
     { path: '/quote'         , component: TBook },
     { path: '/company'       , component: TCompany },
     { path: '/previous'      , component: TPrevious },

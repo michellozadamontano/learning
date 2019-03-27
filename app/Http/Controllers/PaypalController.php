@@ -27,6 +27,7 @@ use App\PaypalPlan;
 use App\PaypalPrice;
 use App\Coupon;
 use App\User;
+use App\Student;
 
 
 class PaypalController extends Controller
@@ -515,8 +516,24 @@ class PaypalController extends Controller
 
     // aqui voy a obtener los usuarios subscritos
     public function getUserSubscribed(){
-        $users = User::where('paypal',1)->count();
-        return $users;
+        /*$users = User::where('paypal',1)->count();
+        return $users;*/
+        $students = Student::with('user.paypalSubscription')
+        ->whereHas('user', function ($q) {
+			$q->where('paypal', 1);
+		})->get();
+		return response()->json($students);
+    }
+    // usuarios subscritos por rango de fechas
+    public function getUserSubscribedByRange(){
+        
+        $students = Student::with('user.paypalSubscription')
+        ->whereHas('user', function ($q) {
+            $desde = request('desde');
+            $hasta = request('hasta');
+			$q->where('paypal', 1)->whereBetween('updated_at', [$desde, $hasta]);
+		})->get();
+		return response()->json($students);
     }
  
 }

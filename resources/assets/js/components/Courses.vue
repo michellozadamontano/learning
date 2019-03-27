@@ -13,6 +13,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <button
+                                   v-tooltip="reject"
                                     v-if="parseInt(props.row.status) === 1 || parseInt(props.row.status) === 2"
                                     type="button"
                                     class="btn btn-danger btn-block"                                    
@@ -23,6 +24,7 @@
                             </div>
                             <div class="col-md-6">
                                 <button
+                                    v-tooltip="approve"
                                     v-if="parseInt(props.row.status) === 3"
                                     type="button"
                                     class="btn btn-success btn-block"                                    

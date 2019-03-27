@@ -8,9 +8,25 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Estudiates inscritos a cursos</h3>                
+                <h3 class="card-title">Estudiates subscritos</h3>                
               </div>             
               <div class="card-body table-responsive p-2">
+                  <span class="purple"><h3>Filtrar por rango de fecha</h3> </span>
+                  <div class="col-8">
+                      <div class="input-group">                       
+                        <datepicker v-model="desde" placeholder="Desde" input-class="form-control"></datepicker>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">-</span>
+                        </div>                        
+                        <datepicker v-model="hasta" placeholder="Hasta" input-class="form-control"></datepicker>
+                        <button class="btn btn-primary" @click="showByrange()">
+                           mostrar
+                        </button>
+                    </div>                    
+                        
+                  
+                  </div>
+                  
                   <v-client-table :data="tableData" :columns="columns" :options="options">
                         <div slot="actions" slot-scope="">
                             <a href="#" v-tooltip="msg">                                
@@ -37,15 +53,18 @@
 <script>
 import Loading from 'vue-loading-overlay';   
 import 'vue-loading-overlay/dist/vue-loading.css';
+import Datepicker from 'vuejs-datepicker';
 export default {
-    name: "students",
+    name: "studentsubcribed",
     data() {
         return {
             isLoading: false,
             msg:'Editar',
-            url: 'admin/student_data',
-            columns: ['id', 'name', 'email','courses_formatted','plan','costo','paypal_email','country','city','actions'],
+            url: '/subscriptions/users_subscribed',
+            columns: ['id', 'name', 'email','plan','costo','paypal_email','country','city','actions'],
             tableData:[],
+            desde:"",
+            hasta:"",
             options: {
                 filterByColumn: false,
                 perPage: 10,
@@ -53,8 +72,7 @@ export default {
                     headings: {
                     id                  : 'ID',
                     name                : 'Nombre',
-                    email               : 'Email',
-                    courses_formatted   : 'Cursos',
+                    email               : 'Email',                    
                     plan                : 'Plan',
                     costo               : 'Costo',
                     paypal_email        : 'Paypal Email',
@@ -119,7 +137,8 @@ export default {
         }
     },
     components: {
-        Loading
+        Loading,
+        Datepicker
     }, 
     methods: {
         loadStudent(){
@@ -134,6 +153,27 @@ export default {
                 this.isLoading = false;
                 
             })
+        },
+        showByrange(){
+           
+            console.log("desde:"+ this.desde + ' hasta:' + this.hasta);
+            if(this.desde != "" && this.hasta != ""){
+                this.isLoading = true;
+                axios.post('subscriptions/users_subscribed_range',{
+                    desde: this.desde,
+                    hasta: this.hasta
+                }).then(res => {
+                    this.tableData = res.data;
+                   // console.log(res.data);
+                    this.isLoading = false;
+                    
+                }).catch(error => {
+                    console.log(error);
+                    this.isLoading = false;
+                    
+                })
+            }
+             
         }
         
     },

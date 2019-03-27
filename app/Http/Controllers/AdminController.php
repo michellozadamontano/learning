@@ -138,4 +138,5 @@ class AdminController extends Controller
 		$pepe = $value . " edwing colombia";
 		return view('admin.traiding',compact('pepe'));
 	}
+	
 }
