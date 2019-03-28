@@ -13,6 +13,12 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
 
+Route::get('courses/{path?}', [
+    'uses' => 'HomeController@index',
+    'as' => 'courses',
+    'where' => ['path' => '.*']
+]);
+
 
 Route::get('/images/{path}/{attachment}', function($path, $attachment) {
 	//$file = sprintf('storage/%s/%s', $path, $attachment);
@@ -85,6 +91,7 @@ Route::group(['middleware' => ['auth']], function () {
 		Route::get('/paypalplans', 'PaypalController@paypalPlans')->name('subscriptions.paypalPlans');
 		Route::get('/users_subscribed','PaypalController@getUserSubscribed');
 		Route::post('/users_subscribed_range','PaypalController@getUserSubscribedByRange');
+		Route::get('/users_subscribed_count','PaypalController@getSubscriptionStatistics');
 	});
 
 	Route::group(['prefix' => "invoices"], function() {

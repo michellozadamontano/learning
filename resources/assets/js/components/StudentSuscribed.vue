@@ -8,7 +8,16 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Estudiates subscritos</h3>                
+                <h3 class="card-title">Estudiates subscritos</h3>     
+                <download-excel                    
+                   
+                    :data="array_excel"
+                    :before-generate = "startDownload"
+                    :before-finish = "finishDownload"
+                    class="hover-excel ">
+                     Datos Excel
+                     <i class="fas fa-file-excel green"></i>                    
+                </download-excel>           
               </div>             
               <div class="card-body table-responsive p-2">
                   <span class="purple"><h3>Filtrar por rango de fecha</h3> </span>
@@ -63,6 +72,16 @@ export default {
             url: '/subscriptions/users_subscribed',
             columns: ['id', 'name', 'email','plan','costo','paypal_email','country','city','actions'],
             tableData:[],
+            excel_object:{
+                nombre:"",
+                email: "",
+                plan:"",
+                costo:"",
+                paypal_email:"",
+                country:"",
+                city:"",
+            },
+            array_excel:[],
             desde:"",
             hasta:"",
             options: {
@@ -133,7 +152,8 @@ export default {
                         
                     }
                 }
-            }
+            },
+            json_data:this.array_excel,
         }
     },
     components: {
@@ -146,7 +166,23 @@ export default {
             axios.get(this.url).then(res => {
                 this.tableData = res.data;
                 console.log(res.data);
+               /* res.data.forEach(element => {
+                   let obj =  this.excel_object = {
+                        nombre          : element.user.name,
+                        email           : element.user.email,
+                        plan            : element.user.paypal_subscription.plan,
+                        costo           : element.user.paypal_subscription.amount,
+                        paypal_email    : element.user.paypal_subscription.paypal_email,
+                        country         : element.user.paypal_subscription.country,
+                        city            : element.user.paypal_subscription.city,
+                    }
+                    this.array_excel.push(obj);
+
+                });*/
+               // console.log(this.array_excel);
+                
                 this.isLoading = false;
+
                 
             }).catch(error => {
                 console.log(error);
@@ -174,11 +210,48 @@ export default {
                 })
             }
              
+        },
+        async fetchData(){
+            this.array_excel = []
+            axios.get(this.url).then(res => {              
+               
+                res.data.forEach(element => {
+                   let obj =  this.excel_object = {
+                        nombre          : element.user.name,
+                        email           : element.user.email,
+                        plan            : element.user.paypal_subscription.plan,
+                        costo           : element.user.paypal_subscription.amount,
+                        paypal_email    : element.user.paypal_subscription.paypal_email,
+                        country         : element.user.paypal_subscription.country,
+                        city            : element.user.paypal_subscription.city,
+                    }
+                    this.array_excel.push(obj);
+
+                });
+               // console.log(this.array_excel);
+                this.isLoading = false;
+                return this.array_excel;
+                
+
+                
+            }).catch(error => {
+                console.log(error);
+                this.isLoading = false;
+                
+            })
+           
+        },
+        startDownload(){
+        this.isLoading = true;
+        },
+        finishDownload(){
+             this.isLoading = false;
         }
         
     },
     mounted() {
         this.loadStudent();
+        this.fetchData();
     },
 }
 </script>

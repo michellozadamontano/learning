@@ -31520,6 +31520,10 @@ header .navbar-laravel .navbar-brand {
   text-align: center;
 }
 
+.hover-excel:hover {
+  cursor: pointer;
+}
+
 /*css para los tooltips*/
 
 .tooltip {

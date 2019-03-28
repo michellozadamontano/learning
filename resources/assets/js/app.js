@@ -67,6 +67,9 @@ Vue.use(VueResource);
 import StripeForm from './components/StripeForm';
 Vue.component('stripe-form', StripeForm);
 
+import JsonExcel from 'vue-json-excel' 
+Vue.component('downloadExcel', JsonExcel)
+
 import Dashboard            from './components/Dashboard';
 import Courses              from './components/Courses';
 import Teachers             from './components/Teachers';

@@ -535,5 +535,24 @@ class PaypalController extends Controller
 		})->get();
 		return response()->json($students);
     }
+    public function getSubscriptionStatistics(){
+        
+        $sub_array = array();
+        $month = 0;
+       for ($i=1; $i <= 12; $i++) { 
+            $month = $i;
+            $students = Student::with('user.paypalSubscription')
+            ->whereHas('user', function ($q) use($i) {
+                $year = date("Y");               
+                
+                $q->where('paypal', 1)
+                ->whereYear('updated_at', $year)
+                ->whereMonth('updated_at', $i);
+            })->count();
+            \array_push($sub_array,$students);
+       }
+       return response()->json($sub_array);
+        
+    }
  
 }
