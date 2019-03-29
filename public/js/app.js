@@ -96612,7 +96612,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
             this.datacollection = {
                 labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
                 datasets: [{
-                    label: 'subscriciones',
+                    label: 'suscripciones',
                     backgroundColor: '#f87979',
                     data: this.subscribed_per_month
                 }]
@@ -112412,6 +112412,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -112431,6 +112451,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             reject: "Rechazar",
             approve: "Aprobar",
             url: '/admin/courses_json', //this.route,
+            excel_object: {
+                nombre: "",
+                descripcion: "",
+                estado: ""
+            },
+            array_excel: [],
             columns: ['id', 'name', 'status', 'activate_deactivate'],
             options: {
                 filterByColumn: true,
@@ -112451,6 +112477,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     this.isLoading = true;
                     return window.axios.get(this.url, {
                         params: data
+
                     }).catch(function (e) {
                         this.isLoading = false;
                         this.dispatch('error', e);
@@ -112516,9 +112543,38 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }).catch(function (error) {}).finally(function () {
                 // this.processing = false;
             });
+        },
+        startDownload: function startDownload() {
+            this.isLoading = true;
+        },
+        finishDownload: function finishDownload() {
+            this.isLoading = false;
+        },
+        loadData: function loadData() {
+            var _this4 = this;
+
+            axios.get('/admin/courses_excel').then(function (res) {
+                console.log(res.data);
+                res.data.forEach(function (element) {
+                    var state = void 0;
+                    if (element.status == 1) state = "PUBLICADO";
+                    if (element.status == 2) state = "PENDIENTE";
+                    if (element.status == 3) state = "RECHAZADO";
+
+                    _this4.excel_object = {
+                        nombre: element.name,
+                        descripcion: element.description,
+                        estado: state
+                    };
+                    _this4.array_excel.push(_this4.excel_object);
+                });
+            });
         }
     },
-    computed: {}
+    computed: {},
+    mounted: function mounted() {
+        this.loadData();
+    }
 });
 
 /***/ }),
@@ -112546,166 +112602,230 @@ var render = function() {
         }
       }),
       _vm._v(" "),
-      _c(
-        "v-server-table",
-        {
-          ref: "table",
-          attrs: { columns: _vm.columns, url: _vm.url, options: _vm.options },
-          scopedSlots: _vm._u([
-            {
-              key: "activate_deactivate",
-              fn: function(props) {
-                return _c("div", {}, [
-                  _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "col-md-6" }, [
-                      _c("div", { staticClass: "row" }, [
-                        _c("div", { staticClass: "col-md-6" }, [
-                          parseInt(props.row.status) === 1 ||
-                          parseInt(props.row.status) === 2
-                            ? _c(
-                                "button",
-                                {
-                                  directives: [
+      _c("div", { staticClass: "row mt-5" }, [
+        _c("div", { staticClass: "col-12" }, [
+          _c("div", { staticClass: "card" }, [
+            _c(
+              "div",
+              { staticClass: "card-header" },
+              [
+                _c("h3", { staticClass: "card-title" }, [_vm._v("Cursos")]),
+                _vm._v(" "),
+                _c(
+                  "download-excel",
+                  {
+                    staticClass: "hover-excel ",
+                    attrs: {
+                      data: _vm.array_excel,
+                      "before-generate": _vm.startDownload,
+                      "before-finish": _vm.finishDownload
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                        Datos Excel\n                        "
+                    ),
+                    _c("i", { staticClass: "fas fa-file-excel green" })
+                  ]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "card-body table-responsive p-2" },
+              [
+                _c(
+                  "v-server-table",
+                  {
+                    ref: "table",
+                    attrs: {
+                      columns: _vm.columns,
+                      url: _vm.url,
+                      options: _vm.options
+                    },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "activate_deactivate",
+                        fn: function(props) {
+                          return _c("div", {}, [
+                            _c("div", { staticClass: "row" }, [
+                              _c("div", { staticClass: "col-md-6" }, [
+                                _c("div", { staticClass: "row" }, [
+                                  _c("div", { staticClass: "col-md-6" }, [
+                                    parseInt(props.row.status) === 1 ||
+                                    parseInt(props.row.status) === 2
+                                      ? _c(
+                                          "button",
+                                          {
+                                            directives: [
+                                              {
+                                                name: "tooltip",
+                                                rawName: "v-tooltip",
+                                                value: _vm.reject,
+                                                expression: "reject"
+                                              }
+                                            ],
+                                            staticClass:
+                                              "btn btn-danger btn-block",
+                                            attrs: { type: "button" },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.updateStatus(
+                                                  props.row,
+                                                  3
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass: "fa fa-ban"
+                                            })
+                                          ]
+                                        )
+                                      : _vm._e()
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-md-6" }, [
+                                    parseInt(props.row.status) === 3
+                                      ? _c(
+                                          "button",
+                                          {
+                                            directives: [
+                                              {
+                                                name: "tooltip",
+                                                rawName: "v-tooltip",
+                                                value: _vm.approve,
+                                                expression: "approve"
+                                              }
+                                            ],
+                                            staticClass:
+                                              "btn btn-success btn-block",
+                                            attrs: { type: "button" },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.updateStatus(
+                                                  props.row,
+                                                  1
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass: "fa fa-rocket"
+                                            })
+                                          ]
+                                        )
+                                      : _vm._e()
+                                  ])
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "col-md-6" },
+                                [
+                                  _c(
+                                    "router-link",
                                     {
-                                      name: "tooltip",
-                                      rawName: "v-tooltip",
-                                      value: _vm.reject,
-                                      expression: "reject"
-                                    }
-                                  ],
-                                  staticClass: "btn btn-danger btn-block",
-                                  attrs: { type: "button" },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.updateStatus(props.row, 3)
-                                    }
-                                  }
-                                },
-                                [_c("i", { staticClass: "fa fa-ban" })]
+                                      staticClass: "btn btn-primary btn-block",
+                                      attrs: { to: "/content/" + props.row.id }
+                                    },
+                                    [_vm._v(" Ver Curso")]
+                                  )
+                                ],
+                                1
                               )
-                            : _vm._e()
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-md-6" }, [
-                          parseInt(props.row.status) === 3
-                            ? _c(
-                                "button",
-                                {
-                                  directives: [
-                                    {
-                                      name: "tooltip",
-                                      rawName: "v-tooltip",
-                                      value: _vm.approve,
-                                      expression: "approve"
-                                    }
-                                  ],
-                                  staticClass: "btn btn-success btn-block",
-                                  attrs: { type: "button" },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.updateStatus(props.row, 1)
-                                    }
-                                  }
-                                },
-                                [_c("i", { staticClass: "fa fa-rocket" })]
-                              )
-                            : _vm._e()
-                        ])
-                      ])
-                    ]),
+                            ])
+                          ])
+                        }
+                      },
+                      {
+                        key: "status",
+                        fn: function(props) {
+                          return _c("div", {}, [
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(_vm.formattedStatus(props.row.status)) +
+                                "\n                        "
+                            )
+                          ])
+                        }
+                      }
+                    ])
+                  },
+                  [
+                    _vm._v(" "),
                     _vm._v(" "),
                     _c(
                       "div",
-                      { staticClass: "col-md-6" },
+                      {
+                        attrs: { slot: "filter__status" },
+                        on: { change: _vm.filterByStatus },
+                        slot: "filter__status"
+                      },
                       [
                         _c(
-                          "router-link",
+                          "select",
                           {
-                            staticClass: "btn btn-primary btn-block",
-                            attrs: { to: "/content/" + props.row.id }
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.status,
+                                expression: "status"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.status = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              }
+                            }
                           },
-                          [_vm._v(" Ver Curso")]
+                          [
+                            _c(
+                              "option",
+                              { attrs: { selected: "", value: "0" } },
+                              [_vm._v("Selecciona una opción")]
+                            ),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "1" } }, [
+                              _vm._v("Publicado")
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "2" } }, [
+                              _vm._v("Pendiente")
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "3" } }, [
+                              _vm._v("Rechazado")
+                            ])
+                          ]
                         )
-                      ],
-                      1
+                      ]
                     )
-                  ])
-                ])
-              }
-            },
-            {
-              key: "status",
-              fn: function(props) {
-                return _c("div", {}, [
-                  _vm._v(
-                    "\n            " +
-                      _vm._s(_vm.formattedStatus(props.row.status)) +
-                      "\n        "
-                  )
-                ])
-              }
-            }
+                  ]
+                )
+              ],
+              1
+            )
           ])
-        },
-        [
-          _vm._v(" "),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              attrs: { slot: "filter__status" },
-              on: { change: _vm.filterByStatus },
-              slot: "filter__status"
-            },
-            [
-              _c(
-                "select",
-                {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.status,
-                      expression: "status"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  on: {
-                    change: function($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function(o) {
-                          return o.selected
-                        })
-                        .map(function(o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
-                      _vm.status = $event.target.multiple
-                        ? $$selectedVal
-                        : $$selectedVal[0]
-                    }
-                  }
-                },
-                [
-                  _c("option", { attrs: { selected: "", value: "0" } }, [
-                    _vm._v("Selecciona una opción")
-                  ]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "1" } }, [
-                    _vm._v("Publicado")
-                  ]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "2" } }, [
-                    _vm._v("Pendiente")
-                  ]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "3" } }, [_vm._v("Rechazado")])
-                ]
-              )
-            ]
-          )
-        ]
-      )
+        ])
+      ])
     ],
     1
   )
@@ -112868,6 +112988,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 // Import component
@@ -112889,6 +113016,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             fullPage: true,
             columns: ['id', 'name', 'email', 'cursos', 'actions'],
             tableData: [],
+            array_excel: [],
             options: {
                 filterByColumn: true,
                 perPage: 10,
@@ -112940,6 +113068,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.isLoading = true;
             axios.get('/admin/teachers_json').then(function (response) {
                 _this2.tableData = response.data;
+                response.data.forEach(function (element) {
+                    var value = "";
+                    element.courses.forEach(function (row) {
+                        value += row.name + ' , ';
+                    });
+                    var obj = {
+                        nombre: element.user.name,
+                        correo: element.user.email,
+                        cursos: value
+                    };
+                    _this2.array_excel.push(obj);
+                });
                 _this2.processing = false;
                 _this2.isLoading = false;
                 //  console.log(response.data);
@@ -112947,11 +113087,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         onCancel: function onCancel() {
             console.log('Se cancelo el loading.');
+        },
+        startDownload: function startDownload() {
+            this.isLoading = true;
+        },
+        finishDownload: function finishDownload() {
+            this.isLoading = false;
         }
     },
     computed: {},
     mounted: function mounted() {
-
         this.getResults();
     }
 });
@@ -112985,7 +113130,34 @@ var render = function() {
       _c("div", { staticClass: "row mt-5" }, [
         _c("div", { staticClass: "col-md-12" }, [
           _c("div", { staticClass: "card" }, [
-            _vm._m(0),
+            _c(
+              "div",
+              { staticClass: "card-header" },
+              [
+                _c("h3", { staticClass: "card-title" }, [_vm._v("Profesores")]),
+                _vm._v(" "),
+                _c(
+                  "download-excel",
+                  {
+                    staticClass: "hover-excel ",
+                    attrs: {
+                      data: _vm.array_excel,
+                      "before-generate": _vm.startDownload,
+                      "before-finish": _vm.finishDownload
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                    Datos Excel\n                    "
+                    ),
+                    _c("i", { staticClass: "fas fa-file-excel green" })
+                  ]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-tools" })
+              ],
+              1
+            ),
             _vm._v(" "),
             _c(
               "div",
@@ -113026,18 +113198,7 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header" }, [
-      _c("h3", { staticClass: "card-title" }, [_vm._v("Profesores")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "card-tools" })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -114765,7 +114926,7 @@ exports = module.exports = __webpack_require__(7)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -114835,7 +114996,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             isLoading: false,
             msg: 'Editar',
             url: 'admin/student_data',
-            columns: ['id', 'name', 'email', 'courses_formatted', 'plan', 'costo', 'paypal_email', 'country', 'city', 'actions'],
+            columns: ['id', 'name', 'email', 'courses_formatted', 'plan', 'costo', 'paypal_email', 'country', 'city', 'descuento', 'coupon', 'actions'],
             tableData: [],
             excel_object: {
                 nombre: "",
@@ -114845,7 +115006,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 costo: "",
                 paypal_email: "",
                 country: "",
-                city: ""
+                city: "",
+                descuento: "",
+                coupon: ""
             },
             array_excel: [],
             options: {
@@ -114905,6 +115068,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                             city = row.user.paypal_subscription.city;
                         }
                         return city;
+                    },
+                    descuento: function descuento(h, row) {
+                        var descuento = "";
+                        if (row.user.paypal_subscription != null) {
+                            if (row.user.paypal_subscription.coupon != null) {
+                                descuento = 'SI';
+                            } else {
+                                descuento = 'NO';
+                            }
+                        }
+                        return descuento;
+                    },
+                    coupon: function coupon(h, row) {
+                        var coupon = "";
+                        if (row.user.paypal_subscription != null) {
+                            coupon = row.user.paypal_subscription.coupon;
+                        }
+                        return coupon;
                     }
                 }
             }
@@ -114924,7 +115105,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 console.log(res.data);
                 _this.array_excel = [];
                 res.data.forEach(function (element) {
-                    var obj = _this.excel_object = {
+                    var obj = {
                         nombre: element.user.name,
                         email: element.user.email,
                         cursos: element.courses_formatted,
@@ -114932,7 +115113,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                         costo: element.user.paypal_subscription.amount,
                         paypal_email: element.user.paypal_subscription.paypal_email,
                         country: element.user.paypal_subscription.country,
-                        city: element.user.paypal_subscription.city
+                        city: element.user.paypal_subscription.city,
+                        descuento: element.user.paypal_subscription.coupon != null ? "SI" : "NO",
+                        coupon: element.user.paypal_subscription.coupon
                     };
                     _this.array_excel.push(obj);
                 });
@@ -115403,7 +115586,11 @@ var render = function() {
                                   }
                                 }
                               },
-                              [_c("i", { staticClass: "fa fa-edit blue" })]
+                              [
+                                _c("i", {
+                                  staticClass: "fa fa-edit blue fa-2x"
+                                })
+                              ]
                             ),
                             _vm._v(
                               "\n                        /\n                        "
@@ -115418,7 +115605,11 @@ var render = function() {
                                   }
                                 }
                               },
-                              [_c("i", { staticClass: "fa fa-trash red" })]
+                              [
+                                _c("i", {
+                                  staticClass: "fa fa-trash red fa-2x"
+                                })
+                              ]
                             )
                           ])
                         }
@@ -117634,7 +117825,7 @@ var render = function() {
               { staticClass: "card-header" },
               [
                 _c("h3", { staticClass: "card-title" }, [
-                  _vm._v("Estudiates subscritos")
+                  _vm._v("Estudiates suscritos")
                 ]),
                 _vm._v(" "),
                 _c(

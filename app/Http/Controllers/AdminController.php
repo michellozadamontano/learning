@@ -31,6 +31,10 @@ class AdminController extends Controller
 		}
 		return abort(401);
 	}
+	public function coursesExcel() {
+		$courses = Course::all();
+		return $courses;
+	}
 	public function teachersJson() {
 	//	if(request()->ajax()) {
 			$vueTables = new EloquentVueTables;

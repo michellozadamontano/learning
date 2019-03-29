@@ -97,7 +97,7 @@ import LineChart from './Graficas';
                 labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul','Ago','Sep','Oct','Nov','Dic'],
                 datasets: [
                     {
-                        label: 'subscriciones',
+                        label: 'suscripciones',
                         backgroundColor: '#f87979',
                         data: this.subscribed_per_month,
                     }

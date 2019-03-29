@@ -20,11 +20,11 @@
                     <v-client-table :data="tableData" :columns="columns" :options="options">
                         <div slot="actions" slot-scope="props">
                             <a href="#" @click="editModal(props.row)">
-                                <i class="fa fa-edit blue"></i>
+                                <i class="fa fa-edit blue fa-2x"></i>
                             </a>
                             /
                             <a href="#" @click="deleteCategory(props.row.id)">
-                                <i class="fa fa-trash red"></i>
+                                <i class="fa fa-trash red fa-2x"></i>
                             </a>
                         </div>
                     </v-client-table>

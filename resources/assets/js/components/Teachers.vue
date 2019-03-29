@@ -12,7 +12,14 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Profesores</h3>
-
+                    <download-excel        
+                        :data="array_excel"
+                        :before-generate = "startDownload"
+                        :before-finish = "finishDownload"
+                        class="hover-excel ">
+                        Datos Excel
+                        <i class="fas fa-file-excel green"></i>                    
+                    </download-excel>   
                 <div class="card-tools">
                     
                 </div>
@@ -64,6 +71,7 @@
                 fullPage: true,
                 columns: ['id', 'name', 'email','cursos','actions'],
                 tableData:[],
+                array_excel:[],
                 options: {
                     filterByColumn: true,
                     perPage: 10,
@@ -112,7 +120,20 @@
                 this.isLoading = true;
                 axios.get('/admin/teachers_json')
                     .then(response => {
-                        this.tableData = response.data;
+                        this.tableData = response.data;                        
+                        response.data.forEach(element => {
+                            let value = "";
+                             element.courses.forEach(row => {
+                                 value  += row.name + ' , ' ;                      
+                                                               
+                            });
+                            let obj = {
+                                nombre: element.user.name,
+                                correo: element.user.email,
+                                cursos: value
+                            }
+                            this.array_excel.push(obj);
+                        });                        
                         this.processing = false;
                         this.isLoading = false;
                       //  console.log(response.data);
@@ -121,7 +142,13 @@
             },
             onCancel() {
               console.log('Se cancelo el loading.')
-            }
+            },
+            startDownload(){
+                this.isLoading = true;
+            },
+            finishDownload(){
+                this.isLoading = false;
+            },
            
             
            
@@ -129,10 +156,9 @@
         computed: {
             
         },
-        mounted() {        
-       
-        this.getResults();
-    }
+        mounted() {   
+            this.getResults();
+        }
     }
 </script>
 

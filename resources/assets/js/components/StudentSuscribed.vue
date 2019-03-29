@@ -8,7 +8,7 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Estudiates subscritos</h3>     
+                <h3 class="card-title">Estudiates suscritos</h3>     
                 <download-excel        
                     :data="array_excel"
                     :before-generate = "startDownload"

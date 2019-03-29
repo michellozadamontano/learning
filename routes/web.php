@@ -134,6 +134,7 @@ Route::group(['prefix' => "admin", "middleware" => ['auth', sprintf("role:%s", \
 	Route::get('/students', 'AdminController@student')->name('admin.students');
 	Route::get('/student_data', 'AdminController@dataStudent')->name('admin.datastudents');
 	Route::get('/courses_json', 'AdminController@coursesJson')->name('admin.courses_json');
+	Route::get('/courses_excel', 'AdminController@coursesExcel');
 	Route::post('/courses/updateStatus', 'AdminController@updateCourseStatus');
 	Route::post('/courses/showCourseContent','AdminController@showCourseContent');
 	Route::post('/courses/showContentFiles','AdminController@showContentFiles');

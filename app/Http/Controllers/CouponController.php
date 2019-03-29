@@ -14,7 +14,7 @@ class CouponController extends Controller
     {
 
         $this->validate($request,[
-            'code' => 'required|string|max:8',
+            'code' => 'required|string|max:20',
             'quantity' => 'required',
             'percent' => 'required'
         ]);
@@ -35,7 +35,7 @@ class CouponController extends Controller
         $coupon = Coupon::findOrFail($id);
 
         $this->validate($request,[
-            'code' => 'required|string|max:8',
+            'code' => 'required|string|max:20',
             'quantity' => 'required',
             'percent' => 'required'
         ]);

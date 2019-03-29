@@ -53,7 +53,7 @@ export default {
             isLoading: false,
             msg:'Editar',
             url: 'admin/student_data',
-            columns: ['id', 'name', 'email','courses_formatted','plan','costo','paypal_email','country','city','actions'],
+            columns: ['id', 'name', 'email','courses_formatted','plan','costo','paypal_email','country','city','descuento','coupon','actions'],
             tableData:[],
             excel_object:{
                 nombre:"",
@@ -64,6 +64,8 @@ export default {
                 paypal_email:"",
                 country:"",
                 city:"",
+                descuento:"",
+                coupon: "",
             },
             array_excel:[],
             options: {
@@ -133,6 +135,29 @@ export default {
                         }
                         return city;
                         
+                    },
+                     descuento: function(h,row){
+                        let descuento = ""
+                        if(row.user.paypal_subscription != null)
+                        {
+                            if(row.user.paypal_subscription.coupon != null)
+                            {
+                                descuento =  'SI'
+                            }
+                            else{
+                                descuento =  'NO'
+                            }
+                            
+                        }
+                        return descuento;                        
+                    },
+                    coupon: function(h,row){
+                        let coupon = ""
+                        if(row.user.paypal_subscription != null)
+                        {
+                            coupon =  row.user.paypal_subscription.coupon
+                        }
+                        return coupon;                        
                     }
                 }
             }
@@ -149,7 +174,7 @@ export default {
                 console.log(res.data);
                 this.array_excel = []
                 res.data.forEach(element => {
-                   let obj =  this.excel_object = {
+                   let obj =  {
                         nombre              : element.user.name,
                         email               : element.user.email,
                         cursos              : element.courses_formatted,
@@ -158,6 +183,8 @@ export default {
                         paypal_email        : element.user.paypal_subscription.paypal_email,
                         country             : element.user.paypal_subscription.country,
                         city                : element.user.paypal_subscription.city,
+                        descuento           : element.user.paypal_subscription.coupon != null ? "SI" : "NO",
+                        coupon              : element.user.paypal_subscription.coupon
                     }
                     this.array_excel.push(obj);
 
