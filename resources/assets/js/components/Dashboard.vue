@@ -10,7 +10,7 @@
               <div class="small-box bg-aqua red">
                 <div class="inner">
                   <h3>{{student}}</h3>
-                  <p>Alumnnos subscritos</p>
+                  <p>Alumnnos suscritos</p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-bag"></i>
@@ -42,7 +42,7 @@
             <div class="col-6">
                 <div class="card">                      
                     <div class="card-body">
-                    <h4 class="card-title">Subscripciones Mensuales</h4>                    
+                    <h4 class="card-title">Suscripciones Mensuales</h4>                    
                     <div class="small">
                         <line-chart :chart-data="datacollection"></line-chart>    
                     </div>

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class PaypalSubscription extends Model
 {
     //
-    protected $fillable = ['user_id','paypal_id','state','start_date','plan','end_date','paypal_email','country','city','amount'];
+    protected $fillable = ['user_id','paypal_id','state','start_date','plan','end_date','paypal_email','country','city','amount','coupon'];
     public function user() {
         return $this->belongsTo(User::class);
     }

@@ -13,11 +13,11 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
 
-Route::get('courses/{path?}', [
+/*Route::get('courses/{path?}', [
     'uses' => 'HomeController@index',
     'as' => 'courses',
     'where' => ['path' => '.*']
-]);
+]);*/
 
 
 Route::get('/images/{path}/{attachment}', function($path, $attachment) {

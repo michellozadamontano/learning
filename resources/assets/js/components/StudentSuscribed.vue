@@ -9,8 +9,7 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Estudiates subscritos</h3>     
-                <download-excel                    
-                   
+                <download-excel        
                     :data="array_excel"
                     :before-generate = "startDownload"
                     :before-finish = "finishDownload"
@@ -70,7 +69,7 @@ export default {
             isLoading: false,
             msg:'Editar',
             url: '/subscriptions/users_subscribed',
-            columns: ['id', 'name', 'email','plan','costo','paypal_email','country','city','actions'],
+            columns: ['id', 'name', 'email','plan','costo','paypal_email','country','city','descuento','coupon','actions'],
             tableData:[],
             excel_object:{
                 nombre:"",
@@ -80,6 +79,8 @@ export default {
                 paypal_email:"",
                 country:"",
                 city:"",
+                descuento:"",
+                coupon: "",
             },
             array_excel:[],
             desde:"",
@@ -97,6 +98,8 @@ export default {
                     paypal_email        : 'Paypal Email',
                     country             : 'Pais',
                     city                : 'Ciudad',
+                    descuento           : 'Descuento',
+                    coupon              : 'Coupon',
                     actions             : "Acciones",    
                 },
                 templates:{
@@ -150,10 +153,32 @@ export default {
                         }
                         return city;
                         
+                    },
+                    descuento: function(h,row){
+                        let descuento = ""
+                        if(row.user.paypal_subscription != null)
+                        {
+                            if(row.user.paypal_subscription.coupon != null)
+                            {
+                                descuento =  'SI'
+                            }
+                            else{
+                                descuento =  'NO'
+                            }
+                            
+                        }
+                        return descuento;                        
+                    },
+                    coupon: function(h,row){
+                        let coupon = ""
+                        if(row.user.paypal_subscription != null)
+                        {
+                            coupon =  row.user.paypal_subscription.coupon
+                        }
+                        return coupon;                        
                     }
                 }
-            },
-            json_data:this.array_excel,
+            },    
         }
     },
     components: {
@@ -161,13 +186,28 @@ export default {
         Datepicker
     }, 
     methods: {
-        loadStudent(){
+        async loadStudent(){
             this.isLoading = true;
             axios.get(this.url).then(res => {
-                this.tableData = res.data;
+                this.tableData = res.data;  
                 console.log(res.data);
-               /* res.data.forEach(element => {
-                   let obj =  this.excel_object = {
+                              
+                res.data.forEach(element => {
+                    let desc  = "";
+                   
+                   /* if(element.user.paypal_subscription != null)
+                    {
+                        if(element.user.paypal_subscription.coupon =! ""){
+                            desc = "SI"
+                            console.log(element.user.paypal_subscription);
+                            
+                        }
+                        else{
+                            desc = "NO"
+                        }
+                        
+                    }*/
+                    let obj =  {
                         nombre          : element.user.name,
                         email           : element.user.email,
                         plan            : element.user.paypal_subscription.plan,
@@ -175,20 +215,21 @@ export default {
                         paypal_email    : element.user.paypal_subscription.paypal_email,
                         country         : element.user.paypal_subscription.country,
                         city            : element.user.paypal_subscription.city,
+                        descuento       : element.user.paypal_subscription.coupon != null ? "SI" : "NO",
+                        coupon          : element.user.paypal_subscription.coupon
                     }
                     this.array_excel.push(obj);
+                    desc = "";
 
-                });*/
-               // console.log(this.array_excel);
-                
-                this.isLoading = false;
-
-                
-            }).catch(error => {
-                console.log(error);
-                this.isLoading = false;
-                
-            })
+                });
+                    console.log(this.array_excel);
+                    this.isLoading = false;      
+                    
+                }).catch(error => {
+                    console.log(error);
+                    this.isLoading = false;
+                    
+                })
         },
         showByrange(){
            
@@ -216,7 +257,21 @@ export default {
             axios.get(this.url).then(res => {              
                
                 res.data.forEach(element => {
-                   let obj =  this.excel_object = {
+                    let desc  = "";
+                   
+                    if(element.user.paypal_subscription != null)
+                    {
+                        if(element.user.paypal_subscription.coupon =! ""){
+                            desc = "SI"
+                            console.log(element.user.paypal_subscription.coupo);
+                            
+                        }
+                        else{
+                            desc = "NO"
+                        }
+                        
+                    }
+                    let obj =  this.excel_object = {
                         nombre          : element.user.name,
                         email           : element.user.email,
                         plan            : element.user.paypal_subscription.plan,
@@ -224,8 +279,11 @@ export default {
                         paypal_email    : element.user.paypal_subscription.paypal_email,
                         country         : element.user.paypal_subscription.country,
                         city            : element.user.paypal_subscription.city,
+                        descuento       : desc,
+                        coupon          : element.user.paypal_subscription.coupon
                     }
                     this.array_excel.push(obj);
+                    desc = "";
 
                 });
                // console.log(this.array_excel);
@@ -251,7 +309,7 @@ export default {
     },
     mounted() {
         this.loadStudent();
-        this.fetchData();
+       // this.fetchData();
     },
 }
 </script>

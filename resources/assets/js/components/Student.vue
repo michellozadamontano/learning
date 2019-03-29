@@ -8,7 +8,16 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Estudiates inscritos a cursos</h3>                
+                <h3 class="card-title">Estudiates inscritos a cursos</h3> 
+                <download-excel                    
+                   
+                    :data="array_excel"
+                    :before-generate = "startDownload"
+                    :before-finish = "finishDownload"
+                    class="hover-excel ">
+                     Datos Excel
+                     <i class="fas fa-file-excel green"></i>                    
+                </download-excel>                
               </div>             
               <div class="card-body table-responsive p-2">
                   <v-client-table :data="tableData" :columns="columns" :options="options">
@@ -46,6 +55,17 @@ export default {
             url: 'admin/student_data',
             columns: ['id', 'name', 'email','courses_formatted','plan','costo','paypal_email','country','city','actions'],
             tableData:[],
+            excel_object:{
+                nombre:"",
+                email: "",
+                cursos: "",
+                plan:"",
+                costo:"",
+                paypal_email:"",
+                country:"",
+                city:"",
+            },
+            array_excel:[],
             options: {
                 filterByColumn: false,
                 perPage: 10,
@@ -127,6 +147,24 @@ export default {
             axios.get(this.url).then(res => {
                 this.tableData = res.data;
                 console.log(res.data);
+                this.array_excel = []
+                res.data.forEach(element => {
+                   let obj =  this.excel_object = {
+                        nombre              : element.user.name,
+                        email               : element.user.email,
+                        cursos              : element.courses_formatted,
+                        plan                : element.user.paypal_subscription.plan,
+                        costo               : element.user.paypal_subscription.amount,
+                        paypal_email        : element.user.paypal_subscription.paypal_email,
+                        country             : element.user.paypal_subscription.country,
+                        city                : element.user.paypal_subscription.city,
+                    }
+                    this.array_excel.push(obj);
+
+                });
+
+
+
                 this.isLoading = false;
                 
             }).catch(error => {
@@ -134,6 +172,12 @@ export default {
                 this.isLoading = false;
                 
             })
+        },
+        startDownload(){
+            this.isLoading = true;
+        },
+        finishDownload(){
+            this.isLoading = false;
         }
         
     },

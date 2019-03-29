@@ -288,24 +288,25 @@ class PaypalController extends Controller
             {
                 $mebresia = "ANUAL";
             }
-
            
-            PaypalSubscription::updateOrCreate(
-                ['user_id'  =>$user->id],
-                [
-                    'paypal_id'     =>  $result->id,
-                    'state'         =>  $result->state,
-                    'start_date'    =>  $result->start_date,
-                    'plan'          =>  $mebresia,
-                    'paypal_email'  =>  $payer->payer_info->email,
-                    'country'       =>  $payer->payer_info->shipping_address->country_code,
-                    'city'          =>  $payer->payer_info->shipping_address->city,
-                    'amount'        =>  $plan->payment_definitions[0]->amount->value
-                ]
-            );
+            
             if($request->session()->has('coupon')){
                 $coupon = session('coupon');               
                 $coup = Coupon::where('code',$coupon)->first();
+                PaypalSubscription::updateOrCreate(
+                    ['user_id'  =>$user->id],
+                    [
+                        'paypal_id'     =>  $result->id,
+                        'state'         =>  $result->state,
+                        'start_date'    =>  $result->start_date,
+                        'plan'          =>  $mebresia,
+                        'paypal_email'  =>  $payer->payer_info->email,
+                        'country'       =>  $payer->payer_info->shipping_address->country_code,
+                        'city'          =>  $payer->payer_info->shipping_address->city,
+                        'amount'        =>  $plan->payment_definitions[0]->amount->value,
+                        'coupon'        =>  $coupon
+                    ]
+                );
                 if($coup){
                     if($coup->quantity > 0)
                     {    
@@ -313,7 +314,24 @@ class PaypalController extends Controller
                         $coup->save();
                     }
                 }
+                $request->session()->forget('coupon');
             }
+            else{
+                PaypalSubscription::updateOrCreate(
+                    ['user_id'  =>$user->id],
+                    [
+                        'paypal_id'     =>  $result->id,
+                        'state'         =>  $result->state,
+                        'start_date'    =>  $result->start_date,
+                        'plan'          =>  $mebresia,
+                        'paypal_email'  =>  $payer->payer_info->email,
+                        'country'       =>  $payer->payer_info->shipping_address->country_code,
+                        'city'          =>  $payer->payer_info->shipping_address->city,
+                        'amount'        =>  $plan->payment_definitions[0]->amount->value    
+                    ]
+                );
+            }
+
            // dd($result);
             return redirect(route('subscriptions.paypal'))
             ->with('message', ['success', __("La suscripción se ha llevado a cabo correctamente")]);
@@ -521,8 +539,9 @@ class PaypalController extends Controller
         $students = Student::with('user.paypalSubscription')
         ->whereHas('user', function ($q) {
 			$q->where('paypal', 1);
-		})->get();
-		return response()->json($students);
+        })->get();
+        return $students;
+		//return response()->json($students);
     }
     // usuarios subscritos por rango de fechas
     public function getUserSubscribedByRange(){
@@ -532,7 +551,7 @@ class PaypalController extends Controller
             $desde = request('desde');
             $hasta = request('hasta');
 			$q->where('paypal', 1)->whereBetween('updated_at', [$desde, $hasta]);
-		})->get();
+        })->get();       
 		return response()->json($students);
     }
     public function getSubscriptionStatistics(){
