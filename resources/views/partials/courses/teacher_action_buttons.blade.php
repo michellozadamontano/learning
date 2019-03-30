@@ -3,13 +3,13 @@
         <a class="btn btn-course" href="{{ route('courses.detail', ["slug" => $course->slug]) }}">
             <i class="fa fa-eye"></i> {{ __("Detalle") }}
         </a>
-        <a class="btn btn-warning text-white" href="{{ route('courses.edit', ["slug" => $course->slug]) }}">
+        <a class="btn btn-success text-white" href="{{ route('courses.edit', ["slug" => $course->slug]) }}">
             <i class="fa fa-pencil"></i> {{ __("Editar curso") }}
         </a>
         <a class="btn btn-primary text-white" href="{{ route('courses.add_content', ["slug" => $course->slug]) }}">
             <i class="fa fa-plus-square-o"></i> {{ __("Agregar Contenido") }}
         </a>
-        <a class="btn btn-warning text-white" href="{{ route('courses.edit_content', ["slug" => $course->slug]) }}">
+        <a class="btn btn-success text-white" href="{{ route('courses.edit_content', ["slug" => $course->slug]) }}">
             <i class="fa fa-plus-square-o"></i> {{ __("Editar Contenido") }}
         </a>
         @include('partials.courses.btn_forms.delete')

@@ -34815,18 +34815,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_Graficas___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_19__components_Graficas__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__components_Student__ = __webpack_require__(431);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__components_Student___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_20__components_Student__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__components_Category__ = __webpack_require__(436);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__components_Category___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_21__components_Category__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__components_StudentSuscribed__ = __webpack_require__(439);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__components_StudentSuscribed___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_22__components_StudentSuscribed__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__components_TBook__ = __webpack_require__(445);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__components_TBook___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_23__components_TBook__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__components_TCompany__ = __webpack_require__(448);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__components_TCompany___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_24__components_TCompany__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__components_TPrevious__ = __webpack_require__(451);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__components_TPrevious___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_25__components_TPrevious__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__components_TKeyStat__ = __webpack_require__(454);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__components_TKeyStat___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_26__components_TKeyStat__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__components_StudentJustRegistered__ = __webpack_require__(471);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__components_StudentJustRegistered___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_21__components_StudentJustRegistered__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__components_Category__ = __webpack_require__(436);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__components_Category___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_22__components_Category__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__components_StudentSuscribed__ = __webpack_require__(439);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__components_StudentSuscribed___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_23__components_StudentSuscribed__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__components_TBook__ = __webpack_require__(445);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__components_TBook___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_24__components_TBook__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__components_TCompany__ = __webpack_require__(448);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__components_TCompany___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_25__components_TCompany__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__components_TPrevious__ = __webpack_require__(451);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__components_TPrevious___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_26__components_TPrevious__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__components_TKeyStat__ = __webpack_require__(454);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__components_TKeyStat___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_27__components_TKeyStat__);
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -34914,9 +34916,10 @@ Vue.component('downloadExcel', __WEBPACK_IMPORTED_MODULE_11_vue_json_excel___def
 
 
 
+
 var routes = [
 //{  name: 'dashboard',path: '/dashboard', component: require('./components/Dashboard.vue') },
-{ path: '/', component: __WEBPACK_IMPORTED_MODULE_12__components_Dashboard___default.a }, { path: '/dashboard', component: __WEBPACK_IMPORTED_MODULE_12__components_Dashboard___default.a }, { path: '/courses', component: __WEBPACK_IMPORTED_MODULE_13__components_Courses___default.a }, { path: '/teachers', component: __WEBPACK_IMPORTED_MODULE_14__components_Teachers___default.a }, { path: '/students', component: __WEBPACK_IMPORTED_MODULE_20__components_Student___default.a }, { path: '/paypal', component: __WEBPACK_IMPORTED_MODULE_15__components_Paypal___default.a }, { path: '/content/:id', component: __WEBPACK_IMPORTED_MODULE_16__components_Content___default.a }, { path: '/coupon', component: __WEBPACK_IMPORTED_MODULE_17__components_Coupon___default.a }, { path: '/video/:id/:course', component: __WEBPACK_IMPORTED_MODULE_18__components_ShowVideo___default.a }, { path: '/category', component: __WEBPACK_IMPORTED_MODULE_21__components_Category___default.a }, { path: '/subscribed', component: __WEBPACK_IMPORTED_MODULE_22__components_StudentSuscribed___default.a }, { path: '/quote', component: __WEBPACK_IMPORTED_MODULE_23__components_TBook___default.a }, { path: '/company', component: __WEBPACK_IMPORTED_MODULE_24__components_TCompany___default.a }, { path: '/previous', component: __WEBPACK_IMPORTED_MODULE_25__components_TPrevious___default.a }, { path: '/keystat', component: __WEBPACK_IMPORTED_MODULE_26__components_TKeyStat___default.a }];
+{ path: '/', component: __WEBPACK_IMPORTED_MODULE_12__components_Dashboard___default.a }, { path: '/dashboard', component: __WEBPACK_IMPORTED_MODULE_12__components_Dashboard___default.a }, { path: '/courses', component: __WEBPACK_IMPORTED_MODULE_13__components_Courses___default.a }, { path: '/teachers', component: __WEBPACK_IMPORTED_MODULE_14__components_Teachers___default.a }, { path: '/students', component: __WEBPACK_IMPORTED_MODULE_20__components_Student___default.a }, { path: '/registered', component: __WEBPACK_IMPORTED_MODULE_21__components_StudentJustRegistered___default.a }, { path: '/paypal', component: __WEBPACK_IMPORTED_MODULE_15__components_Paypal___default.a }, { path: '/content/:id', component: __WEBPACK_IMPORTED_MODULE_16__components_Content___default.a }, { path: '/coupon', component: __WEBPACK_IMPORTED_MODULE_17__components_Coupon___default.a }, { path: '/video/:id/:course', component: __WEBPACK_IMPORTED_MODULE_18__components_ShowVideo___default.a }, { path: '/category', component: __WEBPACK_IMPORTED_MODULE_22__components_Category___default.a }, { path: '/subscribed', component: __WEBPACK_IMPORTED_MODULE_23__components_StudentSuscribed___default.a }, { path: '/quote', component: __WEBPACK_IMPORTED_MODULE_24__components_TBook___default.a }, { path: '/company', component: __WEBPACK_IMPORTED_MODULE_25__components_TCompany___default.a }, { path: '/previous', component: __WEBPACK_IMPORTED_MODULE_26__components_TPrevious___default.a }, { path: '/keystat', component: __WEBPACK_IMPORTED_MODULE_27__components_TKeyStat___default.a }];
 
 var router = new __WEBPACK_IMPORTED_MODULE_7_vue_router__["a" /* default */]({
   mode: 'history',
@@ -96569,6 +96572,22 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -96579,6 +96598,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
             isLoading: false,
             student: '',
             student_course: "",
+            student_registered: "",
             url: 'admin/student_data',
             datacollection: null,
             subscribed_per_month: ''
@@ -96598,14 +96618,22 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                 //console.log(resp.data);
             });
         },
-        inscribedStudent: function inscribedStudent() {
+        unsubscribedUsers: function unsubscribedUsers() {
             var _this2 = this;
 
+            axios.get('/subscriptions/users_registered').then(function (resp) {
+                _this2.student_registered = resp.data.length;
+                console.log(resp.data);
+            });
+        },
+        inscribedStudent: function inscribedStudent() {
+            var _this3 = this;
+
             axios.get(this.url).then(function (res) {
-                _this2.student_course = res.data.length;
+                _this3.student_course = res.data.length;
             }).catch(function (error) {
                 console.log(error);
-                _this2.isLoading = false;
+                _this3.isLoading = false;
             });
         },
         fillData: function fillData() {
@@ -96620,19 +96648,19 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
         },
         getSubscribedPerMonth: function () {
             var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
-                var _this3 = this;
+                var _this4 = this;
 
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
                     while (1) {
                         switch (_context.prev = _context.next) {
                             case 0:
                                 axios.get('/subscriptions/users_subscribed_count').then(function (res) {
-                                    _this3.subscribed_per_month = res.data;
+                                    _this4.subscribed_per_month = res.data;
                                     console.log(res.data);
-                                    _this3.fillData();
+                                    _this4.fillData();
                                 }).catch(function (error) {
                                     console.log(error);
-                                    _this3.isLoading = false;
+                                    _this4.isLoading = false;
                                 });
 
                             case 1:
@@ -96656,6 +96684,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
             this.registeredStudent();
             this.inscribedStudent();
             this.getSubscribedPerMonth();
+            this.unsubscribedUsers();
 
             this.isLoading = false;
         } catch (error) {
@@ -112180,6 +112209,35 @@ var render = function() {
             ],
             1
           )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-3" }, [
+          _c(
+            "div",
+            { staticClass: "small-box bg-aqua red" },
+            [
+              _c("div", { staticClass: "inner" }, [
+                _c("h3", [_vm._v(_vm._s(_vm.student_registered))]),
+                _vm._v(" "),
+                _c("p", [_vm._v("Alumnnos solo registrados")])
+              ]),
+              _vm._v(" "),
+              _vm._m(2),
+              _vm._v(" "),
+              _c(
+                "router-link",
+                {
+                  staticClass: "small-box-footer blue",
+                  attrs: { to: "/registered" }
+                },
+                [
+                  _vm._v("\n             Mas info\n            "),
+                  _c("i", { staticClass: "fa fa-arrow-circle-right indigo" })
+                ]
+              )
+            ],
+            1
+          )
         ])
       ]),
       _vm._v(" "),
@@ -112210,6 +112268,14 @@ var render = function() {
   )
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "icon" }, [
+      _c("i", { staticClass: "ion ion-bag" })
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -114513,7 +114579,7 @@ var render = function() {
                               type: "number",
                               min: "0",
                               max: "1",
-                              step: "0.1",
+                              step: "0.01",
                               name: "percent",
                               placeholder: "Porciento"
                             },
@@ -119831,6 +119897,355 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 458 */,
+/* 459 */,
+/* 460 */,
+/* 461 */,
+/* 462 */,
+/* 463 */,
+/* 464 */,
+/* 465 */,
+/* 466 */,
+/* 467 */,
+/* 468 */,
+/* 469 */,
+/* 470 */,
+/* 471 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(472)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(474)
+/* template */
+var __vue_template__ = __webpack_require__(475)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/StudentJustRegistered.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-1cb4ed82", Component.options)
+  } else {
+    hotAPI.reload("data-v-1cb4ed82", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 472 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(473);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(10)("ce4288d8", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1cb4ed82\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./StudentJustRegistered.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1cb4ed82\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./StudentJustRegistered.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 473 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(7)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 474 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_loading_overlay__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_loading_overlay___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_loading_overlay__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_loading_overlay_dist_vue_loading_css__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_loading_overlay_dist_vue_loading_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_vue_loading_overlay_dist_vue_loading_css__);
+
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: "student_registered",
+    data: function data() {
+        return {
+            isLoading: false,
+            msg: 'Editar',
+            url: '/subscriptions/users_registered',
+            columns: ['id', 'name', 'email', 'actions'],
+            tableData: [],
+            array_excel: [],
+
+            options: {
+                filterByColumn: false,
+                perPage: 10,
+                perPageValues: [10, 25, 50, 100, 500],
+                headings: {
+                    id: 'ID',
+                    name: 'Nombre',
+                    email: 'Email',
+                    actions: "Acciones"
+                }
+            }
+        };
+    },
+
+    components: {
+        Loading: __WEBPACK_IMPORTED_MODULE_1_vue_loading_overlay___default.a
+    },
+    methods: {
+        loadStudent: function () {
+            var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
+                var _this = this;
+
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+                    while (1) {
+                        switch (_context.prev = _context.next) {
+                            case 0:
+                                this.isLoading = true;
+                                axios.get(this.url).then(function (res) {
+                                    _this.tableData = res.data;
+                                    console.log(res.data);
+                                    res.data.forEach(function (element) {
+
+                                        var obj = {
+                                            nombre: element.name,
+                                            email: element.email
+                                        };
+                                        _this.array_excel.push(obj);
+                                    });
+                                    console.log(_this.array_excel);
+                                    _this.isLoading = false;
+                                }).catch(function (error) {
+                                    console.log(error);
+                                    _this.isLoading = false;
+                                });
+
+                            case 2:
+                            case 'end':
+                                return _context.stop();
+                        }
+                    }
+                }, _callee, this);
+            }));
+
+            function loadStudent() {
+                return _ref.apply(this, arguments);
+            }
+
+            return loadStudent;
+        }(),
+        startDownload: function startDownload() {
+            this.isLoading = true;
+        },
+        finishDownload: function finishDownload() {
+            this.isLoading = false;
+        }
+    },
+    mounted: function mounted() {
+        this.loadStudent();
+    }
+});
+
+/***/ }),
+/* 475 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "container" },
+    [
+      _c("loading", {
+        attrs: {
+          active: _vm.isLoading,
+          "can-cancel": true,
+          "is-full-page": true
+        },
+        on: {
+          "update:active": function($event) {
+            _vm.isLoading = $event
+          }
+        }
+      }),
+      _vm._v(" "),
+      _c("div", { staticClass: "row mt-5" }, [
+        _c("div", { staticClass: "col-md-12" }, [
+          _c("div", { staticClass: "card" }, [
+            _c(
+              "div",
+              { staticClass: "card-header" },
+              [
+                _c("h3", { staticClass: "card-title" }, [
+                  _vm._v("Estudiates registrados no suscritos")
+                ]),
+                _vm._v(" "),
+                _c(
+                  "download-excel",
+                  {
+                    staticClass: "hover-excel ",
+                    attrs: {
+                      data: _vm.array_excel,
+                      "before-generate": _vm.startDownload,
+                      "before-finish": _vm.finishDownload
+                    }
+                  },
+                  [
+                    _vm._v("\n                 Datos Excel\n                 "),
+                    _c("i", { staticClass: "fas fa-file-excel green" })
+                  ]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "card-body table-responsive p-2" },
+              [
+                _c(
+                  "v-client-table",
+                  {
+                    attrs: {
+                      data: _vm.tableData,
+                      columns: _vm.columns,
+                      options: _vm.options
+                    }
+                  },
+                  [
+                    _c("div", { attrs: { slot: "actions" }, slot: "actions" }, [
+                      _vm._v(
+                        "\n                        /\n                        "
+                      )
+                    ])
+                  ]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-footer" })
+          ])
+        ])
+      ])
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-1cb4ed82", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

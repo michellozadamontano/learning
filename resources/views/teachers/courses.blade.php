@@ -8,7 +8,7 @@
     <div class="pl-5 pr-5">
         <div class="row justify-content-center">
             @forelse($courses as $course)
-                <div class="col-md-10 offset-2 listing-block">
+                <div class="col-10 offset-2 listing-block">
                     <div class="media" style="height: 250px;">
                         <img
                             style="height: 200px; width: 300px;"

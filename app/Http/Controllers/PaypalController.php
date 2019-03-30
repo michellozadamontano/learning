@@ -543,6 +543,12 @@ class PaypalController extends Controller
         return $students;
 		//return response()->json($students);
     }
+    public function getUserRegistered(){
+        $students = User::where('paypal','<>', 1)
+        ->orWhere('paypal',null)
+        ->get();
+        return $students;
+    }
     // usuarios subscritos por rango de fechas
     public function getUserSubscribedByRange(){
         

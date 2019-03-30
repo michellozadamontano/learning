@@ -36,7 +36,23 @@
                 <i class="fa fa-arrow-circle-right red"></i>  
               </router-link>               
               </div>
-            </div><!-- ./col -->            
+            </div><!-- ./col -->  
+            <div class="col-3">
+              <!-- small box -->
+              <div class="small-box bg-aqua red">
+                <div class="inner">
+                  <h3>{{student_registered}}</h3>
+                  <p>Alumnnos solo registrados</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-bag"></i>
+                </div>
+                <router-link to="/registered" class="small-box-footer blue">
+                 Mas info
+                <i class="fa fa-arrow-circle-right indigo"></i>  
+              </router-link>               
+              </div>
+            </div><!-- ./col -->           
         </div> 
         <div class="row justify-content-left">
             <div class="col-6">
@@ -65,6 +81,7 @@ import LineChart from './Graficas';
                 isLoading: false,
                 student:'',
                 student_course:"",
+                student_registered:"",
                 url: 'admin/student_data',
                 datacollection: null,
                 subscribed_per_month:'',
@@ -79,6 +96,13 @@ import LineChart from './Graficas';
                 axios.get('/subscriptions/users_subscribed').then(resp => {
                     this.student = resp.data.length;
                     //console.log(resp.data);
+                    
+                })
+            },
+            unsubscribedUsers(){
+                axios.get('/subscriptions/users_registered').then(resp => {
+                    this.student_registered = resp.data.length;
+                    console.log(resp.data);
                     
                 })
             },
@@ -122,7 +146,8 @@ import LineChart from './Graficas';
                 this.isLoading = true;
                 this.registeredStudent(); 
                 this.inscribedStudent();
-                this.getSubscribedPerMonth();                
+                this.getSubscribedPerMonth();
+                this.unsubscribedUsers();                
                
                 this.isLoading = false;
             } catch (error) {

@@ -92,6 +92,7 @@ Route::group(['middleware' => ['auth']], function () {
 		Route::get('/users_subscribed','PaypalController@getUserSubscribed');
 		Route::post('/users_subscribed_range','PaypalController@getUserSubscribedByRange');
 		Route::get('/users_subscribed_count','PaypalController@getSubscriptionStatistics');
+		Route::get('/users_registered','PaypalController@getUserRegistered');
 	});
 
 	Route::group(['prefix' => "invoices"], function() {

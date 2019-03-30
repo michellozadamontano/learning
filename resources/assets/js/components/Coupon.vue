@@ -68,7 +68,7 @@
                     </div>
 
                      <div class="form-group">
-                         <input v-model="form.percent" type="number" min="0" max="1" step="0.1" name="percent"
+                         <input v-model="form.percent" type="number" min="0" max="1" step="0.01" name="percent"
                             placeholder="Porciento"
                             class="form-control" :class="{ 'is-invalid': form.errors.has('percent') }">
                         <has-error :form="form" field="percent"></has-error>

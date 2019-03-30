@@ -42,16 +42,16 @@
                             <div class="alert alert-primary" role="alert">
                                 @if($file->arhivo != "")
                                     <small>
-                                            <a href="{{route('courses.download', ['file' => $file->arhivo])}}">
-                                                <i class="fa fa-file" aria-hidden="true"></i>
+                                            <a href="{{route('courses.download', ['file' => $file->arhivo])}}" style="color:blue">
+                                                <i class="fa fa-file yellow" aria-hidden="true"></i>
                                                 <span>{{$file->file}}</span><br>
                                             </a> 
                                     </small>                      
                                 @endif 
                                 @if($file->path != "")
                                     <small data-toggle="tooltip" data-placement="top" title="{{$file->description}}">
-                                        <a href="{{route('courses.show_video', ['id' => $file->id])}}">
-                                            <i class="fa fa-youtube-play" aria-hidden="true"></i>
+                                        <a href="{{route('courses.show_video', ['id' => $file->id])}}" style="color:blue">
+                                            <i class="fa fa-youtube-play red" aria-hidden="true"></i>
                                             <span>{{$file->file}}</span><br>
                                         </a>
                                     </small>                               
