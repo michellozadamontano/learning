@@ -40,7 +40,7 @@
                                             <div class="col-md-6">
                                                 <button
                                                     v-tooltip="approve"
-                                                    v-if="parseInt(props.row.status) === 3"
+                                                    v-if="parseInt(props.row.status) === 3 || parseInt(props.row.status) === 2" 
                                                     type="button"
                                                     class="btn btn-success btn-block"                                    
                                                     @click="updateStatus(props.row, 1)"

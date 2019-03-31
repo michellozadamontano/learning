@@ -20,5 +20,15 @@ class ProfileController extends Controller
 		$user->password = bcrypt(request('password'));
 		$user->save();
 	    return back()->with('message', ['success', __("Usuario actualizado correctamente")]);
+	}
+	public function update_ajax () {
+		$this->validate(request(), [
+			'password' => ['confirmed', new StrengthPassword]
+		]);
+
+		$user = auth()->user();
+		$user->password = bcrypt(request('password'));
+		$user->save();
+	    return response()->json('Usuario actualizado correctamente');
     }
 }

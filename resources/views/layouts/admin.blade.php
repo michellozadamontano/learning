@@ -125,13 +125,21 @@ scratch. This page gets rid of all links and provides the needed markup only.
           </li>
 
           <li class="nav-item">
-                <router-link to="/paypal" class="nav-link">
-                    <i class="fab fa-paypal blue"></i>
-                    <p>
-                        Paypal
-                    </p>
-                </router-link>
+              <router-link to="/paypal" class="nav-link">
+                  <i class="fab fa-paypal blue"></i>
+                  <p>
+                      Paypal
+                  </p>
+              </router-link>
          </li>
+         <li class="nav-item">
+            <router-link to="/profile" class="nav-link">
+              <i class="fas fa-key  indigo  "></i>                
+                <p>
+                    Contraseñas
+                </p>
+            </router-link>
+        </li>
          <li class="nav-item has-treeview">
           <a href="#" class="nav-link">
             <i class="nav-icon fa fa-cog green"></i>

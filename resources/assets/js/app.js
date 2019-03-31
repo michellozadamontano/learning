@@ -82,6 +82,7 @@ import Student              from './components/Student';
 import Student_Registered   from './components/StudentJustRegistered';
 import Category             from './components/Category';
 import StudentSubscribed    from './components/StudentSuscribed';
+import Profile              from './components/Profile';
 import TBook                from './components/TBook';
 import TCompany             from './components/TCompany';
 import TPrevious            from './components/TPrevious';
@@ -99,6 +100,7 @@ let routes = [
     { path: '/paypal'       , component: Paypal },
     { path: '/content/:id'  , component: Content },
     { path: '/coupon'       , component: Coupon },
+    { path: '/profile'      , component: Profile },
     { path: '/video/:id/:course'    , component: ShowVideo },  
     { path: '/category'      , component: Category },
     { path: '/subscribed'    , component: StudentSubscribed },
