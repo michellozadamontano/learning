@@ -132,12 +132,12 @@
                                     {{ __("Requerimiento 1") }}
                                 </label>
                                 <div class="col-md-6">
-                                    <input
+                                    <textarea
                                         id="requirement1"
                                         class="form-control{{ $errors->has('requirements.0') ? ' is-invalid' : '' }}"
-                                        name="requirements[]"
-                                        value="{{ old('requirements.0') ? old('requirements.0') : ($course->requirements_count > 0 ? $course->requirements[0]->requirement : '') }}"
-                                    />
+                                        name="requirements[]"   
+                                        rows="8"                                     
+                                    >{{ old('requirements.0') ? old('requirements.0') : ($course->requirements_count > 0 ? $course->requirements[0]->requirement : '') }}</textarea>
                                     @if ($errors->has('requirements.0'))
                                         <span class="invalid-feedback">
                                         <strong>{{ $errors->first('requirements.0') }}</strong>
@@ -162,12 +162,12 @@
                                     {{ __("Requerimiento 2") }}
                                 </label>
                                 <div class="col-md-6">
-                                    <input
+                                    <textarea
                                         id="requirement2"
                                         class="form-control{{ $errors->has('requirements.1') ? ' is-invalid' : '' }}"
-                                        name="requirements[]"
-                                        value="{{ old('requirements.1') ? old('requirements.1') : ($course->requirements_count > 1 ? $course->requirements[1]->requirement : '') }}"
-                                    />
+                                        name="requirements[]" 
+                                        rows="8"                                      
+                                    >{{ old('requirements.1') ? old('requirements.1') : ($course->requirements_count > 1 ? $course->requirements[1]->requirement : '') }}</textarea>
 
                                     @if ($errors->has('requirements.1'))
                                         <span class="invalid-feedback">
@@ -201,12 +201,13 @@
                                     {{ __("Meta 1") }}
                                 </label>
                                 <div class="col-md-6">
-                                    <input
+                                    <textarea
                                         id="goal1"
                                         class="form-control{{ $errors->has('goals.0') ? ' is-invalid' : '' }}"
                                         name="goals[]"
-                                        value="{{ old('goals.0') ? old('goals.0') : ($course->goals_count > 0 ? $course->goals[0]->goal : '') }}"
-                                    />
+                                        rows="8"
+                                        
+                                    >{{ old('goals.0') ? old('goals.0') : ($course->goals_count > 0 ? $course->goals[0]->goal : '') }}</textarea>
                                     @if ($errors->has('goals.0'))
                                         <span class="invalid-feedback">
                                             <strong>{{ $errors->first('goals.0') }}</strong>
@@ -228,12 +229,12 @@
                                     {{ __("Meta 2") }}
                                 </label>
                                 <div class="col-md-6">
-                                    <input
+                                    <textarea
                                         id="goal2"
                                         class="form-control{{ $errors->has('goals.1') ? ' is-invalid' : '' }}"
                                         name="goals[]"
-                                        value="{{ old('goals.1') ? old('goals.1') : ($course->goals_count > 1 ? $course->goals[1]->goal : '') }}"
-                                    />
+                                        rows="8"                                        
+                                    >{{ old('goals.1') ? old('goals.1') : ($course->goals_count > 1 ? $course->goals[1]->goal : '') }}</textarea>
                                     @if ($errors->has('goals.1'))
                                         <span class="invalid-feedback">
                                             <strong>{{ $errors->first('goals.1') }}</strong>

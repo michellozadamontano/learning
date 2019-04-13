@@ -231,7 +231,7 @@ class CourseController extends Controller
 		if($request->file('archivo') != null)
 		{
 			$request->validate([
-				'archivo' => 'mimes:pdf,txt,docx',
+				'archivo' => 'mimes:pdf,txt,docx,xlsx,mp4s,m4a,mp4a',
 			]);
 			$archivo = Helper::uploadFile('archivo', 'courses');
 			$content_file->arhivo = $archivo;
@@ -302,7 +302,7 @@ class CourseController extends Controller
 			if($request->file('archivo') != null)
 			{
 				$request->validate([
-					'archivo' => 'mimes:pdf,txt,docx',
+					'archivo' => 'mimes:pdf,txt,docx,xlsx,mp4s,m4a,mp4a',
 				]);
 				if($content_file->arhivo != "")
 				{

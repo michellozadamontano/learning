@@ -1,4 +1,7 @@
 <?php
+use Illuminate\Http\Request;
+//use Telegram\Bot\Api;
+//require_once base_path('vendor/irazasyed/telegram-bot-sdk/src/Traits/Telegram.php');
 
 Route::get('/set_language/{lang}', 'Controller@setLanguage')->name( 'set_language');
 
@@ -8,6 +11,20 @@ Route::get('login/{driver}/callback', 'Auth\LoginController@handleProviderCallba
 Route::get('/', function () {
     return view('welcome');
 });
+
+/*Route::post('/bot/getupdates', function() {	
+	$updates = Telegram::getUpdates();
+    dd($updates);
+    return (json_encode($updates));
+});
+
+Route::post('bot/sendmessage', function() {
+    Telegram::sendMessage([
+        'chat_id' => '680403039',
+        'text' => 'Hello world!'
+    ]);
+    return;
+});*/
 
 Auth::routes();
 
@@ -93,6 +110,7 @@ Route::group(['middleware' => ['auth']], function () {
 		Route::post('/users_subscribed_range','PaypalController@getUserSubscribedByRange');
 		Route::get('/users_subscribed_count','PaypalController@getSubscriptionStatistics');
 		Route::get('/users_registered','PaypalController@getUserRegistered');
+		Route::get('/payu/plan','PayuController@payu_plan')->name('subscriptions.payulplan');
 	});
 
 	Route::group(['prefix' => "invoices"], function() {
@@ -146,6 +164,11 @@ Route::group(['prefix' => "admin", "middleware" => ['auth', sprintf("role:%s", \
 	Route::get('/teachers', 'AdminController@teachers')->name('admin.teachers');
 	Route::get('/teachers_json', 'AdminController@teachersJson')->name('admin.teachers_json');
 	Route::get('/traiding/{value?}', 'AdminController@traiding')->name('admin.traiding');
+
+	Route::get('/payumember', 'AdminController@usersColombia');
+	Route::post('/payucreate', 'AdminController@payuColombia');
+	Route::post('/payuupdate/{id}', 'AdminController@payuUpdate');
+	Route::post('/payudelete', 'AdminController@payuDelete');
 });
 
 Route::group(['prefix' => "traiding", "middleware" => ["auth"]], function() {

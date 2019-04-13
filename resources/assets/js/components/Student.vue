@@ -173,21 +173,27 @@ export default {
                 this.tableData = res.data;
                 console.log(res.data);
                 this.array_excel = []
+                let desc  = "";
                 res.data.forEach(element => {
+                    if(element.user.paypal_subscription != null)
+                    {                           
+                        desc = element.user.paypal_subscription.coupon != null ? "SI" : "NO"                                                 
+                    }
+
                    let obj =  {
-                        nombre              : element.user.name,
-                        email               : element.user.email,
-                        cursos              : element.courses_formatted,
-                        plan                : element.user.paypal_subscription.plan,
-                        costo               : element.user.paypal_subscription.amount,
-                        paypal_email        : element.user.paypal_subscription.paypal_email,
-                        country             : element.user.paypal_subscription.country,
-                        city                : element.user.paypal_subscription.city,
-                        descuento           : element.user.paypal_subscription.coupon != null ? "SI" : "NO",
-                        coupon              : element.user.paypal_subscription.coupon
+                        nombre          : element.user.name,
+                        email           : element.user.email,
+                        cursos          : element.courses_formatted,
+                        plan            : element.user.paypal_subscription != null ? element.user.paypal_subscription.plan : "",
+                        costo           : element.user.paypal_subscription != null ? element.user.paypal_subscription.amount : "",
+                        paypal_email    : element.user.paypal_subscription != null ? element.user.paypal_subscription.paypal_email : "",
+                        country         : element.user.paypal_subscription != null ? element.user.paypal_subscription.country : "",
+                        city            : element.user.paypal_subscription != null ? element.user.paypal_subscription.city : "",                       
+                        descuento       : desc,
+                        coupon          : element.user.paypal_subscription != null ? element.user.paypal_subscription.coupon : ""
                     }
                     this.array_excel.push(obj);
-
+                    desc = "";
                 });
 
 

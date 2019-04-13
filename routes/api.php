@@ -1,7 +1,32 @@
 <?php
 
 use Illuminate\Http\Request;
+use Telegram\Bot\Api;
 
+/*Route::post('/bot/getupdates', function() {
+    $telegram = new Api('886157042:AAHF5eycxJHX_K-tDnPEn17bAvoQhqErLAg');
+    $response = $telegram->getMe();
+    $response = $telegram->getUpdates();   
+    
+
+  //  $updates = Telegram::getUpdates();
+    
+    return (json_encode($response));
+});*/
+
+/*Route::post('bot/sendmessage', function() {
+   
+    $telegram = new Api('886157042:AAHF5eycxJHX_K-tDnPEn17bAvoQhqErLAg');
+
+    $response = $telegram->sendMessage([
+    'chat_id' => '680403039', 
+    'text' => 'Hello World'
+    ]);
+
+    $messageId = $response->getMessageId();
+      //  return;
+});*/
+Route::post('bot/sendmessage', 'TelegramController@getUpdate');
 /*
 |--------------------------------------------------------------------------
 | API Routes

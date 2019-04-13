@@ -7,7 +7,7 @@
         <div class="row justify-content-left">
             <div class="col-3">
               <!-- small box -->
-              <div class="small-box bg-aqua red">
+              <div class="small-box bg-aqua">
                 <div class="inner">
                   <h3>{{student}}</h3>
                   <p>Alumnnos suscritos</p>
@@ -23,7 +23,7 @@
             </div><!-- ./col -->
             <div class="col-3">
               <!-- small box -->
-              <div class="small-box bg-aqua red">
+              <div class="small-box bg-aqua">
                 <div class="inner">
                   <h3>{{student_course}}</h3>
                   <p>Alumnnos inscritos a cursos</p>
@@ -39,7 +39,7 @@
             </div><!-- ./col -->  
             <div class="col-3">
               <!-- small box -->
-              <div class="small-box bg-aqua red">
+              <div class="small-box bg-aqua">
                 <div class="inner">
                   <h3>{{student_registered}}</h3>
                   <p>Alumnnos solo registrados</p>
@@ -52,7 +52,23 @@
                 <i class="fa fa-arrow-circle-right indigo"></i>  
               </router-link>               
               </div>
-            </div><!-- ./col -->           
+            </div><!-- ./col --> 
+            <div class="col-3">
+              <!-- small box -->
+              <div class="small-box bg-aqua">
+                <div class="inner">
+                  <h3> <i class="fas fa-dollar-sign"></i> {{ingresos}}</h3>
+                  <p>Ingresos Totales</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-bag"></i>
+                </div>
+                <router-link to="" class="small-box-footer blue">
+                 
+                <i class="fa fa-arrow-circle-right red"></i>  
+              </router-link>               
+              </div>
+            </div><!-- ./col -->          
         </div> 
         <div class="row justify-content-left">
             <div class="col-6">
@@ -82,6 +98,7 @@ import LineChart from './Graficas';
                 student:'',
                 student_course:"",
                 student_registered:"",
+                ingresos:'',
                 url: 'admin/student_data',
                 datacollection: null,
                 subscribed_per_month:'',
@@ -95,7 +112,14 @@ import LineChart from './Graficas';
             registeredStudent() {
                 axios.get('/subscriptions/users_subscribed').then(resp => {
                     this.student = resp.data.length;
-                    //console.log(resp.data);
+                    console.log(resp.data);
+                    let sum = 0;
+                    resp.data.forEach(element => {
+                        if(element.user.paypal_subscription != null){
+                            sum += parseFloat(element.user.paypal_subscription.amount)
+                        }
+                    });                    
+                    this.ingresos = sum.toFixed(2);                   
                     
                 })
             },

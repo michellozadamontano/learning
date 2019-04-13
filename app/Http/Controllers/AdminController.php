@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use App\Teacher;
 use App\Student;
 use App\User;
+use App\PaypalSubscription;
 use App\CourseContentFile;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -57,7 +58,7 @@ class AdminController extends Controller
 				\request('status') === Course::PUBLISHED
 			) {
 				$course->previous_approved = true;
-			//	\Mail::to($course->teacher->user)->send(new CourseApproved($course));
+				\Mail::to($course->teacher->user)->send(new CourseApproved($course));
 			}
 
 			if(
@@ -66,7 +67,7 @@ class AdminController extends Controller
 				\request('status') === Course::REJECTED
 			) {
 				$course->previous_rejected = true;
-			//	\Mail::to($course->teacher->user)->send(new CourseRejected($course));
+				\Mail::to($course->teacher->user)->send(new CourseRejected($course));
 			}
 
 			$course->status = \request('status');
@@ -142,5 +143,56 @@ class AdminController extends Controller
 		$pepe = $value . " edwing colombia";
 		return view('admin.traiding',compact('pepe'));
 	}
+
+	//aqui voy a programar temporarmente las suscripcion por payu
+	public function usersColombia(){
+		$students = User::with('paypalSubscription')
+        ->whereHas('paypalSubscription', function ($q) {			
+			$q->where('country', 'CO');
+		})
+		->where('paypal', 1)		
+		->get();
+
+
+        return $students;
+	}
+	public function payuColombia(Request $request) {
+		$this->validate($request,[
+            'user' 		=> 'required',
+            'plan' 		=> 'required',
+			'amount' 	=> 'required',
+			'country' 	=> 'required',
+			'email' 	=> 'required'
+		]);
+		$user = User::find($request['user']);
+		$user->paypal = 1;
+		$user->save();
+		PaypalSubscription::updateOrCreate(
+			['user_id'  =>$request['user']],
+			[
+				'paypal_id'     =>  'Colombia Id',
+				'state'         =>  'Active',
+				'start_date'    =>  date("Y-m-d"),
+				'plan'          =>  $request['plan'],
+				'paypal_email'  =>  $request['email'],
+				'country'       =>  $request['country'],
+				'city'          =>  $request['country'],
+				'amount'        =>  $request['amount']    
+			]
+		);
+	}
+	public function payuUpdate(Request $request, $id) {
+		$this->validate($request,[
+            'user' 		=> 'required',
+            'plan' 		=> 'required',
+			'amount' 	=> 'required',
+			'country' 	=> 'required',
+			'email' 	=> 'required'
+		]);
+		$payu =  PaypalSubscription::find()->where('user_id',$id)->first();
+		$payu->update($request->all());
+		return ['message' => 'Actualizado'];
+	}
+
 	
 }

@@ -74,6 +74,7 @@ import Dashboard            from './components/Dashboard';
 import Courses              from './components/Courses';
 import Teachers             from './components/Teachers';
 import Paypal               from './components/Paypal';
+import Payu                 from './components/Payu';
 import Content              from './components/Content';
 import Coupon               from './components/Coupon';
 import ShowVideo            from './components/ShowVideo';
@@ -98,6 +99,7 @@ let routes = [
     { path: '/students'     , component: Student },
     { path: '/registered'   , component: Student_Registered },
     { path: '/paypal'       , component: Paypal },
+    { path: '/payu'         , component: Payu },
     { path: '/content/:id'  , component: Content },
     { path: '/coupon'       , component: Coupon },
     { path: '/profile'      , component: Profile },

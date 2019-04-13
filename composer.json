@@ -9,10 +9,12 @@
         "alchemyguy/youtube-laravel-api": "v1.0.0.2",
         "barryvdh/laravel-ide-helper": "^2.4",
         "caouecs/laravel-lang": "~3.0",
+        "codeman/laravel-payu": "^1.00",
         "doctrine/dbal": "^2.6",
         "dprmc/iex-trading": "^1.0",
         "fideloper/proxy": "~4.0",
         "intervention/image": "^2.4",
+        "irazasyed/telegram-bot-sdk": "dev-develop",
         "laravel/cashier": "~7.0",
         "laravel/framework": "5.6.*",
         "laravel/socialite": "^3.0",
@@ -35,7 +37,7 @@
             "database/factories"           
         ],
         "psr-4": {
-            "App\\": "app/"
+            "App\\": "app/"   
         },
         "files": [
             "vendor/dprmc/iex-trading/src/IEXTrading.php"

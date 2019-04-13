@@ -20,8 +20,8 @@
                                     src="https://www.youtube.com/embed/{{$file->path}}">
                                 </iframe>
                                 @else
-                                <iframe width="620" height="415" frameborder="0"
-                                    src="https://player.vimeo.com/video/{{$file->path}}">
+                                <iframe width="720" height="415" frameborder="0"
+                                    src="https://player.vimeo.com/video/{{$file->path}}" webkitallowfullscreen mozallowfullscreen allowfullscreen>
                                 </iframe> 
                             @endif         
                                             
