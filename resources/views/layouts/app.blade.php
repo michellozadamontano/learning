@@ -18,7 +18,7 @@
     <link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
 
     @stack('styles')
-
+    
 </head>
 <body>
     @include('partials.navigation')

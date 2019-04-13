@@ -51,7 +51,7 @@
                 <div class="modal-body">
                      <div class="form-group">
                          <label for="user">Usuarios no suscritos</label>
-                         <select v-model="form.user"  name="user" id="user" class="form-control">
+                         <select v-model="form.user"  name="user" id="user" class="form-control" @change="userChange()">
                             <option v-for="u in users" :key="u.id" v-bind:value="u.id">{{u.name}}</option> 
                          </select>
                         
@@ -188,14 +188,16 @@
                 this.form.post('admin/payuupdate/'+this.form.id)
                 .then(() => {
                     // success
+                    this.isLoading = false;
+                     Fire.$emit('AfterCreate');
                     $('#addNew').modal('hide');
-                     swal(
-                        'Updated!',
-                        'Information has been updated.',
+                     swal.fire(
+                        'Actualizado!',
+                        'La informacion ha sido actualizada.',
                         'success'
                         )                       
-                        this.isLoading = false;
-                         Fire.$emit('AfterCreate');
+                        
+                        
                 })
                 .catch(() => {                   
                     this.isLoading = false;
@@ -285,6 +287,13 @@
                 .catch(()=>{
                     this.isLoading = false;
                 })
+            },
+            userChange() {
+                console.log(this.form.user);               
+                let obj = this.users.find(o => o.id === this.form.user);
+                this.form.email = obj.email;
+                
+                
             }
         },
         created() {            

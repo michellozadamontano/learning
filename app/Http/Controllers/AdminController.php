@@ -189,8 +189,12 @@ class AdminController extends Controller
 			'country' 	=> 'required',
 			'email' 	=> 'required'
 		]);
-		$payu =  PaypalSubscription::find()->where('user_id',$id)->first();
-		$payu->update($request->all());
+		$payu =  PaypalSubscription::all()->where('user_id',$id)->first();
+		//$payu->update($request->all());
+		$payu->amount 			= $request['amount'];
+		$payu->plan 			= $request['plan'];
+		$payu->paypal_email 	= $request['email'];
+		$payu->save();
 		return ['message' => 'Actualizado'];
 	}
 

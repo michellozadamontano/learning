@@ -120,7 +120,7 @@
                 .then(() => {
                     // success
                     $('#addNew').modal('hide');
-                     swal(
+                     swal.fire(
                         'Actualizado!',
                         'La categoria fue actualizada.',
                         'success'

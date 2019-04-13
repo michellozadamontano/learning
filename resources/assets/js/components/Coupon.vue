@@ -134,9 +134,9 @@
                 .then(() => {
                     // success
                     $('#addNew').modal('hide');
-                     swal(
-                        'Updated!',
-                        'Information has been updated.',
+                     swal.fire(
+                        'Actualizado!',
+                        'El cupon ha sido actualizado.',
                         'success'
                         )
                         //this.$Progress.finish();

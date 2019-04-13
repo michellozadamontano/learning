@@ -114008,10 +114008,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.isLoading = true;
             this.form.post('admin/payuupdate/' + this.form.id).then(function () {
                 // success
-                $('#addNew').modal('hide');
-                swal('Updated!', 'Information has been updated.', 'success');
                 _this.isLoading = false;
                 Fire.$emit('AfterCreate');
+                $('#addNew').modal('hide');
+                swal.fire('Actualizado!', 'La informacion ha sido actualizada.', 'success');
             }).catch(function () {
                 _this.isLoading = false;
             });
@@ -114099,16 +114099,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }).catch(function () {
                 _this6.isLoading = false;
             });
+        },
+        userChange: function userChange() {
+            var _this7 = this;
+
+            console.log(this.form.user);
+            var obj = this.users.find(function (o) {
+                return o.id === _this7.form.user;
+            });
+            this.form.email = obj.email;
         }
     },
     created: function created() {
-        var _this7 = this;
+        var _this8 = this;
 
         this.loadUsers();
         this.unsubscribedUsers();
         Fire.$on('AfterCreate', function () {
-            _this7.loadUsers();
-            _this7.unsubscribedUsers();
+            _this8.loadUsers();
+            _this8.unsubscribedUsers();
         });
     }
 });
@@ -114300,24 +114309,29 @@ var render = function() {
                               staticClass: "form-control",
                               attrs: { name: "user", id: "user" },
                               on: {
-                                change: function($event) {
-                                  var $$selectedVal = Array.prototype.filter
-                                    .call($event.target.options, function(o) {
-                                      return o.selected
-                                    })
-                                    .map(function(o) {
-                                      var val =
-                                        "_value" in o ? o._value : o.value
-                                      return val
-                                    })
-                                  _vm.$set(
-                                    _vm.form,
-                                    "user",
-                                    $event.target.multiple
-                                      ? $$selectedVal
-                                      : $$selectedVal[0]
-                                  )
-                                }
+                                change: [
+                                  function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.$set(
+                                      _vm.form,
+                                      "user",
+                                      $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    )
+                                  },
+                                  function($event) {
+                                    return _vm.userChange()
+                                  }
+                                ]
                               }
                             },
                             _vm._l(_vm.users, function(u) {
@@ -115120,7 +115134,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.form.put('coupon/' + this.form.id).then(function () {
                 // success
                 $('#addNew').modal('hide');
-                swal('Updated!', 'Information has been updated.', 'success');
+                swal.fire('Actualizado!', 'El cupon ha sido actualizado.', 'success');
                 //this.$Progress.finish();
                 _this.isLoading = false;
                 Fire.$emit('AfterCreate');
@@ -116755,7 +116769,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.form.put('category/' + this.form.id).then(function () {
                 // success
                 $('#addNew').modal('hide');
-                swal('Actualizado!', 'La categoria fue actualizada.', 'success');
+                swal.fire('Actualizado!', 'La categoria fue actualizada.', 'success');
                 _this.isLoading = false;
                 Fire.$emit('AfterCreate');
             }).catch(function (error) {
