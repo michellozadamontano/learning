@@ -305,11 +305,13 @@ class CourseController extends Controller
 		$contenFiles = CourseContentFile::where('course_content_id',$id)->get();
 		return view('courses.edit_content_files', compact('contenFiles'));
 	}
-	public function editContentFilesAction(Request $request) {
+	public function editContentFilesAction(Request $request) {		
 		try{
+			//dd($request);
 			$id = request('course_content_id');
 			$request->validate([
-				'description' => 'required'
+				'description' => 'required',
+				'titulo_video' => 'required',
 			]);
 			$content_file = CourseContentFile::find($id);
 			if($request->file('archivo') != null)

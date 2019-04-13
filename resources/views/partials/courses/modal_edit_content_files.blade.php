@@ -46,9 +46,7 @@
                                                         name="titulo_video"
                                                         id="titulo_video"
                                                         class="form-control{{ $errors->has('titulo_video') ? ' is-invalid' : '' }}"
-                                                        value=""
-                                                        required
-                                                        autofocus
+                                                        value=""   
                                                     />
                 
                                                     @if ($errors->has('titulo_video'))

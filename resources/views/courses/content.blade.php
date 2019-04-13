@@ -71,10 +71,9 @@
                                         </a>
                                     </small>                               
                                     
-                                @endif  
+                                @endif      
                                 
-                                
-                                   <small>{{__('Descripción')}}: {{$file->description}}</small>
+                                   <small style="background: cadetblue">{{__('Descripción')}}: {!! eval('?>'.Blade::compileString($file->description)) !!} </small>                                  
                                 </div>
                                 
                             @endforeach                             
