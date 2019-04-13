@@ -50,6 +50,7 @@ Route::get('/images/{path}/{attachment}', function($path, $attachment) {
 
 Route::group(['prefix' => 'courses'], function () {
 
+	Route::get('/{course}/free/{paginate?}', 'CourseController@showContentFree')->name('courses.free');
 	Route::group(['middleware' => ['auth']], function() {
 		Route::get('/subscribed', 'CourseController@subscribed')->name('courses.subscribed');
 		Route::get('/{course}/inscribe', 'CourseController@inscribe')->name('courses.inscribe');

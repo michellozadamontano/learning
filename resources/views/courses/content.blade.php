@@ -8,6 +8,19 @@
                         <i class="fa fa-eye"></i> {{ __("Detalle") }}
                 </a>
             </div>
+            @if ($course->free == 1)
+            <div class="col-sm-3">
+                <form action="{{ route('courses.free',["slug" => $course->slug])}}" method="GET" id="form_paginate">
+                    <select name="paginate" id="paginate" class="form-control" onchange="this.form.submit()">
+                        <option value="">[Seleccionar]</option>          
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="15">15</option>      
+                        <option value="20">20</option>                  
+                    </select>
+                </form>
+            </div>
+            @else 
             <div class="col-sm-3">
                 <form action="{{ route('courses.content',["slug" => $course->slug])}}" method="GET" id="form_paginate">
                     <select name="paginate" id="paginate" class="form-control" onchange="this.form.submit()">
@@ -19,6 +32,8 @@
                     </select>
                 </form>
             </div>
+            @endif
+            
         </div>        
             
         <div class="row justify-content-center">      

@@ -94,6 +94,13 @@
                                 </label>
                             </div>
                         </div>
+                        <div class="form-group row form-check">
+                            <div class="col-6 offset-4">
+                                <input type="checkbox" class="form-check-input" id="free" name="free" {{ old('free') === 1 || $course->free === 1 ? 'checked': '' }}>
+                                <label class="form-check-label" for="free">Gratis ?</label>
+                            </div>
+                            
+                        </div>
 
                         <div class="form-group row">
                             <label

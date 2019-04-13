@@ -69,12 +69,15 @@ class CourseController extends Controller
 		return view('courses.form', compact('course', 'btnText'));
 	}
 
-	public function store (CourseRequest $course_request) {		
-	
+	public function store (CourseRequest $course_request) {	
+		
+		$free = $course_request['free'] == "on" ? 1:0;
+	//	dd($free);
 		$picture = Helper::uploadFile('picture', 'courses');
 		$course_request->merge(['picture' => $picture]);
 		$course_request->merge(['teacher_id' => auth()->user()->teacher->id]);
 		$course_request->merge(['status' => Course::PENDING]);
+		$course_request->merge(['free' => $free]);
 		Course::create($course_request->input());
 		return back()->with('message', ['success', __('Curso enviado correctamente, recibirá un correo con cualquier información')]);
 	}
@@ -92,6 +95,8 @@ class CourseController extends Controller
 			$picture = Helper::uploadFile( "picture", 'courses');
 			$course_request->merge(['picture' => $picture]);
 		}
+		$free = $course_request['free'] == "on" ? 1:0;
+		$course_request->merge(['free' => $free]);
 		$course->fill($course_request->input())->save();
 		return back()->with('message', ['success', __('Curso actualizado')]);
 	}
@@ -107,15 +112,7 @@ class CourseController extends Controller
 
 	//aqui voy a mostrar el contenido del curso
 	public function showContent(Course $course,$paginate = null) {		
-		try {
-			//code...
-		/*	$course->load([	
-				'courseContent'
-			])->paginate(2);	*/	
-		//	dd($course);
-
-			//$course =  $course->with('courseContent')->paginate(2);
-			//dd(request('paginate'));
+		try {			
 			if(request('paginate') == null){
 				$paginate = 5;
 			}
@@ -129,6 +126,22 @@ class CourseController extends Controller
 			return back()->with('message', ['danger', __("Error al mostrar los datos")]);
 		}
 	}
+	public function showContentFree(Course $course,$paginate = null) {		
+		try {			
+			if(request('paginate') == null){
+				$paginate = 5;
+			}
+			else{
+				$paginate = request('paginate');
+			}
+			$contents = CourseContent::where('course_id',$course->id)->paginate($paginate);
+		//	dd($contents);
+			return view('courses.content', compact('contents','course'));
+		} catch (\Exception $exception) {
+			return back()->with('message', ['danger', __("Error al mostrar los datos")]);
+		}
+	}
+
 	public function showVideo($id)
 	{
 		$file = CourseContentFile::find($id);		
@@ -231,7 +244,7 @@ class CourseController extends Controller
 		if($request->file('archivo') != null)
 		{
 			$request->validate([
-				'archivo' => 'mimes:pdf,txt,docx,xlsx,mp4s,m4a,mp4a',
+				'archivo' => 'mimes:pdf,txt,docx,xlsx,mp4s,m4a,mp4a,mp4',
 			]);
 			$archivo = Helper::uploadFile('archivo', 'courses');
 			$content_file->arhivo = $archivo;
@@ -302,7 +315,7 @@ class CourseController extends Controller
 			if($request->file('archivo') != null)
 			{
 				$request->validate([
-					'archivo' => 'mimes:pdf,txt,docx,xlsx,mp4s,m4a,mp4a',
+					'archivo' => 'mimes:pdf,txt,docx,xlsx,mp4s,m4a,mp4a,mp4',
 				]);
 				if($content_file->arhivo != "")
 				{

@@ -18,28 +18,37 @@
             {{ str_limit($course->description, 100) }}
         </p>
         @guest
-        <a
-            href="{{ route('courses.detail', $course->slug) }}"
-            class="btn btn-course btn-block"
-        >
-            {{ __("Más información") }}
-        </a>
+        @if($course->free == 1)
+            <a
+                href="{{route('courses.free', ['slug' => $course->slug])}}"
+                class="btn btn-course btn-block"
+            >
+                    {{ __("Ir Al curso") }}
+            </a>
+        @else 
+            <a
+                href="{{ route('courses.detail', $course->slug) }}"
+                class="btn btn-course btn-block"
+            >
+                {{ __("Más información") }}
+            </a>
+        @endif
         @endguest
         @auth
-        @if(($course->students->contains(auth()->user()->student->id) && auth()->user()->paypal))
-        <a
-            href="{{route('courses.content', ['slug' => $course->slug])}}"
-            class="btn btn-course btn-block"
-        >
-                {{ __("Ir Al curso") }}
-        </a>        
+        @if(($course->students->contains(auth()->user()->student->id) && auth()->user()->paypal)||$course->free == 1)
+            <a
+                href="{{route('courses.content', ['slug' => $course->slug])}}"
+                class="btn btn-course btn-block"
+            >
+                    {{ __("Ir Al curso") }}
+            </a>        
         @else
-        <a
-            href="{{ route('courses.detail', $course->slug) }}"
-            class="btn btn-course btn-block"
-        >
-            {{ __("Más información") }}
-        </a>
+            <a
+                href="{{ route('courses.detail', $course->slug) }}"
+                class="btn btn-course btn-block"
+            >
+                {{ __("Más información") }}
+            </a>
         @endif
        
         @endauth
