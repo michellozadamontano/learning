@@ -183,7 +183,7 @@ export default {
                    let obj =  {
                         nombre          : element.user.name,
                         email           : element.user.email,
-                        cursos          : element.courses_formatted,
+                        cursos          : element.formatted_courses,
                         plan            : element.user.paypal_subscription != null ? element.user.paypal_subscription.plan : "",
                         costo           : element.user.paypal_subscription != null ? element.user.paypal_subscription.amount : "",
                         paypal_email    : element.user.paypal_subscription != null ? element.user.paypal_subscription.paypal_email : "",

@@ -36,6 +36,9 @@ class Student extends Model
 	}
 
 	public function getCoursesFormattedAttribute () {
-    	return $this->courses->pluck('name')->implode(' , ');
+    	return $this->courses->pluck('name')->implode('<br />');
+	}
+	public function getFormattedCoursesAttribute() {
+		return $this->courses->pluck('name')->implode(',');
 	}
 }

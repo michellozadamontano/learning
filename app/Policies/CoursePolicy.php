@@ -23,7 +23,7 @@ class CoursePolicy
 
     public function inscribe (User $user, Course $course) {              
         return  !$course->students->contains($user->student->id);       
-    }
+    }    
 
 	public function review (User $user, Course $course) {
 		return ! $course->reviews->contains('user_id', $user->id);

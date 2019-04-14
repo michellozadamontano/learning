@@ -25,7 +25,9 @@
                                 {{$item->file}}
                             </td>
                             <td>
-                                {{$item->description}}
+                                @php
+                                   echo $item->description
+                                @endphp                                
                             </td>
                             <td>
                             <a href="" class="btn btn-success" data-id="{{$item->id}}" data-file = "{{$item->file}}" data-descrip = "{{$item->description}}" data-toggle="modal" data-target="#myModal">
