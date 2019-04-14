@@ -4,14 +4,18 @@
         width: 100%;
         height: 50px;
     }
+    .card_image {
+        width: 100%;
+        height: 200px;
+    }
 </style>
 @endpush
 <div class="card card-01">
     <img
-        class="oversize card-img-top"
+        class="card_image card-img-top"
         src="{{$course->pathAttachment()}}"
         alt="{{ $course->name }}"
-        style="height: 200px; width: 300px;"
+       
     />
     <div class="card-body">
             @if($course->free == 1)
@@ -46,20 +50,29 @@
             @endif
         @endguest
         @auth
-        @if(($course->students->contains(auth()->user()->student->id) && auth()->user()->paypal)||$course->free == 1)
+        @if($course->free == 1)
             <a
-                href="{{route('courses.content', ['slug' => $course->slug])}}"
+                href="{{route('courses.detail', ['slug' => $course->slug])}}"
                 class="btn btn-course btn-block"
             >
-                    {{ __("Ir Al curso") }}
-            </a>        
-        @else
-            <a
-                href="{{ route('courses.detail', $course->slug) }}"
-                class="btn btn-course btn-block"
-            >
-                {{ __("Más información") }}
+                    {{ __("Ver detalle") }}
             </a>
+        @else 
+            @if(($course->students->contains(auth()->user()->student->id) && auth()->user()->paypal)||$course->free == 1)
+                <a
+                    href="{{route('courses.content', ['slug' => $course->slug])}}"
+                    class="btn btn-course btn-block"
+                >
+                        {{ __("Ir Al curso") }}
+                </a>        
+            @else
+                <a
+                    href="{{ route('courses.detail', $course->slug) }}"
+                    class="btn btn-course btn-block"
+                >
+                    {{ __("Más información") }}
+                </a>
+            @endif
         @endif
        
         @endauth

@@ -2,19 +2,37 @@
     @auth
         @can('opt_for_course', $course)
              @can('subscribe', \App\Course::class)
-                <a class="btn btn-subscribe btn-bottom btn-block" href="{{ route('subscriptions.plans') }}">
-                    <i class="fa fa-bolt"></i> {{ __("Subscribirme") }}
-                </a>                
+                 @if($course->free == 1)
+                    <a class="btn btn-subscribe btn-bottom btn-block" href="{{route('courses.free', ['slug' => $course->slug])}}">
+                        <i class="fa fa-bolt"></i> {{ __("Gratis") }}
+                    </a>
+                @else
+                    <a class="btn btn-subscribe btn-bottom btn-block" href="{{ route('subscriptions.plans') }}">
+                        <i class="fa fa-bolt"></i> {{ __("Subscribirme") }}
+                    </a>    
+                @endif            
              @else
                 
                 @can('inscribe', $course)
-                    <a class="btn btn-subscribe btn-bottom btn-block" href="{{ route('courses.inscribe', ['slug' => $course->slug]) }}">
-                        <i class="fa fa-bolt"></i> {{ __("Inscribirme") }}
-                    </a>
+                    @if($course->free == 1)
+                        <a class="btn btn-subscribe btn-bottom btn-block" href="{{route('courses.free', ['slug' => $course->slug])}}">
+                            <i class="fa fa-bolt"></i> {{ __("Gratis") }}
+                        </a>
+                    @else
+                        <a class="btn btn-subscribe btn-bottom btn-block" href="{{ route('courses.inscribe', ['slug' => $course->slug]) }}">
+                            <i class="fa fa-bolt"></i> {{ __("Inscribirme") }}
+                        </a>
+                    @endif
                 @else
-                    <a class="btn btn-subscribe btn-bottom btn-block" href="{{route('courses.content', ['slug' => $course->slug])}}">
-                        <i class="fa fa-bolt"></i> {{ __("Inscrito") }}
-                    </a>
+                    @if($course->free == 1)
+                        <a class="btn btn-subscribe btn-bottom btn-block" href="{{route('courses.free', ['slug' => $course->slug])}}">
+                            <i class="fa fa-bolt"></i> {{ __("Gratis") }}
+                        </a>
+                    @else
+                        <a class="btn btn-subscribe btn-bottom btn-block" href="{{route('courses.content', ['slug' => $course->slug])}}">
+                            <i class="fa fa-bolt"></i> {{ __("Inscrito") }}
+                        </a>
+                    @endif
                 @endcan
             @endcan
              
