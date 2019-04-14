@@ -252,7 +252,9 @@ class CourseController extends Controller
 
 		if(request('url_vimeo') == null && request('url_youtube') == null && $request->file('archivo') == null)
 		{
-			return back()->with('message', ['danger', __("Al menos tiene que existir o un video o un archivo")]);
+			//return back()->with('message', ['danger', __("Al menos tiene que existir o un video o un archivo")]);
+			$content_file->path 	= "";
+			$content_file->arhivo 	= "";
 		}
 		
 		

@@ -116105,7 +116105,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     var obj = {
                         nombre: element.user.name,
                         email: element.user.email,
-                        cursos: element.formatted_courses,
+                        cursos: element.courses_formatted,
                         plan: element.user.paypal_subscription != null ? element.user.paypal_subscription.plan : "",
                         costo: element.user.paypal_subscription != null ? element.user.paypal_subscription.amount : "",
                         paypal_email: element.user.paypal_subscription != null ? element.user.paypal_subscription.paypal_email : "",
