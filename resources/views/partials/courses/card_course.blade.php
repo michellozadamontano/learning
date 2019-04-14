@@ -2,7 +2,7 @@
 <style>
     .oversize {
         width: 100%;
-        height: auto;
+        height: 50px;
     }
 </style>
 @endpush
@@ -15,7 +15,7 @@
     />
     <div class="card-body">
             @if($course->free == 1)
-                <img src="/images/free.jpg" class="oversize img-rounded" alt="free">
+                <img src="/images/free.jpg" class="oversize img-rounded" alt="free" >
             @endif
         <span class="badge-box"><i class="fa fa-check"></i></span>
         <h4 class="card-title">{{ $course->name }}</h4>
