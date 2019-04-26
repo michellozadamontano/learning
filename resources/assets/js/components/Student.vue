@@ -8,7 +8,8 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Estudiates inscritos a cursos</h3> 
+                <h3 class="card-title">Estudiantes inscritos a cursos</h3>
+                
                 <download-excel                    
                    
                     :data="array_excel"
@@ -20,17 +21,14 @@
                 </download-excel>                
               </div>             
               <div class="card-body table-responsive p-2">
-                  <v-client-table :data="tableData" :columns="columns" :options="options">
-                        <div slot="actions" slot-scope="">
-                            <a href="#" v-tooltip="msg">                                
-                                <i class="fas fa-edit blue   "></i>
-                            </a>
-                            /
-                            <a href="#">
-                                <i class="fa fa-trash red"></i>
-                            </a>                            
-                        </div>
-                    </v-client-table>
+                  <div class="row">                      
+                      <div class="col-12">
+                        <v-client-table :data="tableData" :columns="columns" :options="options" @row-click="showData">
+                            
+                        </v-client-table>
+                      </div>
+                  </div>
+                  
                
               </div>
               <!-- /.card-body -->
@@ -40,32 +38,94 @@
             <!-- /.card -->
           </div>
         </div>        
-        
+       <!-- Modal -->   
+       
+       <!-- Modal -->
+       <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+           <div class="modal-dialog" role="document">
+               <div class="modal-content">
+                   <div class="modal-header">
+                       <h5 class="modal-title">Datos de Usuarios</h5>
+                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                               <span aria-hidden="true">&times;</span>
+                           </button>
+                   </div>
+                   <div class="modal-body">
+                       <div class="media">
+                            <img :src="`images/users/${picture}`" class="mr-3" alt="photo">
+                            <div >
+                                <ul>
+                                    <li class="nav-item">
+                                        <b>Nombre:</b>  <span>{{nameM}}</span>   
+                                          
+                                    </li>
+                                    <li>
+                                       <b>Email:</b>    <span>{{s_email}}</span>
+                                    </li> 
+                                    <li>
+                                        <b>Profession:</b>  <span>{{s_profession}}</span>
+                                    </li>  
+                                    <li>
+                                       <b> Plan:</b>       <span>{{s_plan}}</span>
+                                    </li> 
+                                    <li>
+                                        <b>Costo:</b>      <span>{{s_costo}}</span>
+                                    </li>
+                                    <li>
+                                        <b>Cursos:</b>     <span>{{s_cursos}}</span> 
+                                    </li> 
+                                    <li>
+                                        <b>Pais:</b>       <span>{{s_country}}</span>
+                                    </li>
+                                    <li>
+                                        <b>Ciudad:</b>     <span>{{s_city}}</span>  
+                                    </li>                              
+                                </ul>                             
+                            </div>
+                        </div>
+                   </div>
+                   <div class="modal-footer">
+                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>                       
+                   </div>
+               </div>
+           </div>
+       </div>
     </div>
 </template>
 <script>
+import {Event} from 'vue-tables-2';
 import Loading from 'vue-loading-overlay';   
 import 'vue-loading-overlay/dist/vue-loading.css';
+
 export default {
     name: "students",
     data() {
         return {
-            isLoading: false,
-            msg:'Editar',
-            url: 'admin/student_data',
-            columns: ['id', 'name', 'email','courses_formatted','plan','costo','paypal_email','country','city','descuento','coupon','actions'],
-            tableData:[],
+            isLoading   : false,
+            msg         :'Editar',
+            nameM       : '',
+            picture     : '',
+            s_email     : '',
+            s_cursos    : '',
+            s_plan      : '',
+            s_country   : '',
+            s_city      : '',
+            s_profession: '',
+            s_costo     : '',
+            url         : 'admin/student_data',
+            columns     : ['id', 'name', 'email',],
+            tableData   :[],
             excel_object:{
-                nombre:"",
-                email: "",
-                cursos: "",
-                plan:"",
-                costo:"",
+                nombre      :"",
+                email       : "",
+                cursos      : "",
+                plan        :"",
+                costo       :"",
                 paypal_email:"",
-                country:"",
-                city:"",
-                descuento:"",
-                coupon: "",
+                country     :"",
+                city        :"",
+                descuento   :"",
+                coupon      : "",
             },
             array_excel:[],
             options: {
@@ -83,7 +143,7 @@ export default {
                     country             : 'Pais',
                     city                : 'Ciudad',
                     actions             : "Acciones",    
-                },
+                },                
                 templates:{
                     name: function(h,row,index){
                         return row.user.name
@@ -170,8 +230,7 @@ export default {
         loadStudent(){
             this.isLoading = true;
             axios.get(this.url).then(res => {
-                this.tableData = res.data;
-                console.log(res.data);
+                this.tableData = res.data;                
                 this.array_excel = []
                 let desc  = "";
                 res.data.forEach(element => {
@@ -211,12 +270,55 @@ export default {
         },
         finishDownload(){
             this.isLoading = false;
-        }
+        },  
+        showData(data) {
+            console.log(data);
+            this.nameM          = data.row.user.name;
+            this.picture        = data.row.user.picture;
+            this.s_email        = data.row.user.email;
+            this.s_profession   = data.row.title;
+            this.s_cursos       = data.row.courses_formatted;
+            this.s_plan         = data.row.user.paypal_subscription != null ? data.row.user.paypal_subscription.plan :''
+            this.s_costo        = data.row.user.paypal_subscription != null ? data.row.user.paypal_subscription.amount :''
+            this.s_country      = data.row.user.paypal_subscription != null ? data.row.user.paypal_subscription.country :''
+            this.s_city         = data.row.user.paypal_subscription != null ? data.row.user.paypal_subscription.city :''
+            $('#modelId').modal('show');
+        }      
         
     },
     mounted() {
         this.loadStudent();
+       /* Event.$on('vue-tables.row-click', function (data) {
+            this.isLoading = true;
+            this.nameM = data.row.user.name;
+             console.log(this.nameM);
+            axios.post('/profile/getuser',{
+                user_id:data.row.id
+            }).then(resp => {
+                this.isLoading = false;
+                console.log(resp.data);
+               // this.nameM = resp.data.name;
+               
+                
+               // $('#modelId').modal('show');
+               /* $('#modelId').on('show.bs.modal', function(e) {
+                    var temp = $(e.relatedTarget);
+                    console.log(temp.data);
+                    
+                    var modal = $(this);
+                    modal.find('#name').val(resp.data.name);
+                
+                });
+                
+            }).catch(error => {
+                this.isLoading = false;
+                console.log(error);
+                
+            })
+                        
+        });*/
     },
+    
 }
 </script>
 <style>

@@ -37,5 +37,38 @@ class TeacherController extends Controller
     		$success = false;
 	    }
     	return response()->json(['res' => $success]);
-    }
+	}
+	//estos metodos son para consumirlos desde vuejs
+	public function getCourses() {
+		$teacher = request('teacher_id');
+		$courses = Course::where('teacher_id',$teacher)->get();
+		return $courses;
+	}
+	public function getStudent() {
+		$course_id = request('course_id');
+		$students = User::with('student')->whereHas('student.courses', function($q) use($course_id){
+			$q->where('id',$course_id);
+		})->get();
+		return $students;
+
+	}
+	public function sendMessage() {
+		$course_id 	= request('course_id');
+		$message 	= request('message');
+		$students 	= User::with('student')->whereHas('student.courses', function($q) use($course_id){
+			$q->where('id',$course_id);
+		})->get();		
+		try {
+			\Mail::to($students)->send(new MessageToStudent( auth()->user()->name, $message));
+			/*foreach ($students as $value) {
+				
+			}*/
+    		
+    		$success = true;
+	    } catch (\Exception $exception) {
+    		$success = false;
+		}
+		return response()->json(['res' => $success]);
+
+	}
 }

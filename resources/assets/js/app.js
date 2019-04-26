@@ -19,6 +19,7 @@ import {ServerTable, ClientTable, Event}    from 'vue-tables-2';
 Vue.use(ServerTable, {}, false, 'bootstrap4', 'default');
 Vue.use(ClientTable, {}, false, 'bootstrap4', 'default');
 
+
 import moment from 'moment';
 import { Form, HasError, AlertError } from 'vform';
 import VTooltip from 'v-tooltip'
@@ -88,6 +89,8 @@ import TBook                from './components/TBook';
 import TCompany             from './components/TCompany';
 import TPrevious            from './components/TPrevious';
 import TKeyStat             from './components/TKeyStat';
+import CourseStudent        from './components/CourseStudent';
+import PhotoProfile         from './components/PhotoProfile';
 
 
 let routes = [
@@ -123,6 +126,8 @@ Vue.component('courses-list', Courses);
 Vue.component('teacher-list', Teachers);
 Vue.component('paypal', Paypal);
 Vue.component('grafica', Grafica);
+Vue.component('course-student',CourseStudent);
+Vue.component('photo-profile',PhotoProfile);
 
 Vue.filter('myDate',function(created){
   return moment(created).format('MMMM Do YYYY');

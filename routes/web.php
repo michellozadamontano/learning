@@ -124,6 +124,8 @@ Route::group(["prefix" => "profile", "middleware" => ["auth"]], function() {
 	Route::get('/', 'ProfileController@index')->name('profile.index');
 	Route::put('/', 'ProfileController@update')->name('profile.update');
 	Route::post('/change', 'ProfileController@update_ajax');
+	Route::post('/getuser', 'ProfileController@getUser');
+	Route::post('/updatephoto', 'ProfileController@updatePhoto');
 });
 Route::group(["prefix" => "coupon", "middleware" => ["auth"]], function() {
 	Route::get('/', 'CouponController@index')->name('coupon.index');
@@ -146,6 +148,9 @@ Route::group(['prefix' => "teacher", "middleware" => ["auth"]], function() {
 	Route::get('/courses', 'TeacherController@courses')->name('teacher.courses');
 	Route::get('/students', 'TeacherController@students')->name('teacher.students');	
 	Route::post('/send_message_to_student', 'TeacherController@sendMessageToStudent')->name('teacher.send_message_to_student');
+	Route::post('/ajax_courses', 'TeacherController@getCourses');
+	Route::post('/ajax_students', 'TeacherController@getStudent');
+	Route::post('/ajax_sendmessage', 'TeacherController@sendMessage');
 });
 
 Route::group(['prefix' => "admin", "middleware" => ['auth', sprintf("role:%s", \App\Role::ADMIN)]], function() {

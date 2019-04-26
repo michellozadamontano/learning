@@ -154,8 +154,7 @@ import LineChart from './Graficas';
             },
             async getSubscribedPerMonth () {
                 axios.get('/subscriptions/users_subscribed_count').then(res => {
-                this.subscribed_per_month = res.data;   
-                console.log(res.data);
+                this.subscribed_per_month = res.data;               
                 this.fillData();                            
                     
                 }).catch(error => {
