@@ -48,12 +48,20 @@
                                                     <i class="fa fa-rocket"></i> 
                                                 </button>
                                             </div>
-                                        </div>
-                                        
+                                        </div>                                        
                                     </div>
+
                                     <div class="col-md-6">
-                                        <!--<a class="btn btn-primary btn-block" v-bind:href="`/courses/${props.row.slug}/content`">Ver curso</a>-->
-                                        <router-link :to="'/content/' + props.row.id" class="btn btn-primary btn-block"> Ver Curso</router-link>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <router-link :to="'/content/' + props.row.id" class="btn btn-primary btn-block" v-tooltip='"Ver Curso"'> <i class="fa fa-eye" aria-hidden="true"></i></router-link>
+                                            </div>
+                                            <div class="col-6">
+                                                <router-link :to="'/course/' + props.row.id" class="btn btn-secondary btn-block" v-tooltip='"Editar Curso"'> <i class="fas fa-pencil-alt    "></i></router-link>
+                                            </div>  
+                                        </div>
+                                          
+                                        
                                     </div>
                                 </div>
                                 

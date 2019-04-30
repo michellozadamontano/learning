@@ -29,6 +29,8 @@ Route::post('bot/sendmessage', function() {
 Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
+Route::get('/free', 'CourseController@freeCourses')->name('free');
+Route::get('/pay', 'CourseController@payCourses')->name('pay');
 
 /*Route::get('courses/{path?}', [
     'uses' => 'HomeController@index',
@@ -52,6 +54,10 @@ Route::group(['prefix' => 'courses'], function () {
 	
 	Route::group(['middleware' => ['auth']], function() {
 		Route::get('/subscribed', 'CourseController@subscribed')->name('courses.subscribed');
+		Route::get('/payed', 'CourseController@payed')->name('courses.payed');
+		Route::get('/show_payment/{id}', 'CourseController@show_payment')->name('courses.payment_details');
+		Route::post('/payment','CourseController@create_user_payment_course');
+		Route::post('/paypal','CourseController@paypalButon')->name('courses.paypal');
 		Route::get('/{course}/inscribe', 'CourseController@inscribe')->name('courses.inscribe');
 		Route::post('/add_review', 'CourseController@addReview')->name('courses.add_review');
 		Route::get('/{course}/content/{paginate?}', 'CourseController@showContent')->name('courses.content');
@@ -64,6 +70,8 @@ Route::group(['prefix' => 'courses'], function () {
 		Route::post('/delete_content_action', 'CourseController@deleteContentAction')->name('courses.deleteContentAction');
 		Route::get('/{id}/show_video', 'CourseController@showVideo')->name('courses.show_video');
 		Route::get('/video_ajax/{id}', 'CourseController@showVideoAjax');
+		Route::post('/course_details', 'CourseController@course_details');
+		Route::post('/update_ajax', 'CourseController@update_ajax');
 		Route::post('/add_course_class', 'CourseController@addContentAction')->name('course.add_course_class');
 		Route::post('/add_course_class_file', 'CourseController@addContentFile')->name('courses.addFile');
 		Route::get('/{file}/download', 'CourseController@download')->name('courses.download');

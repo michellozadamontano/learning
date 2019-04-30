@@ -20,18 +20,22 @@ class HomeController extends Controller
             } 
             else{
                 $courses = Course::withCount(['students'])
-                ->with('category', 'teacher', 'reviews')
+                ->with('category', 'teacher', 'reviews','userPayment')
                 ->where('status', Course::PUBLISHED)
+                ->where('free','<>', 1)
+                ->where('pay','<>', 1)
                 ->latest()
                 ->paginate(12);
-    
+                
             return view('home', compact('courses'));
             }
         }       
         else{
             $courses = Course::withCount(['students'])
-		    ->with('category', 'teacher', 'reviews')
-		    ->where('status', Course::PUBLISHED)
+		    ->with('category', 'teacher', 'reviews','userPayment')
+            ->where('status', Course::PUBLISHED)
+            ->where('free','<>', 1)
+            ->where('pay','<>', 1)
 		    ->latest()
 		    ->paginate(12);
 

@@ -50,7 +50,8 @@ class Course extends Model
 {
 	use SoftDeletes;
 
-	protected $fillable = ['teacher_id', 'name', 'description', 'picture', 'level_id', 'category_id', 'status','free'];
+	protected $fillable = ['teacher_id', 'name', 'description', 'picture', 
+	'level_id', 'category_id', 'status','free','pay','value'];
 
 	const PUBLISHED = 1;
 	const PENDING = 2;
@@ -136,6 +137,9 @@ class Course extends Model
 	}
 	public function courseContent() {
 		return $this->hasMany(CourseContent::class);
+	}
+	public function userPayment() {
+		return $this->hasMany('App\UserPayment');
 	}
 
 	/**

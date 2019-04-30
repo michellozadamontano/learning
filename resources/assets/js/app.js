@@ -73,6 +73,7 @@ Vue.component('downloadExcel', JsonExcel)
 
 import Dashboard            from './components/Dashboard';
 import Courses              from './components/Courses';
+import Course               from './components/Course';
 import Teachers             from './components/Teachers';
 import Paypal               from './components/Paypal';
 import Payu                 from './components/Payu';
@@ -91,6 +92,7 @@ import TPrevious            from './components/TPrevious';
 import TKeyStat             from './components/TKeyStat';
 import CourseStudent        from './components/CourseStudent';
 import PhotoProfile         from './components/PhotoProfile';
+import PaypalPayment        from './components/PaypalPayment';
 
 
 let routes = [
@@ -98,6 +100,7 @@ let routes = [
     { path: '/'             , component: Dashboard },
     { path: '/dashboard'    , component: Dashboard },
     { path: '/courses'      , component: Courses },
+    { path: '/course/:id'   , component: Course },
     { path: '/teachers'     , component: Teachers },
     { path: '/students'     , component: Student },
     { path: '/registered'   , component: Student_Registered },
@@ -126,8 +129,9 @@ Vue.component('courses-list', Courses);
 Vue.component('teacher-list', Teachers);
 Vue.component('paypal', Paypal);
 Vue.component('grafica', Grafica);
-Vue.component('course-student',CourseStudent);
-Vue.component('photo-profile',PhotoProfile);
+Vue.component('course-student', CourseStudent);
+Vue.component('photo-profile', PhotoProfile);
+Vue.component('paypal-payment', PaypalPayment);
 
 Vue.filter('myDate',function(created){
   return moment(created).format('MMMM Do YYYY');

@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Coupon;
 use App\Course;
-use App\Helpers\Helper;
-use App\Http\Requests\CourseRequest;
-use App\Mail\NewStudentInCourse;
 use App\Review;
-use Intervention\Image\ImageManagerStatic as Image;
-use Symfony\Component\HttpFoundation\Request;
+use App\UserPayment;
 use App\CourseContent;
+use App\Helpers\Helper;
 use App\CourseContentFile;
+use App\Mail\NewStudentInCourse;
+use App\Http\Requests\CourseRequest;
 use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\Request;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class CourseController extends Controller
 {
@@ -34,14 +36,19 @@ class CourseController extends Controller
 		])->get();
 
 		$related = $course->relatedCourses();
+		$paypal_id = config('services.paypal.id');
 
-		return view('courses.detail', compact('course', 'related'));
+		return view('courses.detail', compact('course', 'related','paypal_id'));
+	}
+	public function show_payment($id) {
+		$course = Course::find($id);		
+		return view('courses.payment', compact('course'));
 	}
 
 	public function inscribe (Course $course) {
 		$course->students()->attach(auth()->user()->student->id);
 
-	//	\Mail::to($course->teacher->user)->send(new NewStudentInCourse($course, auth()->user()->name));
+		\Mail::to($course->teacher->user)->send(new NewStudentInCourse($course, auth()->user()->name));
 
 		return back()->with('message', ['success', __("Inscrito correctamente al curso")]);
 	}
@@ -51,6 +58,35 @@ class CourseController extends Controller
 			$query->where('user_id', auth()->id());
 		})->get();
 		return view('courses.subscribed', compact('courses'));
+	}
+	public function payed() {
+		$courses = Course::whereHas('userPayment', function($query) {
+			$query->where('user_id', auth()->id());
+		})->get();
+		return view('courses.payed', compact('courses'));
+	}
+	public function create_user_payment_course(Request $request){
+		$course_id 	= request('course_id');
+		$valor 		= request('valor');
+		$user_id 	= auth()->id();
+		$payment 	= UserPayment::create([
+					'course_id'	=> $course_id,
+					'user_id'	=> $user_id,
+					'valor' 	=> $valor
+				]);
+		if($request->session()->has('coupon')){
+			$coupon = session('coupon');               
+			$coup = Coupon::where('code',$coupon)->first();
+			if($coup){
+				if($coup->quantity > 0)
+				{    
+					$coup->quantity--;
+					$coup->save();
+				}
+			}
+			$request->session()->forget('coupon');
+		}
+		return $payment;
 	}
 
 	public function addReview () {
@@ -87,6 +123,34 @@ class CourseController extends Controller
 			->whereSlug($slug)->first();
 		$btnText = __("Actualizar curso");
 		return view('courses.form', compact('course', 'btnText'));
+	}
+	public function course_details() {
+		$course_id = request('course_id');
+		$course = Course::find($course_id);
+		return $course;
+	}
+	public function update_ajax() {
+		$course_id = request('course_id');
+		$course = Course::find($course_id);
+		$course->name = request('name');
+		$course->description = request('description');
+		if(request('free') == 1) {
+			$course->free = 1;
+			$course->pay = 0;
+			$course->value = 0;
+		}
+		if(request('pay') == 1) {
+			$course->pay = 1;
+			$course->free = 0;
+			$course->value = request('value');
+		}
+		if(request('suscription') == 1) {
+			$course->pay = 0;
+			$course->free = 0;
+			$course->value = 0;
+		}
+		$course->save();
+		return $course;
 	}
 
 	public function update (CourseRequest $course_request, Course $course) {
@@ -388,5 +452,102 @@ class CourseController extends Controller
 			return back()->with('message', ['danger', __("Problemas en eliminar")]);
 		}
 	}
+	public function freeCourses() {
+		try {
+			//aqui voy a mostrar los cursos que soy gratis
+			if(auth()->check()){	
+				$courses = Course::withCount(['students'])
+				->with('category', 'teacher', 'reviews','userPayment')
+				->where('status', Course::PUBLISHED)
+				->where('free',1)
+				->latest()
+				->paginate(12);
+				
+				return view('home', compact('courses'));
+				
+			}       
+			else{
+				$courses = Course::withCount(['students'])
+				->with('category', 'teacher', 'reviews','userPayment')
+				->where('status', Course::PUBLISHED)
+				->where('free',1)
+				->latest()
+				->paginate(12);
+	
+			return view('home', compact('courses'));
+			}
+		} catch (\Throwable $th) {
+			return back()->with('message', ['danger', __("Uff hubo un problema al mostrar los datos")]);
+		}
+	}
+	public function payCourses() {
+		try {
+			//aqui voy a mostrar los cursos que soy gratis
+			if(auth()->check()){	
+				$courses = Course::withCount(['students'])
+				->with('category', 'teacher', 'reviews','userPayment')
+				->where('status', Course::PUBLISHED)
+				->where('pay',1)
+				->latest()
+				->paginate(12);
+				
+				return view('home', compact('courses'));
+				
+			}       
+			else{
+				$courses = Course::withCount(['students'])
+				->with('category', 'teacher', 'reviews','userPayment')
+				->where('status', Course::PUBLISHED)
+				->where('pay',1)
+				->latest()
+				->paginate(12);
+	
+			return view('home', compact('courses'));
+			}
+		} catch (\Throwable $th) {
+			return back()->with('message', ['danger', __("Uff hubo un problema al mostrar los datos")]);
+		}
+	}
+	public function paypalButon(){
+		//este metodo es para pagar a paypal ya con descuento si tiene		
+		$course_id = request('course_id');
+		$course = Course::find($course_id);
+		$paypal_id = config('services.paypal.id');
+		$amount = $course->value;
+		$descuento = 0;
+		if(request('coupon')!= ""){
+			$coupon = request('coupon');
+			
+		   //valido el coupon que sea correcto y que tenga existencia
+			if($this->checkCoupon($coupon)){
+				session(['coupon' => $coupon]); // almaceno el coupon en una session para una vez que se confirme la subscripcion rebajarlo del total
+				//ahora aplico el descuento para este coupon
+				$price      = $course->value;                    
+				$percent    = Coupon::where('code',$coupon)->first()->percent;
+				$new_price  = $price - ($price * $percent);		
+				$amount 	= $new_price;
+				$descuento  = $price * $percent;		
+				return view('courses.paypal', compact('amount','paypal_id','course','descuento'));
+			}
+			else{
+				return back()->with('message', ['danger', __("Cupon No Valido")]);
+			}
+		}
+		else {
+			return view('courses.paypal', compact('amount','paypal_id','course','descuento'));
+		}
+	}
+	public function checkCoupon($coupon){
+        $result = false;
+        $coup = Coupon::where('code',$coupon)->first();
+        if($coup){
+            if($coup->quantity > 0)
+            {
+                $result = true;  
+            }
+        }
+
+        return $result;
+    }
 
 }

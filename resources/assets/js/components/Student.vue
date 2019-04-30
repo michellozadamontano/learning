@@ -287,36 +287,7 @@ export default {
         
     },
     mounted() {
-        this.loadStudent();
-       /* Event.$on('vue-tables.row-click', function (data) {
-            this.isLoading = true;
-            this.nameM = data.row.user.name;
-             console.log(this.nameM);
-            axios.post('/profile/getuser',{
-                user_id:data.row.id
-            }).then(resp => {
-                this.isLoading = false;
-                console.log(resp.data);
-               // this.nameM = resp.data.name;
-               
-                
-               // $('#modelId').modal('show');
-               /* $('#modelId').on('show.bs.modal', function(e) {
-                    var temp = $(e.relatedTarget);
-                    console.log(temp.data);
-                    
-                    var modal = $(this);
-                    modal.find('#name').val(resp.data.name);
-                
-                });
-                
-            }).catch(error => {
-                this.isLoading = false;
-                console.log(error);
-                
-            })
-                        
-        });*/
+        this.loadStudent();       
     },
     
 }

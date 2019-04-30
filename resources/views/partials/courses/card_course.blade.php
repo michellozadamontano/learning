@@ -21,6 +21,9 @@
             @if($course->free == 1)
                 <img src="/images/free.jpg" class="oversize img-rounded" alt="free" >
             @endif
+            @if($course->pay == 1)
+                <img src="/images/pagos.png" class="oversize img-rounded" alt="pago" >
+            @endif
         <span class="badge-box"><i class="fa fa-check"></i></span>
         <h4 class="card-title">{{ $course->name }}</h4>
         <hr />
@@ -31,7 +34,7 @@
         <span class="badge badge-danger badge-cat">{{ $course->category->name }}</span>
         <p class="card-text">
             {{ str_limit($course->description, 100) }}
-        </p>
+        </p>                
         @guest
             @if($course->free == 1)
                 <a
@@ -57,8 +60,8 @@
             >
                     {{ __("Ver detalle") }}
             </a>
-        @else 
-            @if(($course->students->contains(auth()->user()->student->id) && auth()->user()->paypal)||$course->free == 1)
+        @else
+            @if(($course->students->contains(auth()->user()->student->id) && auth()->user()->paypal)||$course->free == 1 || ($course->userPayment->contains('user_id',auth()->user()->id)))
                 <a
                     href="{{route('courses.content', ['slug' => $course->slug])}}"
                     class="btn btn-course btn-block"
