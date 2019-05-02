@@ -11,6 +11,7 @@
     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
         <a class="dropdown-item" href="{{ route('free') }}">{{ __("Contenido Gratuito") }}</a>
         <a class="dropdown-item" href="{{ route('pay') }}">{{ __("Contenido Pago") }}</a>
+        <a class="dropdown-item" href="{{ route('membresia') }}">{{ __("Membresia") }}</a>
     </div>
 </li>
 <li><a class="nav-link" href="{{ route('profile.index') }}">{{ __("Mi perfil") }}</a></li>

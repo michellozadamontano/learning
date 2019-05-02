@@ -133,13 +133,21 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </router-link>
          </li>
          <li class="nav-item">
-          <router-link to="/payu" class="nav-link">
-              <i class="fab fa-paypal green"></i>
-              <p>
-                  Payu
-              </p>
-          </router-link>
-     </li>
+            <router-link to="/payu" class="nav-link">
+                <i class="fab fa-paypal green"></i>
+                <p>
+                    Payu
+                </p>
+            </router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="/user_payment" class="nav-link">
+                <i class="fab fa-paypal purple"></i>
+                <p>
+                    Usuarios Cursos Pagos
+                </p>
+            </router-link>
+          </li>
          <li class="nav-item">
             <router-link to="/profile" class="nav-link">
               <i class="fas fa-key  indigo  "></i>                

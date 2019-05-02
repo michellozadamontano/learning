@@ -61,20 +61,29 @@
                     {{ __("Ver detalle") }}
             </a>
         @else
-            @if(($course->students->contains(auth()->user()->student->id) && auth()->user()->paypal)||$course->free == 1 || ($course->userPayment->contains('user_id',auth()->user()->id)))
+            @if($course->pay == 1 && $course->userPayment->contains('user_id',auth()->user()->id))
                 <a
                     href="{{route('courses.content', ['slug' => $course->slug])}}"
                     class="btn btn-course btn-block"
                 >
                         {{ __("Ir Al curso") }}
-                </a>        
+                </a> 
             @else
-                <a
-                    href="{{ route('courses.detail', $course->slug) }}"
-                    class="btn btn-course btn-block"
-                >
-                    {{ __("Más información") }}
-                </a>
+                @if(($course->students->contains(auth()->user()->student->id) && auth()->user()->paypal && !$course->pay)||$course->free == 1 )
+                    <a
+                        href="{{route('courses.content', ['slug' => $course->slug])}}"
+                        class="btn btn-course btn-block"
+                    >
+                            {{ __("Ir Al curso") }}
+                    </a>        
+                @else
+                    <a
+                        href="{{ route('courses.detail', $course->slug) }}"
+                        class="btn btn-course btn-block"
+                    >
+                        {{ __("Más información") }}
+                    </a>
+                @endif
             @endif
         @endif
        

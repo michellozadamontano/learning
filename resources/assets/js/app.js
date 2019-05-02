@@ -93,6 +93,7 @@ import TKeyStat             from './components/TKeyStat';
 import CourseStudent        from './components/CourseStudent';
 import PhotoProfile         from './components/PhotoProfile';
 import PaypalPayment        from './components/PaypalPayment';
+import UserPayment          from './components/UserPayment';
 
 
 let routes = [
@@ -106,6 +107,7 @@ let routes = [
     { path: '/registered'   , component: Student_Registered },
     { path: '/paypal'       , component: Paypal },
     { path: '/payu'         , component: Payu },
+    { path: '/user_payment' , component: UserPayment },
     { path: '/content/:id'  , component: Content },
     { path: '/coupon'       , component: Coupon },
     { path: '/profile'      , component: Profile },

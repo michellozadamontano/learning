@@ -31,6 +31,7 @@ Auth::routes();
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/free', 'CourseController@freeCourses')->name('free');
 Route::get('/pay', 'CourseController@payCourses')->name('pay');
+Route::get('/membresia', 'CourseController@membresiaCourses')->name('membresia');
 
 /*Route::get('courses/{path?}', [
     'uses' => 'HomeController@index',
@@ -187,4 +188,11 @@ Route::group(['prefix' => "admin", "middleware" => ['auth', sprintf("role:%s", \
 
 Route::group(['prefix' => "traiding", "middleware" => ["auth"]], function() {
 	Route::get('/quote/{symbol}', 'IexController@stockQuote');	
+});
+Route::group(['prefix' => "payment", "middleware" => ["auth"]], function() {
+	Route::get('/', 'UserPaymentController@index');	
+	Route::post('/create', 'UserPaymentController@create_ajax');
+	Route::post('/update/{id}', 'UserPaymentController@update_ajax');
+	Route::get('/users', 'UserPaymentController@getUser');
+	Route::get('/courses', 'UserPaymentController@getPayCourse');
 });

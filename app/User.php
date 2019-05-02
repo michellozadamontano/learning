@@ -103,4 +103,7 @@ class User extends Authenticatable
     public function paypalSubscription() {
         return $this->hasOne(PaypalSubscription::class);
     }
+    public function userPayment() {
+        return $this->hasMany(UserPayment::class);
+    }
 }

@@ -508,6 +508,38 @@ class CourseController extends Controller
 			return back()->with('message', ['danger', __("Uff hubo un problema al mostrar los datos")]);
 		}
 	}
+
+	public function membresiaCourses() {
+		try {
+			//aqui voy a mostrar los cursos de membra
+			if(auth()->check()){	
+				$courses = Course::withCount(['students'])
+				->with('category', 'teacher', 'reviews','userPayment')
+				->where('status', Course::PUBLISHED)
+				->where('pay',0)
+				->where('free',0)
+				->latest()
+				->paginate(12);
+				
+				return view('home', compact('courses'));
+				
+			}       
+			else{
+				$courses = Course::withCount(['students'])
+				->with('category', 'teacher', 'reviews','userPayment')
+				->where('status', Course::PUBLISHED)
+				->where('pay',0)
+				->where('free',0)
+				->latest()
+				->paginate(12);
+	
+			return view('home', compact('courses'));
+			}
+		} catch (\Throwable $th) {
+			return back()->with('message', ['danger', __("Uff hubo un problema al mostrar los datos")]);
+		}
+	}
+
 	public function paypalButon(){
 		//este metodo es para pagar a paypal ya con descuento si tiene		
 		$course_id = request('course_id');
