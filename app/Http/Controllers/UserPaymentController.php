@@ -23,19 +23,27 @@ class UserPaymentController extends Controller
 		]);
         $course_id 	= request('course_id');
 		$valor 		= request('valor');
-		$user_id 	= request('user_id');;
+        $user_id 	= request('user_id');
+        $coupon 	= request('coupon');
 		$payment 	= UserPayment::create([
 					'course_id'	=> $course_id,
 					'user_id'	=> $user_id,
-					'valor' 	=> $valor
+                    'valor' 	=> $valor,
+                    'coupon'    => $coupon
 				]);
     }
     public function update_ajax($id) {
         //$id = request('id');
         $payment = UserPayment::find($id);
-        $payment->valor = request('valor');
+        $payment->valor     = request('valor');
+        $payment->coupon    = request('coupon');
         $payment->save();
         return $payment;
+    }
+    public function delete_ajax($id) {
+        $payment = UserPayment::find($id);
+        $payment->delete();
+        return 'eliminado';
     }
     public function getUser() {
         $users = User::all();

@@ -55,7 +55,7 @@
             </div><!-- ./col --> 
             <div class="col-3">
               <!-- small box -->
-              <div class="small-box bg-aqua">
+              <!--<div class="small-box bg-aqua">
                 <div class="inner">
                   <h3> <i class="fas fa-dollar-sign"></i> {{ingresos}}</h3>
                   <p>Ingresos Totales</p>
@@ -67,7 +67,7 @@
                  
                 <i class="fa fa-arrow-circle-right red"></i>  
               </router-link>               
-              </div>
+              </div>-->
             </div><!-- ./col -->          
         </div> 
         <div class="row justify-content-left">

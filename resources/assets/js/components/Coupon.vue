@@ -9,7 +9,14 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Cupones</h3>
-
+                <download-excel            
+                    :data="array_excel"
+                    :before-generate = "startDownload"
+                    :before-finish = "finishDownload"
+                    class="hover-excel ">
+                     Datos Excel
+                     <i class="fas fa-file-excel green"></i>                    
+                </download-excel> 
                 <div class="card-tools">
                     <button class="btn btn-success" @click="newModal">Adicionar <i class="fas fa-plus fa-fw"></i></button>
                 </div>
@@ -20,11 +27,11 @@
                     <v-client-table :data="tableData" :columns="columns" :options="options">
                         <div slot="actions" slot-scope="props">
                             <a href="#" @click="editModal(props.row)">
-                                <i class="fa fa-edit blue"></i>
+                                <i class="fa fa-edit blue fa-2x"></i>
                             </a>
                             /
                             <a href="#" @click="deleteCoupon(props.row.id)">
-                                <i class="fa fa-trash red"></i>
+                                <i class="fa fa-trash red fa-2x"></i>
                             </a>
                         </div>
                     </v-client-table>
@@ -100,11 +107,12 @@
         },  
         data() {
             return {
-                editmode: false,
-                isLoading: false,
-                coupons : {},
-                columns: ['id', 'code', 'quantity','percent','actions'],
-                tableData:[],
+                editmode    : false,
+                isLoading   : false,
+                coupons     : {},
+                columns     : ['id', 'code', 'quantity','percent','actions'],
+                tableData   :[],
+                array_excel : [],
                 options: {
                     filterByColumn: true,
                     perPage: 10,
@@ -191,6 +199,15 @@
                axios.get("coupon").then((resp) => {
                    this.coupons = resp.data;
                    this.tableData = resp.data;
+
+                   resp.data.forEach(x => {
+                       let obj = {
+                           Codigo   : x.code,
+                           Cantidad : x.quantity,
+                           Porciento: x.percent
+                       }
+                       this.array_excel.push(obj);
+                   });
                    this.isLoading = false;
                 });
             },

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserPayment extends Model
 {
-    protected $fillable = ['course_id','user_id','valor'];
+    protected $fillable = ['course_id','user_id','valor','coupon'];
 
     public function users(){
         return $this->belongsTo('App\User','user_id');

@@ -9,6 +9,14 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Pagos cursos puntuales</h3>
+                <download-excel            
+                    :data="array_excel"
+                    :before-generate = "startDownload"
+                    :before-finish = "finishDownload"
+                    class="hover-excel ">
+                     Datos Excel
+                     <i class="fas fa-file-excel green"></i>                    
+                </download-excel> 
 
                 <div class="card-tools">
                     <button class="btn btn-success" @click="newModal">Adicionar <i class="fas fa-plus fa-fw"></i></button>
@@ -21,7 +29,11 @@
                         <div slot="actions" slot-scope="props">
                             <a href="#" @click="editModal(props.row)">
                                 <i class="fa fa-edit blue fa-2x"></i>
-                            </a>                            
+                            </a>    
+                            /
+                            <a href="#" @click="destroy(props.row)">
+                                <i class="fa fa-trash red fa-2x"></i>
+                            </a>                         
                         </div>
                     </v-client-table>
                 </div>                  
@@ -51,11 +63,17 @@
                 <div class="modal-body">
                      <div class="form-group">
                          <label for="user_id">Usuarios</label>
-                         <select v-model="form.user_id"  name="user_id" id="user_id" class="form-control" :class="{ 'is-invalid': form.errors.has('user_id') }">
+                         <select v-model="form.user_id"  name="user_id" id="user_id" class="form-control" 
+                         :class="{ 'is-invalid': form.errors.has('user_id') }" @change="userChange()">
                             <option v-for="u in users" :key="u.id" v-bind:value="u.id">{{u.name}}</option> 
                          </select>                        
                         <has-error :form="form" field="user_id"></has-error>
                     </div>
+                    <div class="form-group">
+                        <label for="">Email</label>
+                         <input v-model="email" type="email" name="email"                            
+                            class="form-control" readonly>                        
+                    </div> 
 
                      <div class="form-group">   
                          <label for="plan">Cursos de Pagos</label>                     
@@ -72,6 +90,14 @@
                             placeholder="Costo"
                             class="form-control" :class="{ 'is-invalid': form.errors.has('valor') }">
                         <has-error :form="form" field="valor"></has-error>
+                    </div> 
+                    <div class="form-group">
+                      <label for="">Coupon</label>
+                      <select v-model="form.coupon"  name="coupon" id="coupon" class="form-control" >
+                            <option value=""></option>
+                            <option v-for="c in coupons" :key="c.id" v-bind:value="c.code">{{c.code}}</option> 
+                         </select>
+                      <small id="helpId" class="form-text text-muted">Si tiene un cupon por fovor intruduzcalo aqui</small>
                     </div>                     
 
                 </div>
@@ -97,13 +123,16 @@
         },  
         data() {
             return {
-                editmode: false,
-                isLoading: false,
-                users : [],
-                courses:[],
-                columns: ['id', 'name', 'curso','valor','actions'],
-                tableData:[],
-                options: {
+                editmode    : false,
+                isLoading   : false,
+                users       : [],
+                courses     : [],
+                coupons     : [],
+                email       : '',
+                columns     : ['id', 'name', 'curso','valor','coupon','actions'],
+                tableData   : [],
+                array_excel : [],
+                options     : {
                     filterByColumn: false,
                     perPage: 10,
                     perPageValues: [10, 25, 50, 100],
@@ -131,6 +160,7 @@
                     user_id     : '',
                     course_id   : '',
                     valor       : '',
+                    coupon      : '',    
                               
                 }),
                 
@@ -164,6 +194,7 @@
                 this.form.reset();
                 $('#addNew').modal('show');
                 this.form.fill(pay);
+                this.email = pay.users.email;
             },
             newModal(){
                 this.editmode = false;
@@ -174,20 +205,32 @@
                 this.isLoading = true;
                axios.get("payment").then((resp) => {                     
                    this.tableData = resp.data;
+                   resp.data.forEach(x => {
+                       let obj = {
+                           nombre : x.users.name,
+                           email  : x.users.email,
+                           costo  : x.valor,
+                           coupon : x.coupon
+                       }
+                       this.array_excel.push(obj);
+                   });
                    this.isLoading = false;
+                });
+            },
+            loadCoupons(){               
+               axios.get("coupon").then((resp) => {
+                   this.coupons = resp.data;                   
                 });
             },
             Users(){
                 axios.get('payment/users').then(resp => {
-                    this.users = resp.data;
-                    console.log(resp.data);
+                    this.users = resp.data;    
                     
                 })
             },
             Courses(){
                     axios.get('payment/courses').then(resp => {
-                    this.courses = resp.data;
-                    console.log(resp.data);
+                    this.courses = resp.data;                    
                     
                 })
             },
@@ -211,10 +254,57 @@
                 .catch(()=>{
                     this.isLoading = false;
                 })
-            },            
+            },
+            userChange() {
+                console.log(this.form.user_id);               
+                let obj = this.users.find(o => o.id === this.form.user_id);
+                this.email = obj.email;    
+                
+            },
+            destroy(row) {           
+                             
+                this.isLoading = true;
+                swal.fire({
+                    title: 'Estas Seguro?',
+                    text: "Se borrará para siempre!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, elimínalo!'
+                    }).then(result => {
+                        if (result.value) {
+                            this.form.post('payment/delete/'+row.id)
+                            .then(()=>{
+                                this.isLoading = false;
+                                Fire.$emit('AfterCreate');                    
+
+                                toast.fire({
+                                    type: 'success',
+                                    title: 'Registro eliminado'
+                                    })                    
+
+                            })
+                            .catch(()=>{
+                                this.isLoading = false;
+                            })
+                        }
+                        else{
+                            this.isLoading = false;
+                        }
+                    })
+                
+            },
+            startDownload(){
+                this.isLoading = true;
+            },
+            finishDownload(){
+                this.isLoading = false;
+            },             
         },
         created() {            
            this.loadUsers();
+           this.loadCoupons();
            this.Users();
            this.Courses();
            Fire.$on('AfterCreate',() => {

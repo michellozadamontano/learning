@@ -121,6 +121,7 @@ Route::group(['middleware' => ['auth']], function () {
 		Route::get('/users_subscribed_count','PaypalController@getSubscriptionStatistics');
 		Route::get('/users_registered','PaypalController@getUserRegistered');
 		Route::get('/payu/plan','PayuController@payu_plan')->name('subscriptions.payulplan');
+		Route::get('/payu/checkout','PayuController@payucheckout')->name('subscriptions.payucheckout');
 	});
 
 	Route::group(['prefix' => "invoices"], function() {
@@ -193,6 +194,7 @@ Route::group(['prefix' => "payment", "middleware" => ["auth"]], function() {
 	Route::get('/', 'UserPaymentController@index');	
 	Route::post('/create', 'UserPaymentController@create_ajax');
 	Route::post('/update/{id}', 'UserPaymentController@update_ajax');
+	Route::post('/delete/{id}', 'UserPaymentController@delete_ajax');
 	Route::get('/users', 'UserPaymentController@getUser');
 	Route::get('/courses', 'UserPaymentController@getPayCourse');
 });
