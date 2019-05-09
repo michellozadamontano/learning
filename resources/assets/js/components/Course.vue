@@ -36,6 +36,11 @@
                   <input type="number" min="0" max="1" step="0.01" v-model="value" 
                     class="form-control" name="" id="" aria-describedby="helpId" placeholder="" >                  
                 </div>
+                <div class="form-group" v-if="pago">
+                  <label for="">Valor del curso en COP</label>
+                  <input type="number" min="0" max="1" step="0.01" v-model="cop" 
+                    class="form-control" name="" id="" aria-describedby="helpId" placeholder="" >                  
+                </div>
                 <br>
                 <button type="submit" class="btn btn-primary">Guadar</button>
             </form>
@@ -54,6 +59,7 @@ export default {
             gratis      : "",
             pago        : "",   
             value       : "",
+            cop         : "",
             suscription : "" 
         }
     },
@@ -66,7 +72,7 @@ export default {
             let id = this.$route.params.id;
             this.course_id = id;
             if(this.pago == 1){
-                if(this.value == "")
+                if(this.value == "" || this.cop == "")
                 {
                     swal.fire(
                     'Error!',
@@ -86,6 +92,7 @@ export default {
                 free        : this.gratis,
                 pay         : this.pago,
                 value       : this.value,
+                cop         : this.cop,
                 suscription : this.suscription
                 })
             .then(res => {
@@ -142,9 +149,11 @@ export default {
             this.gratis     = res.data.free;
             this.pago       = res.data.pay;
             this.value      = res.data.value;
+            this.cop        = res.data.cop;
             if(res.data.free == 0 && res.data.pay == 0){
                 this.suscription = 1;
             }
+            console.log(this.pago);
             
         })
         .catch((error)=> {

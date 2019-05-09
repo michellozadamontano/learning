@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('jumbotron')
-    @include('partials.jumbotron', ['title' => 'Detalles del curso', 'icon' => 'table'])
+    @include('partials.jumbotron', ['title' => 'Detalles de pagos', 'icon' => 'table'])
 @endsection
 
 @section('content')
@@ -11,27 +11,72 @@
                     <div class="card text-white bg-success">
                       <img class="card-img-top" src="holder.js/100px180/" alt="">
                       <div class="card-body">
-                            <h3>{{ __("Curso") }}: {{ $course->name }}</h3>
-                            <h4>{{ __("Profesor") }}: {{ $course->teacher->user->name }}</h4>
-                            <h5>{{ __("Categoría") }}: {{ $course->category->name }}</h5>
-                            <h5>{{ __("Valor en USD") }}: {{ $course->value }}</h5>
-                            
-                            <form  action="{{route('courses.paypal')}}" method="POST">
-                                    @csrf
-                                <div class="form-group">
-                                    <label for="">CUPON</label>
-                                    <input type="text" name="coupon" id="" class="form-control" placeholder="" aria-describedby="helpId">
-                                    <small id="helpId" class="text-muted">Si tienes un cupon por favor intoducelo aquí</small>
-                                </div>
-                                <div class="form-group">
-                                    <input type="hidden" name="course_id" value="{{$course->id}}">
-                                </div>
-                                <button type="submit" class="btn btn-primary">Confirmar</button>
-                            </form>
+                            <h3>Pago en D&oacute;lares</h3> 
+                            <br>
+                            <div class="alert alert-primary" role="alert">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <h4 class="alert-heading">Datos del pago</h4>
+                                        <h5>{{ __("Valor en USD") }}: {{ $course->value }}</h5>                                                                
+                                        <p class="mb-0"></p>
+                                    </div>
+                                    <div class="col-6">                                        
+                                        <form action="{{ route('courses.paypal') }}" method="POST">
+                                            @csrf
+                                            <input
+                                                class="form-control"
+                                                name="coupon"
+                                                placeholder="{{ __("¿Tienes un cupón?") }}"
+                                            />
+                                            <input type="hidden" name="type" value="paypal" />
+                                            <input type="hidden" name="course_id" value="{{$course->id}}">
+                                            <hr />
+                                            <button type="submit" class="btn btn-primary">Pagar</button>
+                                        </form>                                        
+                                    </div>
+                                </div>   
+                                                        
+                            </div>
                             
                       </div>
                     </div>        
                 </div>
+                <div class="col-6">
+                    <div class="card text-white bg-primary">
+                        <img class="card-img-top" src="holder.js/100px180/" alt="">
+                        <div class="card-body">                            
+                            <h3>Pago en pesos colombianos</h3> 
+                            <br>
+                            <div class="alert alert-primary" role="alert">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <h4 class="alert-heading">Datos del pago</h4>
+                                        <h5>{{ __("Valor en COP") }}: {{ $course->cop }}</h5>                                                                
+                                        <p class="mb-0"></p>
+                                    </div>
+                                    <div class="col-6">                                        
+                                            <form action="{{ route('courses.paypal') }}" method="POST">
+                                                    @csrf
+                                                    <input
+                                                        class="form-control"
+                                                        name="coupon"
+                                                        placeholder="{{ __("¿Tienes un cupón?") }}"
+                                                    />
+                                                    <input type="hidden" name="type" value="epay" />
+                                                    <input type="hidden" name="course_id" value="{{$course->id}}">                                                    
+                                                    <hr />
+                                                    <button type="submit" class="btn btn-primary">Pagar</button>
+                                            </form>                                        
+                                    </div>
+                                </div>
+                                
+                                                        
+                            </div>
+                                
+                                
+                        </div>
+                      </div>  
+                </div>  
                 
                 
         </div>

@@ -34,12 +34,16 @@ class PayuController extends Controller
         \PayU::$apiLogin     = env('PAYU_API_LOGIN');
         \PayU::$merchantId   = env('PAYU_MERCHANT_ID');
         \PayU::$isTest       = true;    
-        // URL de Pagos
-  
-    //\Environment::setSubscriptionsCustomUrl("https://sandbox.api.payulatam.com/payments-api/rest/v4.9");
-    \Environment::setPaymentsCustomUrl("https://sandbox.api.payulatam.com/payments-api/4.0/service.cgi");
-    \Environment::setReportsCustomUrl("https://sandbox.api.payulatam.com/reports-api/4.0/service.cgi"); 
-    \Environment::setSubscriptionsCustomUrl("https://sandbox.api.payulatam.com/payments-api/rest/v4.9");
+        // URL de Pagos  
+      //  \Environment::setPaymentsCustomUrl("https://api.payulatam.com/payments-api/4.0/service.cgi") ;
+    //\Environment::setPaymentsCustomUrl("https://sandbox.api.payulatam.com/payments-api/4.0/service.cgi");
+  //  \Environment::setReportsCustomUrl("https://sandbox.api.payulatam.com/reports-api/4.0/service.cgi"); 
+   // \Environment::setSubscriptionsCustomUrl("https://sandbox.api.payulatam.com/payments-api/rest/v4.9");
+
+    // URL de Pagos
+    \Environment::setPaymentsCustomUrl("https://api.payulatam.com/payments-api/4.0/service.cgi");
+    \Environment::setReportsCustomUrl("https://api.payulatam.com/reports-api/4.0/service.cgi"); 
+    \Environment::setSubscriptionsCustomUrl("https://api.payulatam.com/payments-api/rest/v4.9/");
 
     }
     public function payu_plan() {
@@ -57,7 +61,7 @@ class PayuController extends Controller
         
             // -- Parámetros de la tarjeta de crédito --
             // Ingresa aquí el nombre del pagador.
-            \PayUParameters::PAYER_NAME => "Sample User Name",
+            \PayUParameters::PAYER_NAME => "APPROVED",
             // Ingresa aquí el número de la tarjeta de crédito
             \PayUParameters::CREDIT_CARD_NUMBER => "4242424242424242",
             // Ingresa aquí la fecha de expiración de la tarjeta de crédito en formato AAAA/MM
@@ -89,7 +93,7 @@ class PayuController extends Controller
             // Ingresa aquí la descripción del plan
             \PayUParameters::PLAN_DESCRIPTION => "Plan Mensual",
             // Ingresa aquí el código de identificación para el plan
-            \PayUParameters::PLAN_CODE => "001",
+            \PayUParameters::PLAN_CODE => "0011",
             // Ingresa aquí el intervalo del plan
             \PayUParameters::PLAN_INTERVAL => "MONTH",
             // Ingresa aquí la cantidad de intervalos
@@ -109,12 +113,47 @@ class PayuController extends Controller
             // Ingresa aquí la cantidad de cobros que componen el plan
             \PayUParameters::PLAN_MAX_PAYMENTS => "12",
             // Ingresa aquí la cantidad total de reintentos para cada pago rechazado de la suscripción
-            \PayUParameters::PLAN_MAX_PAYMENT_ATTEMPTS => "3",
+            \PayUParameters::PLAN_MAX_PAYMENT_ATTEMPTS => "2",
             // Ingresa aquí la cantidad máxima de pagos pendientes que puede tener una suscripción antes de ser cancelada.
             \PayUParameters::PLAN_MAX_PENDING_PAYMENTS => "1",
             // Ingresa aquí la cantidad de días de prueba de la suscripción.
             \PayUParameters::TRIAL_DAYS => "0",
         );
+       /* $parameters = array(
+            // Ingresa aquí la descripción del plan
+            \PayUParameters::PLAN_DESCRIPTION => "Sample Plan 001",
+            // Ingresa aquí el código de identificación para el plan
+            \PayUParameters::PLAN_CODE => "sample-plan-841651",
+            // Ingresa aquí el intervalo del plan
+            //DAY||WEEK||MONTH||YEAR
+            \PayUParameters::PLAN_INTERVAL => "MONTH",
+            // Ingresa aquí la cantidad de intervalos
+            \PayUParameters::PLAN_INTERVAL_COUNT => "1",
+            // Ingresa aquí la moneda para el plan
+            \PayUParameters::PLAN_CURRENCY => "COP",
+            // Ingresa aquí el valor del plan
+            \PayUParameters::PLAN_VALUE => "10000",
+            //(OPCIONAL) Ingresa aquí el valor del impuesto
+            \PayUParameters::PLAN_TAX => "0",
+            //(OPCIONAL) Ingresa aquí la base de devolución sobre el impuesto
+            \PayUParameters::PLAN_TAX_RETURN_BASE => "0",
+            // Ingresa aquí la cuenta Id del plan
+            \PayUParameters::ACCOUNT_ID => $this->accountId,
+            // Ingresa aquí el intervalo de reintentos
+            \PayUParameters::PLAN_ATTEMPTS_DELAY => "1",
+            // Ingresa aquí la cantidad de cobros que componen el plan
+            \PayUParameters::PLAN_MAX_PAYMENTS => "12",
+            // Ingresa aquí la cantidad total de reintentos para cada pago rechazado de la suscripción
+            \PayUParameters::PLAN_MAX_PAYMENT_ATTEMPTS => "3",
+            // Ingresa aquí la cantidad máxima de pagos pendientes que puede tener una suscripción antes de ser cancelada.
+            \PayUParameters::PLAN_MAX_PENDING_PAYMENTS => "1",
+        );
+
+        $response = \PayUSubscriptionPlans::create($parameters);
+        if ($response) {
+            $response->id;
+        }
+        print_r($response);*/
         
         $response = \PayUSubscriptions::createSubscription($parameters);
         dd($response);
@@ -124,17 +163,26 @@ class PayuController extends Controller
             $response->customer->id;
         }
     }
-    public function payucheckout() {
-        $reference = "payment_test_00000001";
-        $value = "20000";
+    public function payucheckout(Request $request) { 
+             
+        $value = $request['valor'];
+        $reference = time();
+        $fecha_exp = $request['year'].'/'.$request['month'];
+        $ip = getenv('HTTP_CLIENT_IP')?:
+        getenv('HTTP_X_FORWARDED_FOR')?:
+        getenv('HTTP_X_FORWARDED')?:
+        getenv('HTTP_FORWARDED_FOR')?:
+        getenv('HTTP_FORWARDED')?:
+        getenv('REMOTE_ADDR');
+        
 
         $parameters = array(
             //Ingrese aquí el identificador de la cuenta.
-            \PayUParameters::ACCOUNT_ID => "512321",
+            \PayUParameters::ACCOUNT_ID => $this->accountId,
             //Ingrese aquí el código de referencia.
             \PayUParameters::REFERENCE_CODE => $reference,
             //Ingrese aquí la descripción.
-            \PayUParameters::DESCRIPTION => "payment test",
+            \PayUParameters::DESCRIPTION => "pago de cursos",
 
                 // -- Valores --
                 //Ingrese aquí el valor de la transacción.
@@ -142,22 +190,22 @@ class PayuController extends Controller
                 //Ingrese aquí el valor del IVA (Impuesto al Valor Agregado solo valido para Colombia) de la transacción,
                 //si se envía el IVA nulo el sistema aplicará el 19% automáticamente. Puede contener dos dígitos decimales.
                 //Ej: 19000.00. En caso de no tener IVA debe enviarse en 0.
-                \PayUParameters::TAX_VALUE => "3193",
+                \PayUParameters::TAX_VALUE => "0",
                 //Ingrese aquí el valor base sobre el cual se calcula el IVA (solo valido para Colombia).
                 //En caso de que no tenga IVA debe enviarse en 0.
-                \PayUParameters::TAX_RETURN_BASE => "16806",
+                \PayUParameters::TAX_RETURN_BASE => "0",
             //Ingrese aquí la moneda.
             \PayUParameters::CURRENCY => "COP",
 
             // -- Comprador
             //Ingrese aquí el nombre del comprador.
-            \PayUParameters::BUYER_NAME => "First name and second buyer name",
+            \PayUParameters::BUYER_NAME => $request['clientName'],
             //Ingrese aquí el email del comprador.
-            \PayUParameters::BUYER_EMAIL => "buyer_test@test.com",
+            \PayUParameters::BUYER_EMAIL => $request['email'],
             //Ingrese aquí el teléfono de contacto del comprador.
-            \PayUParameters::BUYER_CONTACT_PHONE => "7563126",
+            \PayUParameters::BUYER_CONTACT_PHONE => $request['phone'],
             //Ingrese aquí el documento de contacto del comprador.
-            \PayUParameters::BUYER_DNI => "5415668464654",
+            \PayUParameters::BUYER_DNI => $request['dni'],
             //Ingrese aquí la dirección del comprador.
             \PayUParameters::BUYER_STREET => "calle 100",
             \PayUParameters::BUYER_STREET_2 => "5555487",
@@ -165,36 +213,35 @@ class PayuController extends Controller
             \PayUParameters::BUYER_STATE => "Antioquia",
             \PayUParameters::BUYER_COUNTRY => "CO",
             \PayUParameters::BUYER_POSTAL_CODE => "000000",
-            \PayUParameters::BUYER_PHONE => "7563126",
+            \PayUParameters::BUYER_PHONE => $request['phone'],
 
             // -- pagador --
             //Ingrese aquí el nombre del pagador.
-            \PayUParameters::PAYER_NAME => "First name and second payer name",
+            \PayUParameters::PAYER_NAME => $request['clientName'],
             //Ingrese aquí el email del pagador.
-            \PayUParameters::PAYER_EMAIL => "payer_test@test.com",
+            \PayUParameters::PAYER_EMAIL => $request['email'],
             //Ingrese aquí el teléfono de contacto del pagador.
-            \PayUParameters::PAYER_CONTACT_PHONE => "7563126",
+            \PayUParameters::PAYER_CONTACT_PHONE => $request['phone'],
             //Ingrese aquí el documento de contacto del pagador.
-            \PayUParameters::PAYER_DNI => "5415668464654",
-            //Ingrese aquí la dirección del pagador.
+            \PayUParameters::PAYER_DNI => $request['dni'],            //Ingrese aquí la dirección del pagador.
             \PayUParameters::PAYER_STREET => "calle 93",
             \PayUParameters::PAYER_STREET_2 => "125544",
             \PayUParameters::PAYER_CITY => "Bogota",
             \PayUParameters::PAYER_STATE => "Bogota",
             \PayUParameters::PAYER_COUNTRY => "CO",
             \PayUParameters::PAYER_POSTAL_CODE => "000000",
-            \PayUParameters::PAYER_PHONE => "7563126",
+            \PayUParameters::PAYER_PHONE => $request['phone'],
 
             // -- Datos de la tarjeta de crédito --
             //Ingrese aquí el número de la tarjeta de crédito
-            \PayUParameters::CREDIT_CARD_NUMBER => "4097440000000004",
+            \PayUParameters::CREDIT_CARD_NUMBER => $request['credit'],
             //Ingrese aquí la fecha de vencimiento de la tarjeta de crédito
-            \PayUParameters::CREDIT_CARD_EXPIRATION_DATE => "2014/12",
+            \PayUParameters::CREDIT_CARD_EXPIRATION_DATE => $fecha_exp,
             //Ingrese aquí el código de seguridad de la tarjeta de crédito
-            \PayUParameters::CREDIT_CARD_SECURITY_CODE=> "321",
+            \PayUParameters::CREDIT_CARD_SECURITY_CODE=> $request['code'],
             //Ingrese aquí el nombre de la tarjeta de crédito
             //VISA||MASTERCARD||AMEX||DINERS
-            \PayUParameters::PAYMENT_METHOD => "VISA",
+            \PayUParameters::PAYMENT_METHOD => $request['tipo'],
 
             //Ingrese aquí el número de cuotas.
             \PayUParameters::INSTALLMENTS_NUMBER => "1",
@@ -204,17 +251,17 @@ class PayuController extends Controller
             //Session id del device.
             \PayUParameters::DEVICE_SESSION_ID => "vghs6tvkcle931686k1900o6e1",
             //IP del pagadador
-            \PayUParameters::IP_ADDRESS => "127.0.0.1",
+            \PayUParameters::IP_ADDRESS => $ip,
             //Cookie de la sesión actual.
             \PayUParameters::PAYER_COOKIE=>"pt1t38347bs6jc9ruv2ecpv7o2",
             //Cookie de la sesión actual.
             \PayUParameters::USER_AGENT=>"Mozilla/5.0 (Windows NT 5.1; rv:18.0) Gecko/20100101 Firefox/18.0"
         );
-
-        $response = \PayUPayments::doAuthorizationAndCapture($parameters);
-        dd($response);
+        
+        $response = \PayUPayments::doAuthorizationAndCapture($parameters);        
 
         if ($response) {
+            dd($response,'entre aqui');
             $response->transactionResponse->orderId;
             $response->transactionResponse->transactionId;
             $response->transactionResponse->state;
@@ -227,5 +274,76 @@ class PayuController extends Controller
             $response->transactionResponse->responseCode;
             $response->transactionResponse->responseMessage;
         }
+    }
+
+    public function api_payu_checkout() {       
+        $client = new \GuzzleHttp\Client();
+       // dd($client);
+        $response = $client->request('POST', 'https://sandbox.api.payulatam.com/payments-api/4.0/service.cgi', [
+            'json' => [
+                "language"=> "es",
+                "command"=> "SUBMIT_TRANSACTION",
+                "merchant"=> [
+                    "apiLogin"=> "pRRXKOl8ikMmt9u",
+                    "apiKey"=> "4Vj8eK4rloUd272L48hsrarnUA"
+                ],
+                "transaction"=> [
+                    "order"=> [
+                        "accountId"=> "512326",
+                        "referenceCode"=> "michelito",
+                        "description"=> "Test order Panama",
+                        "language"=> "en",
+                        "notifyUrl"=> "http://pruebaslap.xtrweb.com/lap/pruebconf.php",
+                        "signature"=> "a2de78b35599986d28e9cd8d9048c45d",
+                        "shippingAddress"=> [
+                            "country"=> "PA"
+                        ],
+                        "buyer"=> [
+                            "fullName"=> "APPROVED",
+                            "emailAddress"=> "test@payulatam.com",
+                            "dniNumber"=> "1155255887",
+                            "shippingAddress"=> [
+                            "street1"=> "Calle 93 B 17 – 25",
+                            "city"=> "Panama",
+                            "state"=> "Panama",
+                            "country"=> "PA",
+                            "postalCode"=> "000000",
+                            "phone"=> "5582254"
+                            ]
+                        ],
+                        "additionalValues"=> [
+                            "TX_VALUE"=> [
+                            "value"=> 5,
+                            "currency"=> "USD"
+                            ]
+                        ]
+                    ],
+                    "creditCard"=> [
+                        "number"=> "4111111111111111",
+                        "securityCode"=> "123",
+                        "expirationDate"=> "2019/08",
+                        "name"=> "test"
+                    ],
+                    "type"=> "AUTHORIZATION_AND_CAPTURE",
+                    "paymentMethod"=> "VISA",
+                    "paymentCountry"=> "PA",
+                    "payer"=> [
+                        "fullName"=> "APPROVED",
+                        "emailAddress"=> "test@payulatam.com"
+                    ],
+                    "ipAddress"=> "127.0.0.1",
+                    "cookie"=> "cookie_52278879710130",
+                    "userAgent"=> "Firefox",
+                    "extraParameters"=> [
+                        "INSTALLMENTS_NUMBER"=> 1,
+                        "RESPONSE_URL"=> "http://learning.online/courses/payed"
+                    ]
+                ],
+                "test"=> true
+            ]
+        ]);
+        $response = $response->getBody()->getContents();
+        echo '<pre>';
+        print_r($response);
     }
 }

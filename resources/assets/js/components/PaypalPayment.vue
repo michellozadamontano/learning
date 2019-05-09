@@ -5,7 +5,8 @@
         :client="credentials"        
         @payment-authorized="payment_authorized_cb" 
         @payment-completed="payment_completed_cb" 
-        @payment-cancelled="payment_cancelled_cb"   
+        @payment-cancelled="payment_cancelled_cb" 
+        
     >
     </PayPal>
 </template>
@@ -14,10 +15,11 @@ import PayPal from 'vue-paypal-checkout'
  
 export default {
     props: {            
-            amount: '',
-            sandbox: '',
+            amount    : '',
+            sandbox   : '',
             production: '',
-            course_id:''
+            course_id :'',
+             
             
     },
   data() {
@@ -36,7 +38,7 @@ export default {
            // toastr.success("Thank you! We'll send you a confirmation email soon with your invoice. ");
            axios.post('/courses/payment',{
                'course_id': this.course_id,
-               'valor'    : this.amount
+               'valor'    : this.amount,               
            }).then(resp => {
              console.log(resp);
               window.location.href = '/courses/payed';                

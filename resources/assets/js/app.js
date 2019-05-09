@@ -94,6 +94,7 @@ import CourseStudent        from './components/CourseStudent';
 import PhotoProfile         from './components/PhotoProfile';
 import PaypalPayment        from './components/PaypalPayment';
 import UserPayment          from './components/UserPayment';
+import PayuCheckOut         from './components/PayuCheckOut';
 
 
 let routes = [
@@ -134,6 +135,7 @@ Vue.component('grafica', Grafica);
 Vue.component('course-student', CourseStudent);
 Vue.component('photo-profile', PhotoProfile);
 Vue.component('paypal-payment', PaypalPayment);
+Vue.component('payu-check-out', PayuCheckOut);
 
 Vue.filter('myDate',function(created){
   return moment(created).format('MMMM Do YYYY');

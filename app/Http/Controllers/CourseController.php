@@ -68,11 +68,13 @@ class CourseController extends Controller
 	public function create_user_payment_course(Request $request){
 		$course_id 	= request('course_id');
 		$valor 		= request('valor');
+		$coupon 	= session('coupon');
 		$user_id 	= auth()->id();
 		$payment 	= UserPayment::create([
 					'course_id'	=> $course_id,
 					'user_id'	=> $user_id,
-					'valor' 	=> $valor
+					'valor' 	=> $valor,
+					'coupon'    => $coupon,
 				]);
 		if($request->session()->has('coupon')){
 			$coupon = session('coupon');               
@@ -135,19 +137,22 @@ class CourseController extends Controller
 		$course->name = request('name');
 		$course->description = request('description');
 		if(request('free') == 1) {
-			$course->free = 1;
-			$course->pay = 0;
-			$course->value = 0;
+			$course->free 	= 1;
+			$course->pay 	= 0;
+			$course->value 	= 0;
+			$course->cop 	= 0;
 		}
 		if(request('pay') == 1) {
-			$course->pay = 1;
-			$course->free = 0;
-			$course->value = request('value');
+			$course->pay 	= 1;
+			$course->free 	= 0;
+			$course->value 	= request('value');
+			$course->cop 	= request('cop');
 		}
 		if(request('suscription') == 1) {
-			$course->pay = 0;
-			$course->free = 0;
-			$course->value = 0;
+			$course->pay 	= 0;
+			$course->free 	= 0;
+			$course->value 	= 0;
+			$course->cop 	= 0;
 		}
 		$course->save();
 		return $course;
@@ -542,11 +547,24 @@ class CourseController extends Controller
 
 	public function paypalButon(){
 		//este metodo es para pagar a paypal ya con descuento si tiene		
-		$course_id = request('course_id');
-		$course = Course::find($course_id);
-		$paypal_id = config('services.paypal.id');
-		$amount = $course->value;
-		$descuento = 0;
+		$course_id 			= request('course_id');
+		$course 			= Course::find($course_id);
+		$paypal_id 			= config('services.paypal.id');
+		$amount 			= $course->value;
+		$cop 				= $course->cop;
+		$descuento 			= 0;
+		$desc_cop 			= 0;
+		$route 				= request()->root();
+		$url_acepted 		= $route.'/courses/epay_acepted';
+		$url_rejected 		= $route.'/courses/epay_rejected';
+		$url_pending 		= $route.'/courses/epay_pending';
+		$epay_key 			= env('EPAY_PUBLIC_KEY');
+		$epay_test 			= env('EPAY_TEST');
+		$type 				= request('type');		
+
+		session(['course_id' => $course_id]);
+		session(['cop' => $cop]);
+
 		if(request('coupon')!= ""){
 			$coupon = request('coupon');
 			
@@ -558,15 +576,21 @@ class CourseController extends Controller
 				$percent    = Coupon::where('code',$coupon)->first()->percent;
 				$new_price  = $price - ($price * $percent);		
 				$amount 	= $new_price;
-				$descuento  = $price * $percent;		
-				return view('courses.paypal', compact('amount','paypal_id','course','descuento'));
+				$descuento  = $price * $percent;
+				//hago lo mismo pero para la moneda colombiana
+				$cop 		= $cop - ($cop * $percent); 
+				$desc_cop 	= $course->cop * $percent; 
+				session(['cop' => $cop]);		
+				return view('courses.paypal', compact('amount','paypal_id','course',
+				'descuento','cop','desc_cop','url_acepted','url_rejected','url_pending','epay_key','epay_test','type'));
 			}
 			else{
 				return back()->with('message', ['danger', __("Cupon No Valido")]);
 			}
 		}
 		else {
-			return view('courses.paypal', compact('amount','paypal_id','course','descuento'));
+			return view('courses.paypal', compact('amount','paypal_id','course',
+			'descuento','cop','desc_cop','url_acepted','url_rejected','url_pending','epay_key','epay_test','type'));
 		}
 	}
 	public function checkCoupon($coupon){
@@ -580,6 +604,43 @@ class CourseController extends Controller
         }
 
         return $result;
-    }
+	}
+	public function epayAcepted(Request $request){
+		$course_id 	= session('course_id');
+		$valor 		= session('cop');
+		$coupon 	= session('coupon');
+		$user_id 	= auth()->id();
+		$payment 	= UserPayment::create([
+					'course_id'	=> $course_id,
+					'user_id'	=> $user_id,
+					'cop' 		=> $valor,
+					'coupon'    => $coupon,
+				]);
+		if($request->session()->has('coupon')){
+			$coupon = session('coupon');               
+			$coup = Coupon::where('code',$coupon)->first();
+			if($coup){
+				if($coup->quantity > 0)
+				{    
+					$coup->quantity--;
+					$coup->save();
+				}
+			}
+			$request->session()->forget('coupon');
+			$request->session()->forget('course_id');
+			$request->session()->forget('cop');			
+		}
+		$courses = Course::whereHas('userPayment', function($query) {
+			$query->where('user_id', auth()->id());
+		})->get();
+		return view('courses.payed', compact('courses'))->with('message', ['success', __("Transaccion Realizada Correctamente")]);
+		
+	}
+	public function epayRejected(Request $request){
+		return back()->with('message', ['danger', __("Transaccion Rechazada")]);
+	}
+	public function epayPending(Request $request){
+		return back()->with('message', ['danger', __("Transaccion Pendiente")]);
+	}
 
 }

@@ -56,6 +56,9 @@ Route::group(['prefix' => 'courses'], function () {
 	Route::group(['middleware' => ['auth']], function() {
 		Route::get('/subscribed', 'CourseController@subscribed')->name('courses.subscribed');
 		Route::get('/payed', 'CourseController@payed')->name('courses.payed');
+		Route::get('/epay_acepted','CourseController@epayAcepted');
+		Route::get('/epay_rejected','CourseController@epayRejected');
+		Route::get('/epay_pending','CourseController@epayPending');
 		Route::get('/show_payment/{id}', 'CourseController@show_payment')->name('courses.payment_details');
 		Route::post('/payment','CourseController@create_user_payment_course');
 		Route::post('/paypal','CourseController@paypalButon')->name('courses.paypal');
@@ -121,7 +124,8 @@ Route::group(['middleware' => ['auth']], function () {
 		Route::get('/users_subscribed_count','PaypalController@getSubscriptionStatistics');
 		Route::get('/users_registered','PaypalController@getUserRegistered');
 		Route::get('/payu/plan','PayuController@payu_plan')->name('subscriptions.payulplan');
-		Route::get('/payu/checkout','PayuController@payucheckout')->name('subscriptions.payucheckout');
+		Route::post('/payu/checkout','PayuController@payucheckout')->name('subscriptions.payucheckout');
+		Route::get('/payu/apicheckout','PayuController@api_payu_checkout')->name('subscriptions.apicheckout');
 	});
 
 	Route::group(['prefix' => "invoices"], function() {
