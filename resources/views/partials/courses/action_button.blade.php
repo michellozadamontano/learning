@@ -18,7 +18,7 @@
                             </a>   
                                                    
                         @else
-                            <a class="btn btn-subscribe btn-bottom btn-block" href="{{ route('subscriptions.plans') }}">
+                            <a class="btn btn-subscribe btn-bottom btn-block" href="{{ route('subscriptions.plan_epay') }}">
                                 <i class="fa fa-bolt"></i> {{ __("Subscribirme") }}
                             </a> 
                         @endif   

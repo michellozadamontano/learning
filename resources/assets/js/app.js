@@ -95,6 +95,7 @@ import PhotoProfile         from './components/PhotoProfile';
 import PaypalPayment        from './components/PaypalPayment';
 import UserPayment          from './components/UserPayment';
 import PayuCheckOut         from './components/PayuCheckOut';
+import Epay                 from './components/Epay';
 
 
 let routes = [
@@ -107,6 +108,7 @@ let routes = [
     { path: '/students'     , component: Student },
     { path: '/registered'   , component: Student_Registered },
     { path: '/paypal'       , component: Paypal },
+    { path: '/epay'         , component: Epay },
     { path: '/payu'         , component: Payu },
     { path: '/user_payment' , component: UserPayment },
     { path: '/content/:id'  , component: Content },

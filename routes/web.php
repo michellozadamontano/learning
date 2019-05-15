@@ -93,7 +93,7 @@ Route::get('/subscribe/paypal/return', 'PaypalController@paypalReturn')->name('s
 
 Route::group(['middleware' => ['auth']], function () {
 	Route::group(["prefix" => "subscriptions"], function() {
-		Route::get('/plans', 'SubscriptionController@plans')
+		Route::post('/plans', 'SubscriptionController@plans')
 		     ->name('subscriptions.plans');
 		Route::get('/admin', 'SubscriptionController@admin')
 		     ->name('subscriptions.admin');
@@ -101,6 +101,9 @@ Route::group(['middleware' => ['auth']], function () {
 		     ->name('subscriptions.process_subscription');
 		Route::post('/resume', 'SubscriptionController@resume')->name('subscriptions.resume');
 		Route::post('/cancel', 'SubscriptionController@cancel')->name('subscriptions.cancel');
+		Route::get('/epay', 'SubscriptionController@plan_epay')->name('subscriptions.plan_epay');
+		Route::post('/paypal_suscription', 'SubscriptionController@paypalRedirect')->name('subscriptions.paypal_redirect');
+		Route::post('/epay_suscription', 'SubscriptionController@epayRedirect')->name('subscriptions.epay_redirect');
         // route for processing payment
         Route::post('/paypal', 'PaymentController@payWithpaypal')
             ->name('subscriptions.paypal');
@@ -201,4 +204,11 @@ Route::group(['prefix' => "payment", "middleware" => ["auth"]], function() {
 	Route::post('/delete/{id}', 'UserPaymentController@delete_ajax');
 	Route::get('/users', 'UserPaymentController@getUser');
 	Route::get('/courses', 'UserPaymentController@getPayCourse');
+});
+Route::group(["prefix" => "epay", "middleware" => ["auth"]], function() {
+	Route::get('/', 'EpayController@index');	
+	Route::post('/create', 'EpayController@create_plan');
+	Route::post('/update', 'EpayController@update_plan');
+	Route::post('/epay_data', 'EpayController@epay_data')->name('epay.epay_data');
+	Route::post('/epay_suscription', 'EpayController@epay_suscription')->name('epay.epay_suscription');
 });

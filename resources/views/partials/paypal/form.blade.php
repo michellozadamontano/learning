@@ -1,4 +1,4 @@
-<form action="{{ route('subscriptions.redirect') }}" method="GET">
+<form action="{{ route('subscriptions.paypal_redirect') }}" method="POST">
     @csrf
     <input
         class="form-control"

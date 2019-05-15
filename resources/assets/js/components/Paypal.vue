@@ -102,25 +102,7 @@
                     console.log('Este es el error', error);
                     this.isLoading = false;
                     
-                })            
-               /* axios
-                    .post('/subscriptions/plan/create',
-                    {
-                        plan:this.plan,
-                        price: this.price
-                    })
-                    .then(response =>{
-                        console.log(response.data);
-                        this.isLoading = false;
-                     // this.code = response.data.price.paypal_code;
-                     // this.paypaldata = response.data.prices;                          
-                     // this.processing = false;  
-                    //  this.$Progress.finish();                   
-                    } ) .catch((error)=>{
-                    console.log('Este es el error', error);
-                    this.isLoading = false;
-                    
-                }) */
+                })    
                 
             }
         },

@@ -23,6 +23,7 @@
         "@fortawesome/fontawesome-free": "^5.7.2",
         "admin-lte": "3.0.0-alpha.2",
         "chart.js": "^2.8.0",
+        "epayco-node": "^0.0.5",
         "iex-api": "^0.0.3",
         "isomorphic-fetch": "^2.2.1",
         "jspdf": "^1.5.3",

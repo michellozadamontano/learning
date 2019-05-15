@@ -28,6 +28,7 @@ use App\PaypalPrice;
 use App\Coupon;
 use App\User;
 use App\Student;
+use Epayco\Epayco;
 
 
 class PaypalController extends Controller
@@ -348,69 +349,124 @@ class PaypalController extends Controller
     }
     public function paypalSuspend(){
        
-        $plan = request('plan');
-        $agreementId = $plan;                  
-        $agreement = new Agreement();            
-
-        $agreement->setId($agreementId);        
-        $agreementStateDescriptor = new AgreementStateDescriptor();
-        $agreementStateDescriptor->setNote("Suspend the agreement");
-
-        try {
-            $agreement->suspend($agreementStateDescriptor, $this->apiContext);
-            $cancelAgreementDetails = Agreement::get($agreement->getId(), $this->apiContext); 
-            $user = auth()->user();
-            $user->paypal = 0;
-            $user->save();
-            $subcription = PaypalSubscription::where('user_id',$user->id)->first();
-            $subcription->state = $cancelAgreementDetails->getState();
-            $subcription->save();
-        /*voy a desacioar todos los curos a los que esta inscrito este estudiante, si reanuda la subcripcion
-         tiene que inscribirse de nuevo*/
-            $user->student->courses()->detach(); 
+        $plan   = request('plan');
+        $cop    = request('cop'); //pesos colombianos
+        
+        if($cop != "") {
+            $epayco = new Epayco(array(
+                "apiKey" => env('EPAY_PUBLIC_KEY'),
+                "privateKey" => env('EPAY_PRIVATE_KEY'),
+                "lenguage" => "ES",
+                "test" => true
+            ));
+            $sub = $epayco->subscriptions->cancel($plan);
+            if($sub->success) {
+                $user = auth()->user();
+                $user->paypal = 0;
+                $user->save();
+                $subcription = PaypalSubscription::where('user_id',$user->id)->first();
+                $subcription->delete();
+                $user->student->courses()->detach();
+                return redirect(route('subscriptions.paypal'))
+                ->with('message', ['success', __("La suscripción se ha cancelado correctamente")]);
+            }
             
-
-            
-           // dd($cancelAgreementDetails);      
-           return redirect(route('subscriptions.paypal'))
-            ->with('message', ['success', __("La suscripción se ha suspendido correctamente")]);
-        } catch (Exception $ex) {  
-            echo 'Hubo un problema al suspender la subscriccion';                
         }
+        else{
+            $agreementId = $plan;                  
+            $agreement = new Agreement();            
+    
+            $agreement->setId($agreementId);        
+            $agreementStateDescriptor = new AgreementStateDescriptor();
+            $agreementStateDescriptor->setNote("Suspend the agreement");
+    
+            try {
+                $agreement->suspend($agreementStateDescriptor, $this->apiContext);
+                $cancelAgreementDetails = Agreement::get($agreement->getId(), $this->apiContext); 
+                $user = auth()->user();
+                $user->paypal = 0;
+                $user->save();
+                $subcription = PaypalSubscription::where('user_id',$user->id)->first();
+                $subcription->state = $cancelAgreementDetails->getState();
+                $subcription->save();
+            /*voy a desacioar todos los curos a los que esta inscrito este estudiante, si reanuda la subcripcion
+             tiene que inscribirse de nuevo*/
+                $user->student->courses()->detach(); 
+                
+    
+                
+               // dd($cancelAgreementDetails);      
+               return redirect(route('subscriptions.paypal'))
+                ->with('message', ['success', __("La suscripción se ha suspendido correctamente")]);
+            } catch (Exception $ex) {  
+                echo 'Hubo un problema al suspender la subscriccion';                
+            }
+        }
+
+        
         
     }
     public function paypalCancel(){        
         $plan = request('plan');
-        $agreementId = $plan;                  
-        $agreement = new Agreement();            
+        $cop    = request('cop');
 
-        $agreement->setId($agreementId);        
-        $agreementStateDescriptor = new AgreementStateDescriptor();
-        $agreementStateDescriptor->setNote("Cancel the agreement");
-
-        try {
-            $agreement->cancel($agreementStateDescriptor, $this->apiContext);
-            $cancelAgreementDetails = Agreement::get($agreement->getId(), $this->apiContext); 
-           // dd($cancelAgreementDetails);
-            $user = auth()->user();
-            $user->paypal = 0;
-            $user->save();
-            $subcription = PaypalSubscription::where('user_id',$user->id)->first();
-            $subcription->delete();
-           // $subcription->state = $cancelAgreementDetails->getState();
-          //  $subcription->save();
-        /*voy a desacioar todos los curos a los que esta inscrito este estudiante, si reanuda la subcripcion
-         tiene que inscribirse de nuevo*/
-            $user->student->courses()->detach(); 
+        if($cop != "") {
+            $epayco = new Epayco(array(
+                "apiKey" => env('EPAY_PUBLIC_KEY'),
+                "privateKey" => env('EPAY_PRIVATE_KEY'),
+                "lenguage" => "ES",
+                "test" => true
+            ));
             
-
+            $sub = $epayco->subscriptions->cancel($plan);
             
-           // dd($cancelAgreementDetails);      
-           return redirect(route('subscriptions.paypal'))
-            ->with('message', ['success', __("La suscripción se ha cancelado correctamente")]);
-        } catch (Exception $ex) {  
-            echo 'Hubo un problema al cancelar la subscriccion';                
+            if($sub->success) {
+                $user = auth()->user();
+                $user->paypal = 0;
+                $user->save();
+                $subcription = PaypalSubscription::where('user_id',$user->id)->first();
+                $subcription->delete();
+                $user->student->courses()->detach();
+               
+                return redirect(route('subscriptions.paypal'))
+                ->with('message', ['success', __("La suscripción se ha cancelado correctamente")]);
+            }
+            
         }
+        else {
+            $agreementId = $plan;                  
+            $agreement = new Agreement();            
+    
+            $agreement->setId($agreementId);        
+            $agreementStateDescriptor = new AgreementStateDescriptor();
+            $agreementStateDescriptor->setNote("Cancel the agreement");
+    
+            try {
+                $agreement->cancel($agreementStateDescriptor, $this->apiContext);
+                $cancelAgreementDetails = Agreement::get($agreement->getId(), $this->apiContext); 
+               // dd($cancelAgreementDetails);
+                $user = auth()->user();
+                $user->paypal = 0;
+                $user->save();
+                $subcription = PaypalSubscription::where('user_id',$user->id)->first();
+                $subcription->delete();
+               // $subcription->state = $cancelAgreementDetails->getState();
+              //  $subcription->save();
+            /*voy a desacioar todos los curos a los que esta inscrito este estudiante, si reanuda la subcripcion
+             tiene que inscribirse de nuevo*/
+                $user->student->courses()->detach(); 
+                
+    
+                
+               // dd($cancelAgreementDetails);      
+               return redirect(route('subscriptions.paypal'))
+                ->with('message', ['success', __("La suscripción se ha cancelado correctamente")]);
+            } catch (Exception $ex) {  
+                echo 'Hubo un problema al cancelar la subscriccion';                
+            }
+        }
+
+        
         
     }
     public function paypalReactivate(){

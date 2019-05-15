@@ -48,9 +48,7 @@ export default {
     methods: {    
        
     },
-    created() {
-        console.log(this.p_key);
-        console.log(this.name);
+    created() {        
     },
 }
 </script>

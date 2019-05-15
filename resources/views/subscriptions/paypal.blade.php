@@ -13,6 +13,7 @@
                         <th scope="col">#</th>                        
                         <th scope="col">Plan</th>
                         <th scope="col">Costo</th>
+                        <th scope="col">COP</th>
                         <th scope="col">ID Suscripción</th>                        
                         <th scope="col">Alta</th>
                         <th scope="col">Estado</th>
@@ -25,6 +26,7 @@
                         <td>{{ $subscription->id }}</td>                        
                         <td>{{ $subscription->plan }}</td>
                         <td>{{ $subscription->amount }}</td>
+                        <td>{{ $subscription->cop }}</td>
                         <td>{{ $subscription->paypal_id }}</td>                       
                         <td>{{ $subscription->created_at->format('d/m/Y') }}</td>
                         <td>{{ $subscription->state }}</td>  
@@ -45,6 +47,7 @@
                                         <form action="{{ route('subscriptions.suspend') }}" method="POST">
                                             @csrf
                                             <input type="hidden" name="plan" value="{{ $subscription->paypal_id }}" />
+                                            <input type="hidden" name="cop" value="{{ $subscription->cop }}" />
                                             <button class="btn btn-warning">
                                                 {{ __("Suspender") }}
                                             </button>
@@ -54,6 +57,7 @@
                                         <form action="{{ route('subscriptions.cancelar') }}" method="POST">
                                             @csrf
                                             <input type="hidden" name="plan" value="{{ $subscription->paypal_id }}" />
+                                            <input type="hidden" name="cop" value="{{ $subscription->cop }}" />
                                             <button class="btn btn-danger">
                                                 {{ __("Cancelar") }}
                                             </button>

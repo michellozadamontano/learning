@@ -12,6 +12,7 @@
         "codeman/laravel-payu": "^1.00",
         "doctrine/dbal": "^2.6",
         "dprmc/iex-trading": "^1.0",
+        "epayco/epayco-php": "dev-master",
         "fideloper/proxy": "~4.0",
         "guzzlehttp/guzzle": "~6.0",
         "intervention/image": "^2.4",
@@ -35,7 +36,8 @@
     "autoload": {
         "classmap": [
             "database/seeds",
-            "database/factories"           
+            "database/factories",
+            "vendor/epayco/epayco-php/src"           
         ],
         "psr-4": {
             "App\\": "app/"   
