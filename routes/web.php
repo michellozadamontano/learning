@@ -93,7 +93,7 @@ Route::get('/subscribe/paypal/return', 'PaypalController@paypalReturn')->name('s
 
 Route::group(['middleware' => ['auth']], function () {
 	Route::group(["prefix" => "subscriptions"], function() {
-		Route::post('/plans', 'SubscriptionController@plans')
+		Route::get('/plans', 'SubscriptionController@plans')
 		     ->name('subscriptions.plans');
 		Route::get('/admin', 'SubscriptionController@admin')
 		     ->name('subscriptions.admin');

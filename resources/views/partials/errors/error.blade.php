@@ -8,7 +8,7 @@
     <div class="pl-5 pr-5">
         <div class="row justify-content-around">
             <div class="alert alert-danger" role="alert">
-                <strong>{{$title}}</strong>
+                <p>{{$title}}</p>
             </div>
         </div>
     </div>

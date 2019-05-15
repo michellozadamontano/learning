@@ -135,7 +135,7 @@ class EpayController extends Controller
                                 "doc_type" => "CC",
                                 "doc_number" => request('doc_number')
                             )); 
-                            if($subc->success) {
+                            if($subc->success && $subc->data->estado == "Aceptada") {
                                 $user->paypal = 1;
                                 $user->save();
                                 $coupon = session('coupon');               
@@ -163,6 +163,11 @@ class EpayController extends Controller
                                 return redirect(route('subscriptions.paypal'))
                                 ->with('message', ['success', __("La suscripción se ha llevado a cabo correctamente")]);
                             }
+                            else {
+                                $title = "Hubo un problema con la suscripcion. Verifique que los datos sean correctos " . $subc->data->respuesta;
+                                return view('partials.errors.error',compact('title')); 
+                               
+                            } 
 
                            
                         }
@@ -189,8 +194,8 @@ class EpayController extends Controller
                                 "doc_type" => "CC",
                                 "doc_number" => request('doc_number')
                             ));
-                            
-                            if($subc->success) {
+
+                            if($subc->success && $subc->data->estado == "Aceptada") {
                                 $user->paypal = 1;
                                 $user->save();
                                 PaypalSubscription::updateOrCreate(
@@ -203,14 +208,13 @@ class EpayController extends Controller
                                         'paypal_email'  =>  $sub->customer->email,                                    
                                         'cop'           =>  $sub->data->amount,                                    
                                     ]
-                                );  
-                                 // dd($result);
+                                );                                  
                                 return redirect(route('subscriptions.paypal'))
                                 ->with('message', ['success', __("La suscripción se ha llevado a cabo correctamente")]);
                             }
                             else {
-                                $title = "Hubo un problema con la suscripcion. Verifique que los datos sean correctos";
-                                return view('partials.errors.error',compact('title')); 
+                                $title = "Hubo un problema con la suscripcion. Verifique que los datos sean correctos " . $subc->data->respuesta;
+                                 return view('partials.errors.error',compact('title'));                                 
                             }                                      
                 
                           
@@ -256,7 +260,7 @@ class EpayController extends Controller
                                 "doc_type" => "CC",
                                 "doc_number" => request('doc_number')
                             ));
-                            if($subc->success) {
+                            if($subc->success && $subc->data->estado == "Aceptada") {
                                 $user->paypal = 1;
                                 $user->save();
                                 $coupon = session('coupon');               
@@ -285,7 +289,7 @@ class EpayController extends Controller
                                 ->with('message', ['success', __("La suscripción se ha llevado a cabo correctamente")]);
                             }
                             else {
-                                $title = "Hubo un problema con la suscripcion. Verifique que los datos sean correctos";
+                                $title = "Hubo un problema con la suscripcion. Verifique que los datos sean correctos ". $subc->data->respuesta;
                                 return view('partials.errors.error',compact('title'));
                             }
                            
@@ -312,7 +316,7 @@ class EpayController extends Controller
                                 "doc_type" => "CC",
                                 "doc_number" => request('doc_number')
                             )); 
-                            if($subc->success) {
+                            if($subc->success && $subc->data->estado == "Aceptada") {
                                 $user->paypal = 1;
                                 $user->save();
                                 PaypalSubscription::updateOrCreate(
@@ -325,17 +329,15 @@ class EpayController extends Controller
                                         'paypal_email'  =>  $sub->customer->email,                                    
                                         'cop'           =>  $sub->data->amount,                                    
                                     ]
-                                );                        
-                    
-                               // dd($result);
+                                );                    
+                                                   
                                 return redirect(route('subscriptions.paypal'))
                                 ->with('message', ['success', __("La suscripción se ha llevado a cabo correctamente")]);
                             }
                             else {
-                                $title = "Hubo un problema con la suscripcion. Verifique que los datos sean correctos";
+                                $title = "Hubo un problema con la suscripcion. Verifique que los datos sean correctos ". $subc->data->respuesta;
                                 return view('partials.errors.error',compact('title'));
                             }
-
                             
                         }
                         else
@@ -379,7 +381,7 @@ class EpayController extends Controller
                                 "doc_type" => "CC",
                                 "doc_number" => request('doc_number')
                             )); 
-                            if($subc->success) {
+                            if($subc->success && $subc->data->estado == "Aceptada") {
                                 $user->paypal = 1;
                                 $user->save();
                                 $coupon = session('coupon');               
@@ -408,7 +410,7 @@ class EpayController extends Controller
                                 ->with('message', ['success', __("La suscripción se ha llevado a cabo correctamente")]); 
                             }
                             else {
-                                $title = "Hubo un problema con la suscripcion. Verifique que los datos sean correctos";
+                                $title = "Hubo un problema con la suscripcion. Verifique que los datos sean correctos ". $subc->data->respuesta;
                                 return view('partials.errors.error',compact('title')); 
                             }
                             
@@ -435,7 +437,7 @@ class EpayController extends Controller
                                 "doc_type" => "CC",
                                 "doc_number" => request('doc_number')
                             )); 
-                            if($subc->success) {
+                            if($subc->success && $subc->data->estado == "Aceptada") {
                                 $user->paypal = 1;
                                 $user->save();
                                 PaypalSubscription::updateOrCreate(
@@ -448,18 +450,16 @@ class EpayController extends Controller
                                         'paypal_email'  =>  $sub->customer->email,                                    
                                         'cop'           =>  $sub->data->amount,                                    
                                     ]
-                                );                        
+                                );           
                     
-                               // dd($result);
+                               
                                 return redirect(route('subscriptions.paypal'))
                                 ->with('message', ['success', __("La suscripción se ha llevado a cabo correctamente")]);
                             }
                             else {
-                                $title = "Hubo un problema con la suscripcion. Verifique que los datos sean correctos";
+                                $title = "Hubo un problema con la suscripcion. Verifique que los datos sean correctos ". $subc->data->respuesta;
                                 return view('partials.errors.error',compact('title')); 
-                            }
-
-                           
+                            }                           
                         }
                         else
                         {
