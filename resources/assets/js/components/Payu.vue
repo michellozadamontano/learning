@@ -8,7 +8,7 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Pagos por Payu</h3>
+                <h3 class="card-title">Pagos Membresia</h3>
 
                 <div class="card-tools">
                     <button class="btn btn-success" @click="newModal">Adicionar <i class="fas fa-plus fa-fw"></i></button>
@@ -21,7 +21,11 @@
                         <div slot="actions" slot-scope="props">
                             <a href="#" @click="editModal(props.row)">
                                 <i class="fa fa-edit blue fa-2x"></i>
-                            </a>                            
+                            </a>  
+                            /
+                            <a href="#" @click="deletePayu(props.row)">
+                                <i class="fa fa-trash red fa-2x"></i>
+                            </a>                          
                         </div>
                     </v-client-table>
                 </div>                  
@@ -82,7 +86,7 @@
                         <has-error :form="form" field="country"></has-error>
                     </div>   
                     <div class="form-group">
-                        <label for="">Payu Email</label>
+                        <label for="">Email</label>
                          <input v-model="form.email" type="email" name="email"                            
                             class="form-control" >
                         <has-error :form="form" field="email"></has-error>
@@ -226,7 +230,7 @@
                 this.form.reset();
                 $('#addNew').modal('show');
             },
-            deletePayu(id){
+            deletePayu(row){
                 swal.fire({
                     title: 'Estas Seguro?',
                     text: "Se borrará para siempre!",
@@ -235,11 +239,11 @@
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
                     confirmButtonText: 'Si, elimínalo!'
-                    }).then((result) => {
+                    }).then((result) => {    
 
                         // Send request to the server
                          if (result.value) {
-                                this.form.delete('coupon/'+id).then(()=>{
+                               this.form.post('admin/payudelete/'+row.id).then(()=>{
                                         swal.fire(
                                         'Eliminado!',
                                         'El Usuario ha sido eliminado.',

@@ -15,7 +15,16 @@ class EpayController extends Controller
 
     }
     public function index(){        
-        return Epay_prices::all();          
+        return Epay_prices::all();
+      /* $epayco = new Epayco(array(
+        "apiKey" => env('EPAY_PUBLIC_KEY'),
+        "privateKey" => env('EPAY_PRIVATE_KEY'),
+        "lenguage" => "ES",
+        "test" => env('EPAY_TEST')
+    ));
+        //$sub = $epayco->subscriptions->getList();
+        $customer = $epayco->customer->getList();
+        dd($customer);*/
     }
     public function create_plan(){
         
@@ -125,7 +134,7 @@ class EpayController extends Controller
                             "token_card" => $token->data->id,
                             "doc_type" => "CC",
                             "doc_number" => request('doc_number')
-                        ));                       
+                        ));                      
                        
                         if($sub->success) {
                             $subc = $epayco->subscriptions->charge(array(
@@ -193,8 +202,7 @@ class EpayController extends Controller
                                 "token_card" => $token->data->id,
                                 "doc_type" => "CC",
                                 "doc_number" => request('doc_number')
-                            ));
-
+                            ));                           
                             if($subc->success && $subc->data->estado == "Aceptada") {
                                 $user->paypal = 1;
                                 $user->save();

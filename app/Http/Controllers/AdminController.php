@@ -197,6 +197,15 @@ class AdminController extends Controller
 		$payu->save();
 		return ['message' => 'Actualizado'];
 	}
+	public function payuDelete(Request $request, $id) {		
+		
+		$user = User::find($id);
+		$user->paypal = 0;
+		$user->save();
+		$payu =  PaypalSubscription::where('user_id',$id);
+		$payu->delete();
+		return ['message' => 'Eliminado'];
+	}
 
 	
 }

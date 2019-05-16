@@ -129,7 +129,7 @@
                 courses     : [],
                 coupons     : [],
                 email       : '',
-                columns     : ['id', 'name', 'curso','valor','coupon','actions'],
+                columns     : ['id', 'name', 'curso','valor','cop','coupon','actions'],
                 tableData   : [],
                 array_excel : [],
                 options     : {
@@ -140,7 +140,8 @@
                         id          : 'ID',
                         name        : 'Usuario',
                         curso       : 'Curso',
-                        valor       : 'Costo',                       
+                        valor       : 'USD', 
+                        cop         : 'COP',                      
                         actions     : "Acciones",    
                     },
                     templates:{

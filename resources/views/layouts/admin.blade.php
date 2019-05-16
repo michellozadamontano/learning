@@ -144,7 +144,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <router-link to="/payu" class="nav-link">
                 <i class="fab fa-paypal green"></i>
                 <p>
-                    Payu
+                    Pagos Membresia
                 </p>
             </router-link>
           </li>

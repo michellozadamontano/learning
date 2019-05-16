@@ -191,7 +191,7 @@ Route::group(['prefix' => "admin", "middleware" => ['auth', sprintf("role:%s", \
 	Route::get('/payumember', 'AdminController@usersColombia');
 	Route::post('/payucreate', 'AdminController@payuColombia');
 	Route::post('/payuupdate/{id}', 'AdminController@payuUpdate');
-	Route::post('/payudelete', 'AdminController@payuDelete');
+	Route::post('/payudelete/{id}', 'AdminController@payuDelete');
 });
 
 Route::group(['prefix' => "traiding", "middleware" => ["auth"]], function() {
